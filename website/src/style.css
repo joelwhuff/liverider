@@ -1,0 +1,96 @@
+html,
+body,
+#content {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex-direction: column;
+}
+
+#content #game {
+    background-color: white;
+    z-index: 2;
+    border: 1px solid black;
+}
+
+#game {
+    width: 700px;
+    height: 400px;
+    position: relative;
+}
+
+#options {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    /*TODO: prettier gradient or sth*/
+    background: #eee;
+    flex-direction: column;
+}
+
+#ui {
+    display: flex;
+    justify-content: center;
+    width: 600px;
+    margin: 10px;
+}
+
+#ui button {
+    margin: 5px;
+}
+
+.toolbar {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+    border-bottom: 1px solid #000;
+}
+
+.toolbar.left {
+    left: 0;
+    top: 0;
+}
+
+.toolbar.left .tool {
+    border-width: 0 1px 0 0;
+}
+
+.toolbar.right {
+    right: 0;
+    top: 0;
+}
+
+.toolbar.right .tool {
+    border-width: 0 0 0 1px;
+}
+
+.tool {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all;
+    height: 24px;
+    background: center center no-repeat;
+    background-color: #fff;
+    border: solid #000;
+    position: relative;
+}
+
+.tool:hover {
+    cursor: pointer;
+    background-color: #e7e7e7;
+}
+
+.tool.empty {
+    border-width: 1px 0 1px 0 !important;
+    background-color: transparent;
+    pointer-events: none;
+}
