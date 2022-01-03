@@ -1,15 +1,23 @@
-import GhostRunner from "../bike/GhostRunner.js";
-import BikeRenderer from "../bike/instance/renderer/BikeRenderer.js";
-import Control from "../keyboard/Control.js";
-import * as KeyCode from "../keyboard/KeyCode.js";
-import Vector from "../numeric/Vector.js";
-import Tool from "./Tool.js";
+import GhostRunner from '../bike/GhostRunner.js';
+import BikeRenderer from '../bike/instance/renderer/BikeRenderer.js';
+import Control from '../keyboard/Control.js';
+import * as KeyCode from '../keyboard/KeyCode.js';
+import Vector from '../numeric/Vector.js';
+import Tool from './Tool.js';
 
 export default class StartPositionTool extends Tool {
-    static get toolName() { return 'Start Position'; }
-    static get keyLabel() { return 'P'; }
-    static get key() { return new Control(KeyCode.DOM_VK_P); }
-    static get icon() { return 'start'; }
+    static get toolName() {
+        return 'Start Position';
+    }
+    static get keyLabel() {
+        return 'P';
+    }
+    static get key() {
+        return new Control(KeyCode.DOM_VK_P);
+    }
+    static get icon() {
+        return 'start';
+    }
 
     constructor(track) {
         super(track);
@@ -47,7 +55,10 @@ export default class StartPositionTool extends Tool {
     }
 
     createDummyRunner() {
-        this.dummyRunner = new GhostRunner(this.track, `,,,,,,${this.track.playerRunner.bikeClass.name},Start Position`);
+        this.dummyRunner = new GhostRunner(
+            this.track,
+            `,,,,,,${this.track.playerRunner.bikeClass.name},Start Position`
+        );
         this.dummyRunner.assignColor = () => {};
 
         this.dummyRunner.createBike();

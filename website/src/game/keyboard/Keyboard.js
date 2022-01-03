@@ -24,13 +24,13 @@ export default class Keyboard {
 
     test(control, e) {
         let matches = control.codes.includes(e.which) || control.codes.includes(e.code);
-        if (matches && (control.modifiers & Keyboard.CTRL)) {
+        if (matches && control.modifiers & Keyboard.CTRL) {
             matches = e.ctrlKey;
         }
-        if (matches && (control.modifiers & Keyboard.ALT)) {
+        if (matches && control.modifiers & Keyboard.ALT) {
             matches = e.altKey;
         }
-        if (matches && (control.modifiers & Keyboard.SHIFT)) {
+        if (matches && control.modifiers & Keyboard.SHIFT) {
             matches = e.shiftKey;
         }
         return matches;

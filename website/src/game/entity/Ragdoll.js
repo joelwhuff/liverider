@@ -1,9 +1,9 @@
-import BikePart from "./BikePart.js";
-import Entity from "./Entity.js";
-import LinePath from "../numeric/LinePath.js";
-import Vector from "../numeric/Vector.js";
-import Spring from "../bike/physics/Spring.js";
-import Bike from "../bike/instance/Bike.js";
+import BikePart from './BikePart.js';
+import Entity from './Entity.js';
+import LinePath from '../numeric/LinePath.js';
+import Vector from '../numeric/Vector.js';
+import Spring from '../bike/physics/Spring.js';
+import Bike from '../bike/instance/Bike.js';
 
 export default class Ragdoll extends Entity {
     /**
@@ -18,16 +18,16 @@ export default class Ragdoll extends Entity {
         this.track = bike.track;
 
         this.points = [
-            this.head = new BikePart(rider.head, bike),
-            this.hip = new BikePart(rider.hip, bike),
-            this.elbow = new BikePart(rider.elbow, bike),
-            this.shadowElbow = new BikePart(rider.shadowElbow, bike),
-            this.hand = new BikePart(rider.hand, bike),
-            this.shadowHand = new BikePart(rider.shadowHand, bike),
-            this.knee = new BikePart(rider.knee, bike),
-            this.shadowKnee = new BikePart(rider.shadowKnee, bike),
-            this.foot = new BikePart(rider.foot, bike),
-            this.shadowFoot = new BikePart(rider.shadowFoot, bike)
+            (this.head = new BikePart(rider.head, bike)),
+            (this.hip = new BikePart(rider.hip, bike)),
+            (this.elbow = new BikePart(rider.elbow, bike)),
+            (this.shadowElbow = new BikePart(rider.shadowElbow, bike)),
+            (this.hand = new BikePart(rider.hand, bike)),
+            (this.shadowHand = new BikePart(rider.shadowHand, bike)),
+            (this.knee = new BikePart(rider.knee, bike)),
+            (this.shadowKnee = new BikePart(rider.shadowKnee, bike)),
+            (this.foot = new BikePart(rider.foot, bike)),
+            (this.shadowFoot = new BikePart(rider.shadowFoot, bike)),
         ];
 
         this.inflexibleJoints = [
@@ -35,14 +35,14 @@ export default class Ragdoll extends Entity {
             new Spring(this.head, this.elbow),
             new Spring(this.elbow, this.hand),
             new Spring(this.head, this.shadowElbow),
-            new Spring(this.shadowElbow, this.shadowHand)
+            new Spring(this.shadowElbow, this.shadowHand),
         ];
 
         this.joints = this.inflexibleJoints.concat([
             new Spring(this.hip, this.knee),
             new Spring(this.knee, this.foot),
             new Spring(this.hip, this.shadowKnee),
-            new Spring(this.shadowKnee, this.shadowFoot)
+            new Spring(this.shadowKnee, this.shadowFoot),
         ]);
 
         for (let point of this.points) {
@@ -134,29 +134,27 @@ export default class Ragdoll extends Entity {
 
         LinePath.render(ctx, [
             [head, shadowElbow, shadowHand],
-            [hip, shadowKnee, shadowFoot]
+            [hip, shadowKnee, shadowFoot],
         ]);
 
         ctx.strokeStyle = '#000';
 
         LinePath.render(ctx, [
             [head, elbow, hand],
-            [hip, knee, foot]
+            [hip, knee, foot],
         ]);
 
         ctx.lineWidth = 8 * this.track.zoomFactor;
 
-        LinePath.render(ctx, [
-            [hip, head]
-        ]);
+        LinePath.render(ctx, [[hip, head]]);
 
         head.selfAdd(head.sub(hip).scale(0.25));
 
         ctx.lineWidth = 2 * this.track.zoomFactor;
 
         ctx.beginPath();
-        ctx.moveTo(head.x + 5 * this.track.zoomFactor, head.y)
-        ctx.arc(head.x, head.y, 5 * this.track.zoomFactor, 0, 2 * Math.PI, true)
+        ctx.moveTo(head.x + 5 * this.track.zoomFactor, head.y);
+        ctx.arc(head.x, head.y, 5 * this.track.zoomFactor, 0, 2 * Math.PI, true);
         ctx.stroke();
     }
 }

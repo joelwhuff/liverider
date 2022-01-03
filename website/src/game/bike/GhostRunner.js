@@ -1,7 +1,7 @@
-import Color from "../numeric/Color.js";
-import GhostParser from "../parser/GhostParser.js";
-import BikeRunner from "./BikeRunner.js";
-import BikeRenderer from "./instance/renderer/BikeRenderer.js";
+import Color from '../numeric/Color.js';
+import GhostParser from '../parser/GhostParser.js';
+import BikeRunner from './BikeRunner.js';
+import BikeRenderer from './instance/renderer/BikeRenderer.js';
 
 export default class GhostRunner extends BikeRunner {
     constructor(track, ghostString) {

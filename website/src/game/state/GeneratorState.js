@@ -1,5 +1,5 @@
-import TrackGenerator from "../parser/TrackGenerator.js";
-import GameState from "./GameState.js";
+import TrackGenerator from '../parser/TrackGenerator.js';
+import GameState from './GameState.js';
 
 export default class GeneratorState extends GameState {
     onEnter() {
@@ -15,7 +15,7 @@ export default class GeneratorState extends GameState {
     update(progress, delta) {
         this.generator.currentStep();
 
-        this.generator.progress = 
+        this.generator.progress =
             this.generator.lineData.index +
             this.generator.foregroundLineData.index +
             this.generator.sceneryData.index +
@@ -23,9 +23,9 @@ export default class GeneratorState extends GameState {
             this.generator.objectData.index;
 
         if (this.generator.done) {
-            let downloadLink = document.createElement("a");
-            downloadLink.download = "track.txt";
-            let data = new Blob([this.generator.getCode()], { type: "text/plain" });
+            let downloadLink = document.createElement('a');
+            downloadLink.download = 'track.txt';
+            let data = new Blob([this.generator.getCode()], { type: 'text/plain' });
             let url = URL.createObjectURL(data);
             downloadLink.href = url;
             downloadLink.click();
@@ -44,14 +44,21 @@ export default class GeneratorState extends GameState {
         ctx.fillRect(100, barY, barW, 30);
 
         ctx.fillStyle = '#aaa';
-        ctx.fillRect(100, barY, this.generator.progress / this.generator.length * barW, 30);
+        ctx.fillRect(100, barY, (this.generator.progress / this.generator.length) * barW, 30);
         ctx.strokeRect(99, barY - 1, barW - 1, 32);
 
-        let progressText = `Generating track code: ${Math.round(this.generator.progress / this.generator.length * 100)} %`;
+        let progressText = `Generating track code: ${Math.round(
+            (this.generator.progress / this.generator.length) * 100
+        )} %`;
         let progressTextMetrics = ctx.measureText(progressText);
         let progressTextWidth = progressTextMetrics.width;
-        let progressTextHeight = progressTextMetrics.actualBoundingBoxAscent + progressTextMetrics.actualBoundingBoxDescent;
+        let progressTextHeight =
+            progressTextMetrics.actualBoundingBoxAscent + progressTextMetrics.actualBoundingBoxDescent;
         ctx.fillStyle = '#000';
-        ctx.fillText(progressText, (this.track.canvas.width - progressTextWidth) / 2, (this.track.canvas.height + progressTextHeight) / 2);
+        ctx.fillText(
+            progressText,
+            (this.track.canvas.width - progressTextWidth) / 2,
+            (this.track.canvas.height + progressTextHeight) / 2
+        );
     }
 }

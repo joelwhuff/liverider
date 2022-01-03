@@ -1,11 +1,13 @@
-import { MAX_LINE_LENGTH, MIN_LINE_LENGTH } from "../../../constant/TrackConstants.js";
-import Line from "../../../item/line/Line.js";
-import LinePath from "../../../numeric/LinePath.js";
-import Vector from "../../../numeric/Vector.js";
-import Tool from "../../Tool.js";
+import { MAX_LINE_LENGTH, MIN_LINE_LENGTH } from '../../../constant/TrackConstants.js';
+import Line from '../../../item/line/Line.js';
+import LinePath from '../../../numeric/LinePath.js';
+import Vector from '../../../numeric/Vector.js';
+import Tool from '../../Tool.js';
 
 export default class LineTool extends Tool {
-    static get lineClass() { return Line; }
+    static get lineClass() {
+        return Line;
+    }
 
     constructor(track) {
         super(track);
@@ -49,7 +51,7 @@ export default class LineTool extends Tool {
 
         this.track.undoManager.push({
             undo: () => line.removeFromTrack(),
-            redo: () => line.addToTrack()
+            redo: () => line.addToTrack(),
         });
 
         this.lastLine = this.track.mousePos.clone();
@@ -61,7 +63,7 @@ export default class LineTool extends Tool {
             Math.abs(this.track.lastClick.y - this.track.mousePos.y)
         );
 
-        return (measure >= MIN_LINE_LENGTH && measure < MAX_LINE_LENGTH);
+        return measure >= MIN_LINE_LENGTH && measure < MAX_LINE_LENGTH;
     }
 
     openOptions() {
@@ -140,18 +142,16 @@ export default class LineTool extends Tool {
     renderLineSize(ctx, mousePx) {}
 
     renderLineInfo(ctx, mousePx) {
-        ctx.strokeStyle = this.checkLineLength() ? "#00f" : "#f00";
+        ctx.strokeStyle = this.checkLineLength() ? '#00f' : '#f00';
         ctx.lineWidth = this.track.zoomFactor * 2;
 
         let startPos = this.isHolding() ? this.lastLine : this.track.lastClick;
 
-        LinePath.render(ctx, [
-            [startPos.toPixel(this.track), mousePx]
-        ]);
+        LinePath.render(ctx, [[startPos.toPixel(this.track), mousePx]]);
 
         let length = startPos.distanceTo(this.track.mousePos);
         let distance = this.track.mousePos.sub(startPos);
-        let angle = -Math.atan2(distance.y, distance.x) / Math.PI * 180;
+        let angle = (-Math.atan2(distance.y, distance.x) / Math.PI) * 180;
 
         ctx.lineWidth = 0.5;
         ctx.fillStyle = '#777';

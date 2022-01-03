@@ -1,7 +1,7 @@
-import LinePath from "../../../numeric/LinePath.js";
-import Transform from "../../../numeric/Transform.js";
-import Vector from "../../../numeric/Vector.js";
-import Bike from "../Bike.js";
+import LinePath from '../../../numeric/LinePath.js';
+import Transform from '../../../numeric/Transform.js';
+import Vector from '../../../numeric/Vector.js';
+import Bike from '../Bike.js';
 
 export default class MTBRenderer {
     /**
@@ -16,7 +16,10 @@ export default class MTBRenderer {
         let hitbox = bike.hitbox.displayPos.toPixel(bike.track);
 
         let wheelsDistance = frontWheel.sub(backWheel);
-        let wheelsDistance90deg = new Vector((frontWheel.y - backWheel.y) * bike.direction, (backWheel.x - frontWheel.x) * bike.direction);
+        let wheelsDistance90deg = new Vector(
+            (frontWheel.y - backWheel.y) * bike.direction,
+            (backWheel.x - frontWheel.x) * bike.direction
+        );
         let hitBoxDistance = hitbox.sub(backWheel.add(wheelsDistance.scale(0.5)));
 
         let bikeTransform = new Transform(backWheel, wheelsDistance, wheelsDistance90deg);
@@ -41,7 +44,10 @@ export default class MTBRenderer {
         let saddleA = hitboxTransform.scale(0.17, 0.6);
         let saddleB = hitboxTransform.scale(0.3, 0.6);
 
-        let pedalRelativePos = new Vector(6 * bike.track.zoomFactor * Math.cos(bike.distance), 6 * bike.track.zoomFactor * Math.sin(bike.distance));
+        let pedalRelativePos = new Vector(
+            6 * bike.track.zoomFactor * Math.cos(bike.distance),
+            6 * bike.track.zoomFactor * Math.sin(bike.distance)
+        );
         let pedalA = chainStay.add(pedalRelativePos);
         let pedalB = chainStay.sub(pedalRelativePos);
 
@@ -77,7 +83,7 @@ export default class MTBRenderer {
         LinePath.render(ctx, [
             // main structure
             [backWheel, chainStay],
-            [topTube, seatTube, chainStay]
+            [topTube, seatTube, chainStay],
         ]);
 
         ctx.lineWidth = 2 * bike.track.zoomFactor;
@@ -85,18 +91,14 @@ export default class MTBRenderer {
             [topTube, downTube],
             [seatPostA, seatPostB, saddle],
             [saddleA, saddleB],
-            [pedalA, pedalB]
+            [pedalA, pedalB],
         ]);
 
         ctx.lineWidth = bike.track.zoomFactor;
-        LinePath.render(ctx, [
-            [steer, steerConnector]
-        ]);
+        LinePath.render(ctx, [[steer, steerConnector]]);
 
         ctx.lineWidth = 3 * bike.track.zoomFactor;
-        LinePath.render(ctx, [
-            [frontWheel, frontFork, headset, handlebarGrips]
-        ]);
+        LinePath.render(ctx, [[frontWheel, frontFork, headset, handlebarGrips]]);
 
         if (bike.runner.dead) {
             return;
@@ -115,12 +117,18 @@ export default class MTBRenderer {
         let sumOfLegPartsLengthsSquared = 2 * legPartLength ** 2; // thigh & calves so 2 parts
 
         let hipToFootDistanceA = footMedianDistance.sub(hip);
-        let hipToFootDistanceA90deg = new Vector(hipToFootDistanceA.y * bike.direction, -hipToFootDistanceA.x * bike.direction);
+        let hipToFootDistanceA90deg = new Vector(
+            hipToFootDistanceA.y * bike.direction,
+            -hipToFootDistanceA.x * bike.direction
+        );
         let legLengthRatioA = sumOfLegPartsLengthsSquared / hipToFootDistanceA.lengthSquared();
         let knee = hip.add(hipToFootDistanceA.scale(0.5)).add(hipToFootDistanceA90deg.scale(legLengthRatioA));
 
         let hipToFootDistanceB = footMedianDistance.sub(hip);
-        let hipToFootDistanceB90deg = new Vector(hipToFootDistanceB.y * bike.direction, -hipToFootDistanceB.x * bike.direction);
+        let hipToFootDistanceB90deg = new Vector(
+            hipToFootDistanceB.y * bike.direction,
+            -hipToFootDistanceB.x * bike.direction
+        );
         let legLengthRatioB = sumOfLegPartsLengthsSquared / hipToFootDistanceB.lengthSquared();
         let shadowKnee = hip.add(hipToFootDistanceB.scale(0.5)).add(hipToFootDistanceB90deg.scale(legLengthRatioB));
 
@@ -131,7 +139,10 @@ export default class MTBRenderer {
         let sumOfArmPartsLengthsSquared = armLength ** 2 + forearmLength ** 2;
 
         let bodyToHandDistance = body.sub(hand);
-        let bodyToHandDistance90deg = new Vector(bodyToHandDistance.y * bike.direction, -bodyToHandDistance.x * bike.direction);
+        let bodyToHandDistance90deg = new Vector(
+            bodyToHandDistance.y * bike.direction,
+            -bodyToHandDistance.x * bike.direction
+        );
         let armLengthRatio = sumOfArmPartsLengthsSquared / bodyToHandDistance.lengthSquared();
         let elbow = hand.add(bodyToHandDistance.scale(0.3)).add(bodyToHandDistance90deg.scale(armLengthRatio));
 
@@ -141,29 +152,23 @@ export default class MTBRenderer {
 
         // ---------- player
         // shadow leg
-        LinePath.render(ctx, [
-            [pedalB, shadowKnee, hip]
-        ]);
+        LinePath.render(ctx, [[pedalB, shadowKnee, hip]]);
         // leg
         ctx.globalAlpha = opacityFactor;
-        LinePath.render(ctx, [
-            [pedalA, knee, hip]
-        ]);
+        LinePath.render(ctx, [[pedalA, knee, hip]]);
         // body
         ctx.lineWidth = 8 * bike.track.zoomFactor;
-        LinePath.render(ctx, [
-            [hip, body]
-        ]);
+        LinePath.render(ctx, [[hip, body]]);
         // head
         ctx.lineWidth = 2 * bike.track.zoomFactor;
         ctx.beginPath();
-        ctx.moveTo(headCenter.x + headRadius, headCenter.y)
+        ctx.moveTo(headCenter.x + headRadius, headCenter.y);
         ctx.arc(headCenter.x, headCenter.y, headRadius, 0, 2 * Math.PI, true);
         ctx.stroke();
         // head gear
         ctx.lineWidth = 2 * bike.track.zoomFactor;
         ctx.beginPath();
-        ctx.moveTo(headCenter.x + headRadius, headCenter.y)
+        ctx.moveTo(headCenter.x + headRadius, headCenter.y);
         ctx.arc(headCenter.x, headCenter.y, headRadius, 0, 2 * Math.PI, true);
         ctx.stroke();
         // head gear
@@ -175,15 +180,11 @@ export default class MTBRenderer {
         let hatBackTop = hatBackBottom.add(playerTransform.x.scale(0.02)).selfAdd(playerTransform.y.scale(0.2));
 
         ctx.fillStyle = bike.color;
-        LinePath.render(ctx, [
-            [hatFrontBottom, hatFront, hatFrontTop, hatBackTop, hatBack, hatBackBottom]
-        ]);
+        LinePath.render(ctx, [[hatFrontBottom, hatFront, hatFrontTop, hatBackTop, hatBack, hatBackBottom]]);
         ctx.fill();
         // arm
         ctx.lineWidth = 5 * bike.track.zoomFactor;
-        LinePath.render(ctx, [
-            [body, elbow, hand]
-        ]);
+        LinePath.render(ctx, [[body, elbow, hand]]);
 
         ctx.strokeStyle = '#000';
         ctx.globalAlpha = 1;

@@ -1,9 +1,9 @@
-import Track from "../track/Track.js";
-import GameObject from "../GameObject.js";
+import Track from '../track/Track.js';
+import GameObject from '../GameObject.js';
 
 export default class Tool extends GameObject {
     static get toolName() {
-        return "Tool";
+        return 'Tool';
     }
     static get keyLabel() {
         return null;
@@ -33,24 +33,24 @@ export default class Tool extends GameObject {
     }
 
     getDOM() {
-        let el = document.createElement("div");
-        el.classList.add("tool");
+        let el = document.createElement('div');
+        el.classList.add('tool');
         el.title = `${this.constructor.toolName} (${this.constructor.keyLabel})`;
 
         if (this.constructor.icon) {
-            this.domIcon = document.createElement("img");
+            this.domIcon = document.createElement('img');
 
-            if (this.constructor.icon.type === "b64") {
-                this.domIcon.setAttribute("src", this.constructor.icon.data);
+            if (this.constructor.icon.type === 'b64') {
+                this.domIcon.setAttribute('src', this.constructor.icon.data);
             } else {
-                this.domIcon.setAttribute("src", `./media/icon/${this.constructor.icon}.svg`);
+                this.domIcon.setAttribute('src', `./media/icon/${this.constructor.icon}.svg`);
             }
 
             el.appendChild(this.domIcon);
         }
 
-        el.addEventListener("click", () => this.run());
-        el.addEventListener("contextmenu", (e) => this.showOptions(e));
+        el.addEventListener('click', () => this.run());
+        el.addEventListener('contextmenu', e => this.showOptions(e));
 
         this.dom = el;
         return el;
@@ -88,7 +88,7 @@ export default class Tool extends GameObject {
     closeOptions() {}
 
     activate() {
-        this.track.canvas.style.cursor = "none";
+        this.track.canvas.style.cursor = 'none';
     }
 
     deactivate() {

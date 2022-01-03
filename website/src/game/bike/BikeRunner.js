@@ -1,11 +1,11 @@
-import Entity from "../entity/Entity.js";
-import Explosion from "../entity/Explosion.js";
-import GameObject from "../GameObject.js";
-import Checkpoint from "../item/reachable/Checkpoint.js";
-import Target from "../item/reachable/Target.js";
-import Track from "../track/Track.js";
-import Bike from "./instance/Bike.js";
-import Ragdoll from "../entity/Ragdoll.js";
+import Entity from '../entity/Entity.js';
+import Explosion from '../entity/Explosion.js';
+import GameObject from '../GameObject.js';
+import Checkpoint from '../item/reachable/Checkpoint.js';
+import Target from '../item/reachable/Target.js';
+import Track from '../track/Track.js';
+import Bike from './instance/Bike.js';
+import Ragdoll from '../entity/Ragdoll.js';
 
 export default class BikeRunner extends GameObject {
     constructor(track, bikeClass) {
@@ -110,10 +110,7 @@ export default class BikeRunner extends GameObject {
     crash() {
         this.die();
         this.deadObject = new Ragdoll(this.instance.getRider(), this.instance);
-        this.deadObject.setVelocity(
-            this.instance.hitbox.velocity.clone(),
-            this.instance.backWheel.velocity.clone()
-        );
+        this.deadObject.setVelocity(this.instance.hitbox.velocity.clone(), this.instance.backWheel.velocity.clone());
     }
 
     explode(pos, vel) {
@@ -192,11 +189,11 @@ export default class BikeRunner extends GameObject {
     }
 
     updateControls() {
-        throw new Exception("Unimplemented method updateControls()");
+        throw new Exception('Unimplemented method updateControls()');
     }
 
     renderInstance(ctx) {
-        throw new Exception("Unimplemented method renderInstance(ctx)");
+        throw new Exception('Unimplemented method renderInstance(ctx)');
     }
 
     fixedUpdate() {

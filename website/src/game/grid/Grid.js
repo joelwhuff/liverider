@@ -1,5 +1,5 @@
-import Vector from "../numeric/Vector.js";
-import Cell from "./cell/Cell.js";
+import Vector from '../numeric/Vector.js';
+import Cell from './cell/Cell.js';
 
 export default class Grid {
     constructor(cellSize, cellClass) {
@@ -40,7 +40,7 @@ export default class Grid {
             /**
              * @param {Cell} cell
              */
-            (cell) => {
+            cell => {
                 cell.push(item);
             }
         );
@@ -51,7 +51,7 @@ export default class Grid {
             /**
              * @param {Cell} cell
              */
-            (cell) => {
+            cell => {
                 cell.remove(item);
             }
         );
@@ -81,7 +81,7 @@ export default class Grid {
         }
 
         let currentCache = Grid.spreadCache.get(cellSize);
-        let key = _from + ";" + _to;
+        let key = _from + ';' + _to;
 
         if (currentCache.has(key)) {
             return currentCache.get(key);

@@ -1,7 +1,7 @@
-import LinePath from "../numeric/LinePath.js";
-import Vector from "../numeric/Vector.js";
-import Entity from "./Entity.js";
-import Shard from "./Shard.js";
+import LinePath from '../numeric/LinePath.js';
+import Vector from '../numeric/Vector.js';
+import Entity from './Entity.js';
+import Shard from './Shard.js';
 
 export default class Explosion extends Entity {
     constructor(pos, vel, bike, time, track) {
@@ -13,7 +13,7 @@ export default class Explosion extends Entity {
             new Shard(bike, pos, vel, this),
             new Shard(bike, pos, vel, this),
             new Shard(bike, pos, vel, this),
-            new Shard(bike, pos, vel, this)
+            new Shard(bike, pos, vel, this),
         ];
 
         this.pos = pos.clone();
@@ -44,15 +44,13 @@ export default class Explosion extends Entity {
 
             for (let i = 0; i < 16; i++) {
                 let dist = (this.speedValue + 30 * Math.random()) / 2;
-                let x = center.x + dist * Math.cos(angle + 2 * Math.PI * i / 16);
-                let y = center.y + dist * Math.sin(angle + 2 * Math.PI * i / 16);
+                let x = center.x + dist * Math.cos(angle + (2 * Math.PI * i) / 16);
+                let y = center.y + dist * Math.sin(angle + (2 * Math.PI * i) / 16);
                 points.push(new Vector(x, y));
             }
 
             ctx.fillStyle = '#ff0';
-            LinePath.render(ctx, [
-                points
-            ]);
+            LinePath.render(ctx, [points]);
             ctx.fill();
         }
 

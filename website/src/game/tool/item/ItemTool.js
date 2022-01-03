@@ -1,8 +1,10 @@
-import Tool from "./../Tool.js";
-import Item from "../../item/Item.js";
+import Tool from './../Tool.js';
+import Item from '../../item/Item.js';
 
 export default class ItemTool extends Tool {
-    static get itemClass() { return Item; }
+    static get itemClass() {
+        return Item;
+    }
 
     onMouseDown(e) {
         if (e.button !== 2) {
@@ -16,7 +18,7 @@ export default class ItemTool extends Tool {
             item.addToTrack();
             this.track.undoManager.push({
                 undo: () => item.removeFromTrack(),
-                redo: () => item.addToTrack()
+                redo: () => item.addToTrack(),
             });
         }
     }

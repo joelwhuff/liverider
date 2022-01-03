@@ -1,12 +1,20 @@
-import Tool from "./Tool.js";
-import * as KeyCode from "../keyboard/KeyCode.js";
-import Control from "../keyboard/Control.js";
+import Tool from './Tool.js';
+import * as KeyCode from '../keyboard/KeyCode.js';
+import Control from '../keyboard/Control.js';
 
 export default class FullscreenTool extends Tool {
-    static get toolName() { return 'Toggle Fullscreen'; }
-    static get keyLabel() { return 'F'; }
-    static get key() { return new Control(KeyCode.DOM_VK_F); }
-    static get icon() { return 'expand'; }
+    static get toolName() {
+        return 'Toggle Fullscreen';
+    }
+    static get keyLabel() {
+        return 'F';
+    }
+    static get key() {
+        return new Control(KeyCode.DOM_VK_F);
+    }
+    static get icon() {
+        return 'expand';
+    }
 
     constructor(track) {
         super(track);
@@ -23,15 +31,18 @@ export default class FullscreenTool extends Tool {
     }
 
     fullscreenElement() {
-        return document.fullscreenElement ||
+        return (
+            document.fullscreenElement ||
             document.webkitFullscreenElement ||
             document.mozFullScreenElement ||
             document.msFullscreenElement ||
-            null;
+            null
+        );
     }
 
     exitFullscreen() {
-        let fn = document.exitFullscreen ||
+        let fn =
+            document.exitFullscreen ||
             document.webkitExitFullscreen ||
             document.mozCancelFullScreen ||
             document.mozExitFullScreen ||
@@ -40,10 +51,8 @@ export default class FullscreenTool extends Tool {
     }
 
     requestFullscreen(el) {
-        let fn = el.requestFullscreen ||
-            el.webkitRequestFullscreen ||
-            el.mozRequestFullScreen ||
-            el.msRequestFullscreen;
+        let fn =
+            el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
         fn.call(el);
     }
 }

@@ -1,4 +1,4 @@
-import Keyboard from "./Keyboard.js";
+import Keyboard from './Keyboard.js';
 
 export default class Control {
     constructor(keyCodes, modifiers = Keyboard.NONE, fireOnce = false) {

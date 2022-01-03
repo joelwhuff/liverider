@@ -1,5 +1,5 @@
-import GameObject from "../GameObject.js";
-import StateManager from "./StateManager.js";
+import GameObject from '../GameObject.js';
+import StateManager from './StateManager.js';
 
 export default class GameState extends GameObject {
     constructor(manager) {

@@ -1,12 +1,20 @@
-import Control from "../keyboard/Control.js";
-import * as KeyCode from "../keyboard/KeyCode.js";
-import Tool from "./Tool.js";
+import Control from '../keyboard/Control.js';
+import * as KeyCode from '../keyboard/KeyCode.js';
+import Tool from './Tool.js';
 
 export default class EraserTool extends Tool {
-    static get toolName() { return 'Eraser'; }
-    static get keyLabel() { return 'E'; }
-    static get key() { return new Control(KeyCode.DOM_VK_E); }
-    static get icon() { return 'eraser'; }
+    static get toolName() {
+        return 'Eraser';
+    }
+    static get keyLabel() {
+        return 'E';
+    }
+    static get key() {
+        return new Control(KeyCode.DOM_VK_E);
+    }
+    static get icon() {
+        return 'eraser';
+    }
 
     constructor(track) {
         super(track);
@@ -38,7 +46,7 @@ export default class EraserTool extends Tool {
             if (deleted.length) {
                 this.track.undoManager.push({
                     undo: () => deleted.forEach(e => e.addToTrack()),
-                    redo: () => deleted.forEach(e => e.removeFromTrack())
+                    redo: () => deleted.forEach(e => e.removeFromTrack()),
                 });
             }
         }
@@ -142,7 +150,7 @@ export default class EraserTool extends Tool {
         let pos = this.track.mousePos.toPixel(this.track);
         ctx.beginPath();
         ctx.arc(pos.x, pos.y, this.size * this.track.zoomFactor, 0, 2 * Math.PI, true);
-        ctx.fillStyle = "#ffb6c1";
+        ctx.fillStyle = '#ffb6c1';
         ctx.fill();
     }
 }

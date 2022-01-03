@@ -1,27 +1,21 @@
-import GhostRunner from "../bike/GhostRunner.js";
-import BMX from "../bike/instance/BMX.js";
-import PlayerRunner from "../bike/PlayerRunner.js";
-import { CACHE_CELL_SIZE, GRID_CELL_SIZE } from "../constant/GridConstants.js";
-import {
-    MAX_LINE_LENGTH,
-    MAX_ZOOM,
-    MIN_LINE_LENGTH,
-    MIN_ZOOM,
-    TRACK_DEFAULT,
-} from "../constant/TrackConstants.js";
-import Entity from "../entity/Entity.js";
-import PhysicsCell from "../grid/cell/PhysicsCell.js";
-import RenderCell from "../grid/cell/RenderCell.js";
-import Grid from "../grid/Grid.js";
-import UndoManager from "../history/UndoManager.js";
-import Item from "../item/Item.js";
-import Line from "../item/line/Line.js";
-import ReachableItem from "../item/ReachableItem.js";
-import Vector from "../numeric/Vector.js";
-import ToolManager from "../tool/manager/ToolManager.js";
-import PauseTool from "../tool/PauseTool.js";
-import ToolCollection from "../tool/ToolCollection.js";
-import TrackEvent from "./TrackEvent.js";
+import GhostRunner from '../bike/GhostRunner.js';
+import BMX from '../bike/instance/BMX.js';
+import PlayerRunner from '../bike/PlayerRunner.js';
+import { CACHE_CELL_SIZE, GRID_CELL_SIZE } from '../constant/GridConstants.js';
+import { MAX_LINE_LENGTH, MAX_ZOOM, MIN_LINE_LENGTH, MIN_ZOOM, TRACK_DEFAULT } from '../constant/TrackConstants.js';
+import Entity from '../entity/Entity.js';
+import PhysicsCell from '../grid/cell/PhysicsCell.js';
+import RenderCell from '../grid/cell/RenderCell.js';
+import Grid from '../grid/Grid.js';
+import UndoManager from '../history/UndoManager.js';
+import Item from '../item/Item.js';
+import Line from '../item/line/Line.js';
+import ReachableItem from '../item/ReachableItem.js';
+import Vector from '../numeric/Vector.js';
+import ToolManager from '../tool/manager/ToolManager.js';
+import PauseTool from '../tool/PauseTool.js';
+import ToolCollection from '../tool/ToolCollection.js';
+import TrackEvent from './TrackEvent.js';
 
 export default class Track {
     /**
@@ -149,8 +143,8 @@ export default class Track {
             deleted.push(...cell.checkDelete(eraserPoint, radius, restrict));
         };
 
-        let mainLayerRestrict = restrict.get("mainLayer");
-        let foregroundLayerRestrict = restrict.get("foregroundLayer");
+        let mainLayerRestrict = restrict.get('mainLayer');
+        let foregroundLayerRestrict = restrict.get('foregroundLayer');
         let mainLayerActive = [...mainLayerRestrict.values()].some(Boolean);
         let foregroundLayerActive = [...foregroundLayerRestrict.values()].some(Boolean);
 
@@ -191,7 +185,7 @@ export default class Track {
         this.pause(false);
 
         this.playerRunner.restart();
-        this.ghostRunners.forEach((runner) => {
+        this.ghostRunners.forEach(runner => {
             runner.restart();
         });
 

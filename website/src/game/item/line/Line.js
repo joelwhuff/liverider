@@ -1,8 +1,8 @@
-import Item from "../Item.js";
-import Vector from "../../numeric/Vector.js";
-import Entity from "../../entity/Entity.js";
-import Grid from "../../grid/Grid.js";
-import PhysicsCell from "../../grid/cell/PhysicsCell.js";
+import Item from '../Item.js';
+import Vector from '../../numeric/Vector.js';
+import Entity from '../../entity/Entity.js';
+import Grid from '../../grid/Grid.js';
+import PhysicsCell from '../../grid/cell/PhysicsCell.js';
 
 export default class Line extends Item {
     /**
@@ -64,7 +64,7 @@ export default class Line extends Item {
      */
     getEnd() {
         this.recorded = true;
-        let end = " " + this.endPos.toString();
+        let end = ' ' + this.endPos.toString();
         let gridCoords = Grid.gridCoords(this.endPos, this.grid.cellSize);
         /** @type {PhysicsCell} */
         let nextGrid = this.grid.cell(gridCoords.x, gridCoords.y);

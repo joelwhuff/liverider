@@ -1,5 +1,5 @@
-import Tool from "../tool/Tool.js";
-import Track from "../track/Track.js";
+import Tool from '../tool/Tool.js';
+import Track from '../track/Track.js';
 
 export default class UI {
     static createEditorUI(state) {
@@ -42,7 +42,5 @@ export default class UI {
         ui.appendChild(uploadButton);
     }
 
-    static createRaceUI(state) {
-
-    }
+    static createRaceUI(state) {}
 }

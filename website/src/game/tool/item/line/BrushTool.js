@@ -1,4 +1,4 @@
-import LineTool from "./LineTool.js";
+import LineTool from './LineTool.js';
 
 export default class BrushTool extends LineTool {
     constructor(track) {

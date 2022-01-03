@@ -1,6 +1,6 @@
-import GameObject from "../GameObject.js";
-import Track from "../track/Track.js";
-import GameState from "./GameState.js";
+import GameObject from '../GameObject.js';
+import Track from '../track/Track.js';
+import GameState from './GameState.js';
 
 export default class StateManager extends GameObject {
     constructor(game, canvas, opt) {

@@ -1,6 +1,6 @@
-import BikePart from "../../entity/BikePart.js";
-import Vector from "../../numeric/Vector.js";
-import Line from "./Line.js";
+import BikePart from '../../entity/BikePart.js';
+import Vector from '../../numeric/Vector.js';
+import Line from './Line.js';
 
 export default class SolidLine extends Line {
     onDelete() {
@@ -10,7 +10,7 @@ export default class SolidLine extends Line {
     onAdd() {
         this.grid.totalSolidLines.push(this);
     }
-    
+
     /**
      *
      * @param {BikePart} part
@@ -43,7 +43,10 @@ export default class SolidLine extends Line {
                 }
             }
             // Is our part close enough to the edges
-            else if (relativePosOnLine * this.len >= -part.size && relativePosOnLine * this.len <= this.len + part.size) {
+            else if (
+                relativePosOnLine * this.len >= -part.size &&
+                relativePosOnLine * this.len <= this.len + part.size
+            ) {
                 let edge = relativePosOnLine > 0 ? this.endPos : this.pos;
                 vectorToPart = part.pos.sub(edge);
                 distanceToPart = vectorToPart.getLength();

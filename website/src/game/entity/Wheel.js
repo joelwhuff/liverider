@@ -1,5 +1,5 @@
-import Vector from "../numeric/Vector.js";
-import BikePart from "./BikePart.js";
+import Vector from '../numeric/Vector.js';
+import BikePart from './BikePart.js';
 
 export default class Wheel extends BikePart {
     constructor(center, bike) {

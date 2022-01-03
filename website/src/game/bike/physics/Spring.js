@@ -1,5 +1,5 @@
-import GameObject from "../../GameObject.js";
-import Vector from "../../numeric/Vector.js";
+import GameObject from '../../GameObject.js';
+import Vector from '../../numeric/Vector.js';
 
 export default class Spring extends GameObject {
     constructor(a, b) {

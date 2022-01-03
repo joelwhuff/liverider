@@ -1,6 +1,6 @@
-import Bike from "../bike/instance/Bike.js";
-import Vector from "../numeric/Vector.js";
-import Entity from "./Entity.js";
+import Bike from '../bike/instance/Bike.js';
+import Vector from '../numeric/Vector.js';
+import Entity from './Entity.js';
 
 export default class BikePart extends Entity {
     constructor(pos, bike) {

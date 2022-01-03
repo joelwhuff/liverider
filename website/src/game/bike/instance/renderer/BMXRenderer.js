@@ -1,7 +1,7 @@
-import LinePath from "../../../numeric/LinePath.js";
-import Transform from "../../../numeric/Transform.js";
-import Vector from "../../../numeric/Vector.js";
-import Bike from "../Bike.js";
+import LinePath from '../../../numeric/LinePath.js';
+import Transform from '../../../numeric/Transform.js';
+import Vector from '../../../numeric/Vector.js';
+import Bike from '../Bike.js';
 
 export default class BMXRenderer {
     /**
@@ -19,7 +19,10 @@ export default class BMXRenderer {
         // i'm naming variables according to this image:
         // https://previews.123rf.com/images/normaals/normaals2002/normaals200200014/139539943-bike-parts-labeled-vector-illustration-diagram-bicycle-equipment-elements-scheme-with-seat-post-dera.jpg
         let wheelsDistance = frontWheel.sub(backWheel);
-        let wheelsDistance90deg = new Vector((frontWheel.y - backWheel.y) * bike.direction, (backWheel.x - frontWheel.x) * bike.direction);
+        let wheelsDistance90deg = new Vector(
+            (frontWheel.y - backWheel.y) * bike.direction,
+            (backWheel.x - frontWheel.x) * bike.direction
+        );
 
         let bikeTransform = new Transform(backWheel, wheelsDistance, wheelsDistance90deg);
 
@@ -31,7 +34,10 @@ export default class BMXRenderer {
         let steer = bikeTransform.scale(0.84, 0.37);
         let downTube = bikeTransform.scale(0.4, 0.05);
 
-        let pedalRelativePos = new Vector(6 * bike.track.zoomFactor * Math.cos(bike.distance), 6 * bike.track.zoomFactor * Math.sin(bike.distance));
+        let pedalRelativePos = new Vector(
+            6 * bike.track.zoomFactor * Math.cos(bike.distance),
+            6 * bike.track.zoomFactor * Math.sin(bike.distance)
+        );
         let pedalA = downTube.add(pedalRelativePos);
         let pedalB = downTube.sub(pedalRelativePos);
         let saddleA = bikeTransform.scale(0.17, 0.38);
@@ -69,7 +75,7 @@ export default class BMXRenderer {
             // seat tube
             [downTube, seatTube],
             // front tube and handlebar
-            [frontWheel, brake, frontFork, headset, handlebarStem, handlebarGrips]
+            [frontWheel, brake, frontFork, headset, handlebarStem, handlebarGrips],
         ]);
 
         if (bike.runner.dead) {
@@ -88,12 +94,18 @@ export default class BMXRenderer {
         let sumOfLegPartsLengthsSquared = 2 * legPartLength ** 2; // thigh & calves so 2 parts
 
         let hipToFootDistanceA = pedalA.sub(hip);
-        let hipToFootDistanceA90deg = new Vector(hipToFootDistanceA.y * bike.direction, -hipToFootDistanceA.x * bike.direction);
+        let hipToFootDistanceA90deg = new Vector(
+            hipToFootDistanceA.y * bike.direction,
+            -hipToFootDistanceA.x * bike.direction
+        );
         let legLengthRatioA = sumOfLegPartsLengthsSquared / hipToFootDistanceA.lengthSquared();
         let knee = hip.add(hipToFootDistanceA.scale(0.5)).add(hipToFootDistanceA90deg.scale(legLengthRatioA));
 
         let hipToFootDistanceB = pedalB.sub(hip);
-        let hipToFootDistanceB90deg = new Vector(hipToFootDistanceB.y * bike.direction, -hipToFootDistanceB.x * bike.direction);
+        let hipToFootDistanceB90deg = new Vector(
+            hipToFootDistanceB.y * bike.direction,
+            -hipToFootDistanceB.x * bike.direction
+        );
         let legLengthRatioB = sumOfLegPartsLengthsSquared / hipToFootDistanceB.lengthSquared();
         let shadowKnee = hip.add(hipToFootDistanceB.scale(0.5)).add(hipToFootDistanceB90deg.scale(legLengthRatioB));
 
@@ -104,9 +116,14 @@ export default class BMXRenderer {
         let sumOfArmPartsLengthsSquared = armLength ** 2 + forearmLength ** 2;
 
         let bodyToHandDistance = body.sub(handlebarGrips);
-        let bodyToHandDistance90deg = new Vector(bodyToHandDistance.y * bike.direction, -bodyToHandDistance.x * bike.direction);
+        let bodyToHandDistance90deg = new Vector(
+            bodyToHandDistance.y * bike.direction,
+            -bodyToHandDistance.x * bike.direction
+        );
         let armLengthRatio = sumOfArmPartsLengthsSquared / bodyToHandDistance.lengthSquared();
-        let elbow = handlebarGrips.add(bodyToHandDistance.scale(0.4)).add(bodyToHandDistance90deg.scale(armLengthRatio));
+        let elbow = handlebarGrips
+            .add(bodyToHandDistance.scale(0.4))
+            .add(bodyToHandDistance90deg.scale(armLengthRatio));
 
         ctx.lineCap = 'round';
         ctx.lineWidth = 6 * bike.track.zoomFactor;
@@ -114,23 +131,17 @@ export default class BMXRenderer {
 
         // ---------- player
         // shadow leg
-        LinePath.render(ctx, [
-            [pedalB, shadowKnee, hip]
-        ]);
+        LinePath.render(ctx, [[pedalB, shadowKnee, hip]]);
         // leg
         ctx.globalAlpha = opacityFactor;
-        LinePath.render(ctx, [
-            [pedalA, knee, hip]
-        ]);
+        LinePath.render(ctx, [[pedalA, knee, hip]]);
         // body
         ctx.lineWidth = 8 * bike.track.zoomFactor;
-        LinePath.render(ctx, [
-            [hip, body]
-        ]);
+        LinePath.render(ctx, [[hip, body]]);
         // head
         ctx.lineWidth = 2 * bike.track.zoomFactor;
         ctx.beginPath();
-        ctx.moveTo(headCenter.x + headRadius, headCenter.y)
+        ctx.moveTo(headCenter.x + headRadius, headCenter.y);
         ctx.arc(headCenter.x, headCenter.y, headRadius, 0, 2 * Math.PI, true);
         ctx.stroke();
         // head gear
@@ -142,15 +153,11 @@ export default class BMXRenderer {
         let hatBackTop = hatBackBottom.add(playerTransform.x.scale(0.02)).selfAdd(playerTransform.y.scale(0.2));
 
         ctx.fillStyle = bike.color;
-        LinePath.render(ctx, [
-            [hatFrontBottom, hatFront, hatFrontTop, hatBackTop, hatBack, hatBackBottom]
-        ]);
+        LinePath.render(ctx, [[hatFrontBottom, hatFront, hatFrontTop, hatBackTop, hatBack, hatBackBottom]]);
         ctx.fill();
         // arm
         ctx.lineWidth = 5 * bike.track.zoomFactor;
-        LinePath.render(ctx, [
-            [body, elbow, handlebarGrips]
-        ]);
+        LinePath.render(ctx, [[body, elbow, handlebarGrips]]);
 
         ctx.strokeStyle = '#000';
         ctx.globalAlpha = 1;

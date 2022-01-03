@@ -1,8 +1,10 @@
-import ItemTool from "./ItemTool.js";
-import DirectionalItem from "../../item/DirectionalItem.js";
+import ItemTool from './ItemTool.js';
+import DirectionalItem from '../../item/DirectionalItem.js';
 
 export default class DirectionalItemTool extends ItemTool {
-    static get itemClass() { return DirectionalItem; }
+    static get itemClass() {
+        return DirectionalItem;
+    }
 
     onMouseDown(e) {
         if (e.button !== 2) {
@@ -16,8 +18,11 @@ export default class DirectionalItemTool extends ItemTool {
         this.mouseDown = false;
 
         let itemClass = this.constructor.itemClass;
-        let radians = Math.atan2(this.track.lastClick.x - this.track.mousePos.x, this.track.mousePos.y - this.track.lastClick.y);
-        let rotation = Math.round(radians * 180 / Math.PI);
+        let radians = Math.atan2(
+            this.track.lastClick.x - this.track.mousePos.x,
+            this.track.mousePos.y - this.track.lastClick.y
+        );
+        let rotation = Math.round((radians * 180) / Math.PI);
 
         /** @type {DirectionalItem} */
         let item = new itemClass(this.track.lastClick.clone(), rotation, this.track);
@@ -28,7 +33,7 @@ export default class DirectionalItemTool extends ItemTool {
         item.addToTrack();
         this.track.undoManager.push({
             undo: () => item.removeFromTrack(),
-            redo: () => item.addToTrack()
+            redo: () => item.addToTrack(),
         });
     }
 

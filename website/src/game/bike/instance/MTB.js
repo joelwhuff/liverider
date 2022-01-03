@@ -1,6 +1,6 @@
-import Vector from "../../numeric/Vector.js";
-import Track from "../../track/Track.js";
-import Bike from "./Bike.js";
+import Vector from '../../numeric/Vector.js';
+import Track from '../../track/Track.js';
+import Bike from './Bike.js';
 
 export default class MTB extends Bike {
     /**

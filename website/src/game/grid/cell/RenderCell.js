@@ -1,4 +1,4 @@
-import Cell from "./Cell.js";
+import Cell from './Cell.js';
 
 export default class RenderCell extends Cell {
     constructor(x, y, size) {
@@ -26,9 +26,9 @@ export default class RenderCell extends Cell {
 
     addScenery(scenery) {
         this.canvas.forEach((canvas, zoom) => {
-            let context = canvas.getContext("2d");
+            let context = canvas.getContext('2d');
 
-            context.strokeStyle = "#aaa";
+            context.strokeStyle = '#aaa';
             context.beginPath();
             scenery.renderCache(context, this.x * zoom, this.y * zoom, zoom);
             context.stroke();
@@ -37,9 +37,9 @@ export default class RenderCell extends Cell {
 
     addLine(line) {
         this.canvas.forEach((canvas, zoom) => {
-            let context = canvas.getContext("2d");
+            let context = canvas.getContext('2d');
 
-            context.strokeStyle = "#000";
+            context.strokeStyle = '#000';
             context.beginPath();
             line.renderCache(context, this.x * zoom, this.y * zoom, zoom);
             context.stroke();
@@ -54,16 +54,16 @@ export default class RenderCell extends Cell {
      * @return {HTMLCanvasElement}
      */
     renderCache(zoom) {
-        let canvas = document.createElement("canvas");
-        let context = canvas.getContext("2d");
+        let canvas = document.createElement('canvas');
+        let context = canvas.getContext('2d');
 
         canvas.width = this.size * zoom;
         canvas.height = this.size * zoom;
 
-        context.lineCap = "round";
+        context.lineCap = 'round';
         context.lineWidth = Math.max(2 * zoom, 0.5);
 
-        context.strokeStyle = "#aaa";
+        context.strokeStyle = '#aaa';
         context.beginPath();
         for (let i = this.scenery.length - 1; i >= 0; --i) {
             this.scenery[i].renderCache(context, this.x * zoom, this.y * zoom, zoom);
@@ -71,7 +71,7 @@ export default class RenderCell extends Cell {
         context.stroke();
 
         context.beginPath();
-        context.strokeStyle = "#000";
+        context.strokeStyle = '#000';
         for (let i = this.lines.length - 1; i >= 0; --i) {
             this.lines[i].renderCache(context, this.x * zoom, this.y * zoom, zoom);
         }

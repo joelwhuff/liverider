@@ -1,4 +1,4 @@
-import Track from "../track/Track.js";
+import Track from '../track/Track.js';
 
 export default class TrackGenerator {
     constructor(track) {
@@ -11,7 +11,7 @@ export default class TrackGenerator {
 
         let grid = this.track.grid;
         let foregroundGrid = this.track.foregroundGrid;
-        this.length = 
+        this.length =
             grid.totalSolidLines.length +
             grid.totalSceneryLines.length +
             grid.totalObjects.length +
@@ -67,7 +67,11 @@ export default class TrackGenerator {
     }
 
     generateForegroundLines() {
-        this.generate(this.foregroundLineData, this.track.foregroundGrid.totalSolidLines, this.generateForegroundScenery);
+        this.generate(
+            this.foregroundLineData,
+            this.track.foregroundGrid.totalSolidLines,
+            this.generateForegroundScenery
+        );
     }
 
     generateForegroundScenery() {
@@ -80,16 +84,18 @@ export default class TrackGenerator {
     }
 
     cleanup() {
-        this.track.grid.totalSolidLines.forEach((line, key) => line.recorded = false);
-        this.track.grid.totalSceneryLines.forEach((line, key) => line.recorded = false);
-        this.track.foregroundGrid.totalSolidLines.forEach((line, key) => line.recorded = false);
-        this.track.foregroundGrid.totalSceneryLines.forEach((line, key) => line.recorded = false);
+        this.track.grid.totalSolidLines.forEach((line, key) => (line.recorded = false));
+        this.track.grid.totalSceneryLines.forEach((line, key) => (line.recorded = false));
+        this.track.foregroundGrid.totalSolidLines.forEach((line, key) => (line.recorded = false));
+        this.track.foregroundGrid.totalSceneryLines.forEach((line, key) => (line.recorded = false));
     }
 
     getCode() {
-        return  `${this.lineData.code}#${this.sceneryData.code}#${this.objectData.code}#` +
-                `${this.foregroundLineData.code}#${this.foregroundSceneryData.code}#` +
-                `${this.track.playerRunner.bikeClass.name}#${this.track.origin.toString()}`;
+        return (
+            `${this.lineData.code}#${this.sceneryData.code}#${this.objectData.code}#` +
+            `${this.foregroundLineData.code}#${this.foregroundSceneryData.code}#` +
+            `${this.track.playerRunner.bikeClass.name}#${this.track.origin.toString()}`
+        );
     }
 
     emptyData() {

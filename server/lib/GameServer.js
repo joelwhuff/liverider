@@ -1,4 +1,4 @@
-import { WebSocketServer } from "ws";
+import { WebSocketServer } from 'ws';
 
 export default class GameServer extends WebSocketServer {
     constructor(options) {

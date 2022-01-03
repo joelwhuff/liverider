@@ -1,6 +1,6 @@
-import SceneryLine from "../../item/line/SceneryLine.js";
-import Item from "../../item/Item.js";
-import SolidLine from "../../item/line/SolidLine.js";
+import SceneryLine from '../../item/line/SceneryLine.js';
+import Item from '../../item/Item.js';
+import SolidLine from '../../item/line/SolidLine.js';
 
 export default class Cell {
     constructor(x, y, size) {
@@ -34,11 +34,11 @@ export default class Cell {
 
     remove(item) {
         if (item instanceof SceneryLine) {
-            this.scenery = this.scenery.filter((obj) => obj !== item);
+            this.scenery = this.scenery.filter(obj => obj !== item);
         } else if (item instanceof SolidLine) {
-            this.lines = this.lines.filter((obj) => obj !== item);
+            this.lines = this.lines.filter(obj => obj !== item);
         } else if (item instanceof Item) {
-            this.objects = this.objects.filter((obj) => obj !== item);
+            this.objects = this.objects.filter(obj => obj !== item);
         }
 
         this.clear();

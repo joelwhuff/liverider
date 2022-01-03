@@ -1,2 +1,1 @@
-export const
-    GAME_UPS = 50;
+export const GAME_UPS = 50;

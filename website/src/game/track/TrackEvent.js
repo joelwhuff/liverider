@@ -1,7 +1,7 @@
-import Track from "./Track.js";
-import Vector from "../numeric/Vector.js";
-import Keyboard from "../keyboard/Keyboard.js";
-import PauseTool from "../tool/PauseTool.js";
+import Track from './Track.js';
+import Vector from '../numeric/Vector.js';
+import Keyboard from '../keyboard/Keyboard.js';
+import PauseTool from '../tool/PauseTool.js';
 
 export default class TrackEvent {
     /**
@@ -28,14 +28,18 @@ export default class TrackEvent {
         this.track.canvas.addEventListener('mouseenter', e => this.onMouseEnter(e), { signal: this.controller.signal });
         this.track.canvas.addEventListener('mouseout', e => this.onMouseOut(e), { signal: this.controller.signal });
 
-        this.track.canvas.addEventListener('contextmenu', e => this.onContextMenu(e), { signal: this.controller.signal });
+        this.track.canvas.addEventListener('contextmenu', e => this.onContextMenu(e), {
+            signal: this.controller.signal,
+        });
 
         document.addEventListener('keydown', e => this.onKeyDown(e), { signal: this.controller.signal });
         document.addEventListener('keyup', e => this.onKeyUp(e), { signal: this.controller.signal });
 
         document.addEventListener('keyboarddown', e => this.onKeyboardDown(e), { signal: this.controller.signal });
 
-        document.addEventListener('visibilitychange', () => this.onVisibilityChange(), { signal: this.controller.signal });
+        document.addEventListener('visibilitychange', () => this.onVisibilityChange(), {
+            signal: this.controller.signal,
+        });
     }
 
     detach() {
@@ -58,10 +62,12 @@ export default class TrackEvent {
 
     onMouseMove(e) {
         let canvasRect = this.track.canvas.getBoundingClientRect();
-        this.track.mousePos.set(new Vector(
-            e.clientX - canvasRect.left + window.pageXOffset,
-            e.clientY - canvasRect.top + window.pageYOffset
-        ).normalizeToCanvas(this.track));
+        this.track.mousePos.set(
+            new Vector(
+                e.clientX - canvasRect.left + window.pageXOffset,
+                e.clientY - canvasRect.top + window.pageYOffset
+            ).normalizeToCanvas(this.track)
+        );
 
         this.track.mousePos.x = Math.round(this.track.mousePos.x / this.track.gridDetail) * this.track.gridDetail;
         this.track.mousePos.y = Math.round(this.track.mousePos.y / this.track.gridDetail) * this.track.gridDetail;
@@ -97,7 +103,7 @@ export default class TrackEvent {
 
     onKeyboardDown(e) {
         let tool = this.track.toolCollection.getByKeyLabel(e.detail);
-        if(tool) {
+        if (tool) {
             tool.run();
         }
     }

@@ -1,9 +1,9 @@
-import { LEFT_TOOLBAR_EDITING, LEFT_TOOLBAR_VIEWING, RIGHT_TOOLBAR } from "../constant/ToolbarConstants.js";
-import Track from "../track/Track.js";
-import CameraTool from "./CameraTool.js";
-import PauseTool from "./PauseTool.js";
-import StartPositionTool from "./StartPositionTool.js";
-import Tool from "./Tool.js";
+import { LEFT_TOOLBAR_EDITING, LEFT_TOOLBAR_VIEWING, RIGHT_TOOLBAR } from '../constant/ToolbarConstants.js';
+import Track from '../track/Track.js';
+import CameraTool from './CameraTool.js';
+import PauseTool from './PauseTool.js';
+import StartPositionTool from './StartPositionTool.js';
+import Tool from './Tool.js';
 
 export default class Toolbar {
     /**
@@ -44,10 +44,13 @@ export default class Toolbar {
     /** @param {Track} track */
     static makeToolbars(track) {
         const makeToolbar = (track, tools) => {
-            return new Toolbar(tools, tools.reduce((toolMap, toolClass) => {
-                return {...toolMap, [toolClass.toolName]: new toolClass(track) };
-            }, {}));
-        }
+            return new Toolbar(
+                tools,
+                tools.reduce((toolMap, toolClass) => {
+                    return { ...toolMap, [toolClass.toolName]: new toolClass(track) };
+                }, {})
+            );
+        };
 
         let rightToolbarEl = null;
 

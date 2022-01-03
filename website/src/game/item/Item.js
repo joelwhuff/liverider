@@ -1,7 +1,7 @@
-import GameObject from "../GameObject.js";
-import Vector from "../numeric/Vector.js";
-import Entity from "../entity/Entity.js";
-import Track from "../track/Track.js";
+import GameObject from '../GameObject.js';
+import Vector from '../numeric/Vector.js';
+import Entity from '../entity/Entity.js';
+import Track from '../track/Track.js';
 
 export default class Item extends GameObject {
     /**
@@ -24,10 +24,10 @@ export default class Item extends GameObject {
     }
 
     static get itemName() {
-        return "Item";
+        return 'Item';
     }
     static get color() {
-        return "#fff";
+        return '#fff';
     }
     static get code() {
         return null;
@@ -89,7 +89,7 @@ export default class Item extends GameObject {
     }
 
     toString() {
-        return this.constructor.code + " " + this.pos.toString();
+        return this.constructor.code + ' ' + this.pos.toString();
     }
 
     /**
@@ -99,7 +99,7 @@ export default class Item extends GameObject {
     onTouch(part) {}
 
     onDelete() {
-        this.grid.totalObjects.filter((obj) => obj !== this);
+        this.grid.totalObjects.filter(obj => obj !== this);
     }
 
     onAdd() {

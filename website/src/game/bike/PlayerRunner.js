@@ -1,8 +1,8 @@
-import Control from "../keyboard/Control.js";
-import * as KeyCode from "../keyboard/KeyCode.js";
-import GhostParser from "../parser/GhostParser.js";
-import BikeRunner from "./BikeRunner.js";
-import BikeRenderer from "./instance/renderer/BikeRenderer.js";
+import Control from '../keyboard/Control.js';
+import * as KeyCode from '../keyboard/KeyCode.js';
+import GhostParser from '../parser/GhostParser.js';
+import BikeRunner from './BikeRunner.js';
+import BikeRenderer from './instance/renderer/BikeRenderer.js';
 
 export default class PlayerRunner extends BikeRunner {
     constructor(track, bikeClass) {
@@ -24,7 +24,7 @@ export default class PlayerRunner extends BikeRunner {
 
     onHitCheckpoint() {
         this.save();
-        this.track.ghostRunners.forEach((runner) => {
+        this.track.ghostRunners.forEach(runner => {
             runner.save();
         });
     }

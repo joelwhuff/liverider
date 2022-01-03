@@ -1,5 +1,5 @@
-import { RENDERER_MAP } from "../../../constant/BikeConstants.js";
-import Bike from "../Bike.js";
+import { RENDERER_MAP } from '../../../constant/BikeConstants.js';
+import Bike from '../Bike.js';
 
 export default class BikeRenderer {
     /**

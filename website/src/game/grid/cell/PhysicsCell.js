@@ -1,6 +1,6 @@
-import Cell from "./Cell.js";
-import Entity from "../../entity/Entity.js";
-import Vector from "../../numeric/Vector.js";
+import Cell from './Cell.js';
+import Entity from '../../entity/Entity.js';
+import Vector from '../../numeric/Vector.js';
 
 export default class PhysicsCell extends Cell {
     /**
@@ -43,12 +43,12 @@ export default class PhysicsCell extends Cell {
     checkDelete(eraserPoint, radius, restrict) {
         let deleted = new Array();
 
-        const del = (obj) => {
+        const del = obj => {
             let deletedObj = obj.checkDelete(eraserPoint, radius);
             if (deletedObj) {
                 deleted.push(deletedObj);
             }
-        }
+        };
 
         if (restrict.get('line')) {
             for (let line of this.lines) {

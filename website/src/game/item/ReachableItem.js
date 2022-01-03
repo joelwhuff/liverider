@@ -1,6 +1,6 @@
-import Item from "./Item.js";
-import BikePart from "../entity/BikePart.js";
-import GhostRunner from "../bike/GhostRunner.js";
+import Item from './Item.js';
+import BikePart from '../entity/BikePart.js';
+import GhostRunner from '../bike/GhostRunner.js';
 
 export default class ReachableItem extends Item {
     /**
@@ -14,7 +14,9 @@ export default class ReachableItem extends Item {
         this.reached = false;
     }
 
-    static get reachedColor() { return '#fff'; }
+    static get reachedColor() {
+        return '#fff';
+    }
 
     /**
      * @param {CanvasRenderingContext2D} ctx

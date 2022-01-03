@@ -1,10 +1,10 @@
-import BikePart from "../../entity/BikePart.js";
-import Wheel from "../../entity/Wheel.js";
-import Transform from "../../numeric/Transform.js";
-import Vector from "../../numeric/Vector.js";
-import Track from "../../track/Track.js";
-import BikeRunner from "../BikeRunner.js";
-import Spring from "../physics/Spring.js";
+import BikePart from '../../entity/BikePart.js';
+import Wheel from '../../entity/Wheel.js';
+import Transform from '../../numeric/Transform.js';
+import Vector from '../../numeric/Vector.js';
+import Track from '../../track/Track.js';
+import BikeRunner from '../BikeRunner.js';
+import Spring from '../physics/Spring.js';
 
 export default class Bike {
     /**
@@ -31,7 +31,7 @@ export default class Bike {
         this.rotationFactor = 0;
 
         this.hitbox = new BikePart(new Vector(), this);
-        this.hitbox.drive = (point) => this.runner.crash();
+        this.hitbox.drive = point => this.runner.crash();
         this.backWheel = new Wheel(new Vector(), this);
         this.frontWheel = new Wheel(new Vector(), this);
 
@@ -108,23 +108,35 @@ export default class Bike {
         rider.shadowFoot = bodyTransform.scale(0.4, 0.05).sub(pedalPos);
 
         let headToHandDistance = rider.head.sub(rider.hand);
-        let headToHandDistance90deg = new Vector(headToHandDistance.y * this.direction, -headToHandDistance.x * this.direction);
+        let headToHandDistance90deg = new Vector(
+            headToHandDistance.y * this.direction,
+            -headToHandDistance.x * this.direction
+        );
         let armLengthRatio = (armLength ** 2 + forearmLength ** 2) / headToHandDistance90deg.lengthSquared();
 
         rider.elbow = rider.head.add(rider.hand).scale(0.5).add(headToHandDistance90deg.scale(armLengthRatio));
         rider.shadowElbow = rider.elbow.clone();
 
         let hipToFootDistance = rider.hip.sub(rider.foot);
-        let hipToFootDistance90deg = new Vector(-hipToFootDistance.y * this.direction, hipToFootDistance.x * this.direction);
+        let hipToFootDistance90deg = new Vector(
+            -hipToFootDistance.y * this.direction,
+            hipToFootDistance.x * this.direction
+        );
         let legLengthRatio = (2 * legPartLength ** 2) / hipToFootDistance90deg.lengthSquared();
 
         rider.knee = rider.hip.add(rider.foot).scale(0.5).add(hipToFootDistance90deg.scale(legLengthRatio));
 
         let hipToShadowFootDistance = rider.hip.sub(rider.shadowFoot);
-        let hipToShadowFootDistance90deg = new Vector(-hipToShadowFootDistance.y * this.direction, hipToShadowFootDistance.x * this.direction);
+        let hipToShadowFootDistance90deg = new Vector(
+            -hipToShadowFootDistance.y * this.direction,
+            hipToShadowFootDistance.x * this.direction
+        );
         let shadowlegLengthRatio = (2 * legPartLength ** 2) / hipToShadowFootDistance90deg.lengthSquared();
 
-        rider.shadowKnee = rider.hip.add(rider.shadowFoot).scale(0.5).add(hipToShadowFootDistance90deg.scale(shadowlegLengthRatio));
+        rider.shadowKnee = rider.hip
+            .add(rider.shadowFoot)
+            .scale(0.5)
+            .add(hipToShadowFootDistance90deg.scale(shadowlegLengthRatio));
 
         return rider;
     }
@@ -155,7 +167,7 @@ export default class Bike {
 
         clone.hitbox = this.hitbox.clone();
         clone.hitbox.bike = clone;
-        clone.hitbox.drive = (point) => clone.runner.crash();
+        clone.hitbox.drive = point => clone.runner.crash();
 
         clone.headToBack = this.headToBack.clone();
         clone.headToBack.a = clone.hitbox;

@@ -1,13 +1,13 @@
-import SolidLine from "../item/line/SolidLine.js";
-import SceneryLine from "../item/line/SceneryLine.js";
-import Vector from "../numeric/Vector.js";
-import { ITEM_LIST, LINE, LINE_FOREGROUND } from "../constant/ItemConstants.js";
-import DirectionalItem from "../item/DirectionalItem.js";
-import Track from "../track/Track.js";
-import Item from "../item/Item.js";
-import Line from "../item/line/Line.js";
-import Toolbar from "../tool/Toolbar.js";
-import { BIKE_MAP } from "../constant/BikeConstants.js";
+import SolidLine from '../item/line/SolidLine.js';
+import SceneryLine from '../item/line/SceneryLine.js';
+import Vector from '../numeric/Vector.js';
+import { ITEM_LIST, LINE, LINE_FOREGROUND } from '../constant/ItemConstants.js';
+import DirectionalItem from '../item/DirectionalItem.js';
+import Track from '../track/Track.js';
+import Item from '../item/Item.js';
+import Line from '../item/line/Line.js';
+import Toolbar from '../tool/Toolbar.js';
+import { BIKE_MAP } from '../constant/BikeConstants.js';
 
 export default class TrackParser {
     /**
@@ -50,22 +50,12 @@ export default class TrackParser {
 
     parseSolidLines() {
         this.progressLabel = 'Solid lines';
-        this.parseLines(
-            this.solidLineData,
-            SolidLine,
-            LINE,
-            this.parseSceneryLines
-        );
+        this.parseLines(this.solidLineData, SolidLine, LINE, this.parseSceneryLines);
     }
 
     parseSceneryLines() {
         this.progressLabel = 'Scenery lines';
-        this.parseLines(
-            this.sceneryLineData,
-            SceneryLine,
-            LINE,
-            this.parseItems
-        );
+        this.parseLines(this.sceneryLineData, SceneryLine, LINE, this.parseItems);
     }
 
     parseItems() {
@@ -111,22 +101,12 @@ export default class TrackParser {
 
     parseForegroundSolidLines() {
         this.progressLabel = 'Foreground Solid lines';
-        this.parseLines(
-            this.foregroundSolidLineData,
-            SolidLine,
-            LINE_FOREGROUND,
-            this.parseForegroundSceneryLines
-        );
+        this.parseLines(this.foregroundSolidLineData, SolidLine, LINE_FOREGROUND, this.parseForegroundSceneryLines);
     }
 
     parseForegroundSceneryLines() {
         this.progressLabel = 'Foreground Scenery lines';
-        this.parseLines(
-            this.foregroundSceneryLineData,
-            SceneryLine,
-            LINE_FOREGROUND,
-            this.parseOrigin
-        );
+        this.parseLines(this.foregroundSceneryLineData, SceneryLine, LINE_FOREGROUND, this.parseOrigin);
     }
 
     parseOrigin() {

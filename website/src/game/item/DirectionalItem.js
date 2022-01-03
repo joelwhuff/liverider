@@ -1,6 +1,6 @@
-import Item from "./Item.js";
-import Vector from "../numeric/Vector.js";
-import Entity from "../entity/Entity.js";
+import Item from './Item.js';
+import Vector from '../numeric/Vector.js';
+import Entity from '../entity/Entity.js';
 
 export default class DirectionalItem extends Item {
     /**
@@ -13,7 +13,7 @@ export default class DirectionalItem extends Item {
         super(pos, track);
         /** @type {number} */
         this.rotation = rotation;
-        let rad = rotation * Math.PI / 180;
+        let rad = (rotation * Math.PI) / 180;
         /** @type {Vector} */
         this.direction = new Vector(-Math.sin(rad), Math.cos(rad));
     }
@@ -28,7 +28,7 @@ export default class DirectionalItem extends Item {
         ctx.beginPath();
         ctx.save();
         ctx.translate(pos.x, pos.y);
-        ctx.rotate(this.rotation * Math.PI / 180);
+        ctx.rotate((this.rotation * Math.PI) / 180);
         ctx.moveTo(-7 * this.track.zoomFactor, -10 * this.track.zoomFactor);
         ctx.lineTo(0, 10 * this.track.zoomFactor);
         ctx.lineTo(7 * this.track.zoomFactor, -10 * this.track.zoomFactor);
@@ -49,6 +49,6 @@ export default class DirectionalItem extends Item {
     }
 
     toString() {
-        return this.constructor.code + " " + this.pos.toString() + ' ' + (this.rotation - 180).toString(32);
+        return this.constructor.code + ' ' + this.pos.toString() + ' ' + (this.rotation - 180).toString(32);
     }
 }

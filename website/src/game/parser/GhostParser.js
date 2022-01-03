@@ -1,5 +1,5 @@
-import BMX from "../bike/instance/BMX.js";
-import { BIKE_MAP } from "../constant/BikeConstants.js";
+import BMX from '../bike/instance/BMX.js';
+import { BIKE_MAP } from '../constant/BikeConstants.js';
 
 export default class GhostParser {
     /**
@@ -17,7 +17,7 @@ export default class GhostParser {
         ghostMap.get('keys').set('rightPressed', new Array());
         ghostMap.get('keys').set('turnPressed', new Array());
 
-        ghostMap.get('keys').forEach((keyArray) => {
+        ghostMap.get('keys').forEach(keyArray => {
             keyArray.push(...parts.shift().split(' '));
         });
 
@@ -31,7 +31,7 @@ export default class GhostParser {
     static generate(bikeRunner) {
         let ghostKeys = new Array();
 
-        bikeRunner.instance.keyLog.forEach((keyArray) => {
+        bikeRunner.instance.keyLog.forEach(keyArray => {
             ghostKeys.push(keyArray.join(' '));
         });
 

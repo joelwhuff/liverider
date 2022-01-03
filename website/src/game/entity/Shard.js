@@ -1,6 +1,6 @@
-import LinePath from "../numeric/LinePath.js";
-import Vector from "../numeric/Vector.js";
-import Entity from "./Entity.js";
+import LinePath from '../numeric/LinePath.js';
+import Vector from '../numeric/Vector.js';
+import Entity from './Entity.js';
 
 export default class Shard extends Entity {
     constructor(bike, pos, vel, explosion) {
@@ -48,7 +48,7 @@ export default class Shard extends Entity {
 
     update(progress, delta) {
         super.update(progress);
-        this.rotation += this.rotationSpeed * delta / 40;
+        this.rotation += (this.rotationSpeed * delta) / 40;
     }
 
     render(ctx) {
@@ -59,15 +59,13 @@ export default class Shard extends Entity {
 
         for (let i in this.shape) {
             let dist = this.shape[i] * size;
-            let x = pos.x + dist * Math.cos(this.rotation + Math.PI * i / 4);
-            let y = pos.y + dist * Math.sin(this.rotation + Math.PI * i / 4);
+            let x = pos.x + dist * Math.cos(this.rotation + (Math.PI * i) / 4);
+            let y = pos.y + dist * Math.sin(this.rotation + (Math.PI * i) / 4);
             points.push(new Vector(x, y));
         }
 
         ctx.fillStyle = '#000';
-        LinePath.render(ctx, [
-            points
-        ]);
+        LinePath.render(ctx, [points]);
         ctx.fill();
     }
 }

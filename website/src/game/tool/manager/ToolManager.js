@@ -1,6 +1,6 @@
-import GameObject from "../../GameObject.js";
-import Track from "../../track/Track.js";
-import Tool from "../Tool.js";
+import GameObject from '../../GameObject.js';
+import Track from '../../track/Track.js';
+import Tool from '../Tool.js';
 
 export default class ToolManager extends GameObject {
     constructor(track) {

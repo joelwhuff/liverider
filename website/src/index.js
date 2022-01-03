@@ -1,9 +1,9 @@
-import Game from "./game/Game.js";
+import Game from './game/Game.js';
 
 /** @type {HTMLCanvasElement} */
-let canvas = document.querySelector("[data-play=openrider]");
+let canvas = document.querySelector('[data-play=openrider]');
 
-window.addEventListener("resize", (e) => setCanvasSize());
+window.addEventListener('resize', e => setCanvasSize());
 setCanvasSize();
 
 /**
@@ -14,7 +14,7 @@ function setCanvasSize() {
     canvas.width = canvas.parentElement.clientWidth;
     canvas.height = canvas.parentElement.clientHeight;
 
-    setContextProperties(canvas.getContext("2d"));
+    setContextProperties(canvas.getContext('2d'));
 }
 
 /**
@@ -22,9 +22,9 @@ function setCanvasSize() {
  * @param {CanvasRenderingContext2D} ctx
  */
 function setContextProperties(ctx) {
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.font = "bold 15px Ubuntu";
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.font = 'bold 15px Ubuntu';
 }
 
 /**
@@ -33,7 +33,7 @@ function setContextProperties(ctx) {
 function newGame(opt) {
     let game = new Game(canvas, opt);
     game.run();
-    game.stateManager.push("parser");
+    game.stateManager.push('parser');
 }
 
 export default {

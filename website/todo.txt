@@ -1,6 +1,6 @@
 optimization
+    get rid of all the static get methods for browser compatability
     add item rendering to cell cache
     add functionality to Grid.spread so it detects when items should be added to multiple cells
     try to do the same for lines eventually (lines that clip between cells)
     try to store polylines in 2darray maybe, could eliminate 2ms+ of moveTo() potentially
-    
