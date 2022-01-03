@@ -1,5 +1,7 @@
 optimization
     get rid of all the static get methods for browser compatability
+    make svg images for the item tools and inline all of the svg rather than requesting each from server
+    make sure tools arent draggable
     add item rendering to cell cache
     add functionality to Grid.spread so it detects when items should be added to multiple cells
     try to do the same for lines eventually (lines that clip between cells)
