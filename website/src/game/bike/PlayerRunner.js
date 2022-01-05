@@ -3,6 +3,7 @@ import * as KeyCode from '../keyboard/KeyCode.js';
 import GhostParser from '../parser/GhostParser.js';
 import BikeRunner from './BikeRunner.js';
 import BikeRenderer from './instance/renderer/BikeRenderer.js';
+import Keyboard from '../keyboard/Keyboard.js';
 
 export default class PlayerRunner extends BikeRunner {
     constructor(track, bikeClass) {

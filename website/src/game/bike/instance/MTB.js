@@ -45,3 +45,5 @@ export default class MTB extends Bike {
         this.frontWheel.displayPos = this.frontWheel.pos.clone();
     }
 }
+
+MTB.bikeName = 'MTB';

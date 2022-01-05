@@ -45,3 +45,5 @@ export default class BMX extends Bike {
         this.frontWheel.displayPos = this.frontWheel.pos.clone();
     }
 }
+
+BMX.bikeName = 'BMX';

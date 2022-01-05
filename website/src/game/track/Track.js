@@ -71,7 +71,7 @@ export default class Track {
             rawTrack = this.trackCode;
         }
 
-        this.trackCode = undefined;
+        this.trackCode = null;
 
         return rawTrack;
     }
