@@ -6,5 +6,6 @@
     -   inline the svg assets
 -   build basic website ui
     -   make race and collab room browsers
+    -   client routing that can take you directly to a room
 -   implement race rooms
 -   implement collab rooms

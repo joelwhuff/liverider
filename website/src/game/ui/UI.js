@@ -1,8 +1,25 @@
-import Tool from '../tool/Tool.js';
+import { LEFT_TOOLBAR_EDITING, LEFT_TOOLBAR_VIEWING, RIGHT_TOOLBAR } from '../constant/ToolbarConstants.js';
+import Toolbar from '../tool/Toolbar.js';
 import Track from '../track/Track.js';
+import CameraTool from '../tool/CameraTool.js';
+import SolidLineTool from '../tool/item/line/SolidLineTool.js';
 
 export default class UI {
-    static createEditorUI(state) {
+    static createEditorUI(state, track) {
+        UI.makeButtons(state);
+        UI.makeToolbar(track, LEFT_TOOLBAR_EDITING, 'left');
+        UI.makeToolbar(track, RIGHT_TOOLBAR, 'right');
+
+        track.toolManager.setTool(track.toolCollection.toolsByToolName.get(SolidLineTool.toolName));
+    }
+
+    static createRaceUI(track) {
+        UI.makeToolbar(track, LEFT_TOOLBAR_VIEWING, 'left');
+
+        track.toolManager.setTool(track.toolCollection.toolsByToolName.get(CameraTool.toolName));
+    }
+
+    static makeButtons(state) {
         let importButton = document.createElement('button');
         let importLabel = document.createElement('label');
         importLabel.setAttribute('for', 'import');
@@ -36,11 +53,31 @@ export default class UI {
         let uploadButton = document.createElement('button');
         uploadButton.innerHTML = 'Upload';
 
+        let ui = document.createElement('div');
+        ui.id = 'ui';
         ui.appendChild(importButton);
         ui.appendChild(importInput);
         ui.appendChild(exportButton);
         ui.appendChild(uploadButton);
+
+        document.body.appendChild(ui);
     }
 
-    static createRaceUI(state) {}
+    static makeToolbar(track, type, side) {
+        let toolbarEl = null;
+
+        let toolbar = new Toolbar(
+            type,
+            type.reduce((toolMap, toolClass) => {
+                return { ...toolMap, [toolClass.toolName]: new toolClass(track) };
+            }, {})
+        );
+
+        toolbarEl = toolbar.getDOM();
+        toolbar.registerControls();
+        toolbarEl.classList.add(side);
+        track.canvas.parentNode.appendChild(toolbarEl);
+
+        toolbar.attachToTrack(track);
+    }
 }

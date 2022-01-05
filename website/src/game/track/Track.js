@@ -25,10 +25,11 @@ export default class Track {
     constructor(canvas, opt = {}) {
         /** @type {HTMLCanvasElement} */
         this.canvas = canvas;
-        /** @type {number} */
-        this.id = opt.id;
         /** @type {string} */
         this.trackCode = opt.trackCode;
+
+        // this.room = opt.room
+        // this.room.setTrack(this)
 
         this.event = new TrackEvent(this);
 
@@ -63,17 +64,14 @@ export default class Track {
         this.undoManager = new UndoManager();
     }
 
-    async fetchRawTrack() {
+    getRawTrack() {
         let rawTrack = TRACK_DEFAULT;
 
-        if (!!this.id) {
-            // fetch track code from id
-        } else if (!!this.trackCode) {
+        if (this.trackCode) {
             rawTrack = this.trackCode;
-            this.id = null;
         }
 
-        this.trackCode = null;
+        this.trackCode = undefined;
 
         return rawTrack;
     }

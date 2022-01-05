@@ -26,12 +26,7 @@ export default class TrackParser {
 
         this.split(rawTrack);
 
-        this.length =
-            this.solidLineData.code.length +
-            this.sceneryLineData.code.length +
-            this.itemData.code.length +
-            this.foregroundSolidLineData.code.length +
-            this.foregroundSceneryLineData.code.length;
+        this.length = this.solidLineData.code.length + this.sceneryLineData.code.length + this.itemData.code.length;
     }
 
     memReset() {
@@ -42,26 +37,23 @@ export default class TrackParser {
         this.solidLineData = this.emptyData();
         this.sceneryLineData = this.emptyData();
         this.itemData = this.emptyData();
-        this.foregroundSolidLineData = this.emptyData();
-        this.foregroundSceneryLineData = this.emptyData();
         this.codeBike = '';
-        this.codeOrigin = '';
     }
 
     parseSolidLines() {
         this.progressLabel = 'Solid lines';
-        this.parseLines(this.solidLineData, SolidLine, LINE, this.parseSceneryLines);
+        this.parseLines(this.solidLineData, SolidLine, this.parseSceneryLines);
     }
 
     parseSceneryLines() {
         this.progressLabel = 'Scenery lines';
-        this.parseLines(this.sceneryLineData, SceneryLine, LINE, this.parseItems);
+        this.parseLines(this.sceneryLineData, SceneryLine, this.parseItems);
     }
 
     parseItems() {
         this.progressLabel = 'Items';
         let itemMap = new Map();
-        ITEM_LIST.map(itemClass => {
+        ITEM_LIST.forEach(itemClass => {
             itemMap.set(itemClass.code, itemClass);
         });
 
@@ -95,33 +87,13 @@ export default class TrackParser {
         }
 
         if (this.itemData.index >= this.itemData.code.length) {
-            this.currentStep = this.parseForegroundSolidLines;
+            this.currentStep = this.parseBike;
         }
-    }
-
-    parseForegroundSolidLines() {
-        this.progressLabel = 'Foreground Solid lines';
-        this.parseLines(this.foregroundSolidLineData, SolidLine, LINE_FOREGROUND, this.parseForegroundSceneryLines);
-    }
-
-    parseForegroundSceneryLines() {
-        this.progressLabel = 'Foreground Scenery lines';
-        this.parseLines(this.foregroundSceneryLineData, SceneryLine, LINE_FOREGROUND, this.parseOrigin);
-    }
-
-    parseOrigin() {
-        this.progressLabel = 'Origin';
-        let origin = this.codeOrigin.split(' ');
-        let originVector = new Vector(parseInt(origin[0], 32), parseInt(origin[1], 32));
-        this.track.origin.set(originVector);
-        this.track.camera.set(originVector);
-
-        this.currentStep = this.parseBike;
     }
 
     parseBike() {
         this.progressLabel = 'Bike';
-        this.track.playerRunner.bikeClass = BIKE_MAP[this.codeBike];
+        this.track.playerRunner.bikeClass = BIKE_MAP[this.codeBike] || BIKE_MAP['BMX'];
         this.track.playerRunner.createBike();
         this.track.focalPoint = this.track.playerRunner.instance.hitbox;
 
@@ -129,26 +101,17 @@ export default class TrackParser {
     }
 
     finish() {
-        Toolbar.makeToolbars(this.track);
-
         this.memReset();
         this.done = true;
     }
 
-    parseLines(lineData, type, event, next) {
+    parseLines(lineData, type, next) {
         let toGo = this.stepSize;
         let l = Math.min(lineData.index + toGo, lineData.code.length);
         for (; lineData.index < l; lineData.index++) {
             let lineCode = lineData.code[lineData.index].split(' ');
             if (lineCode.length > 3) {
                 for (let k = 0, m = lineCode.length - 2; k < m; k += 2) {
-                    let grid = this.track.grid;
-                    let cache = this.track.cache;
-                    if (event == LINE_FOREGROUND) {
-                        grid = this.track.foregroundGrid;
-                        cache = this.track.foregroundCache;
-                    }
-
                     /** @type {Line} */
                     let line = new type(
                         new Vector(parseInt(lineCode[k], 32), parseInt(lineCode[k + 1], 32)),
@@ -156,8 +119,8 @@ export default class TrackParser {
                         this.track
                     );
 
-                    line.grid = grid;
-                    line.cache = cache;
+                    line.grid = this.track.grid;
+                    line.cache = this.track.cache;
 
                     line.addToTrack();
                 }
@@ -172,21 +135,18 @@ export default class TrackParser {
     split(rawTrack) {
         let split = rawTrack.split('#');
         let i = 0;
+
         try {
             this.solidLineData.code = split[i++].split(',');
             this.sceneryLineData.code = split[i++].split(',');
             this.itemData.code = split[i++].split(',');
-            this.foregroundSolidLineData.code = split[i++].split(',');
-            this.foregroundSceneryLineData.code = split[i++].split(',');
             this.codeBike = split[i++] || 'BMX';
-            this.codeOrigin = split[i] || '0 0';
-        } catch (e) {
-            this.codeBike = this.codeBike || 'BMX';
-            this.codeOrigin = this.codeOrigin || '0 0';
+        } catch (err) {
+            this.codeBike = 'BMX';
         }
     }
 
     emptyData() {
-        return { code: '', index: 0 };
+        return { code: [], index: 0 };
     }
 }

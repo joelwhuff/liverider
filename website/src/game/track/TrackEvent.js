@@ -23,7 +23,7 @@ export default class TrackEvent {
         this.track.canvas.addEventListener('mousedown', e => this.onMouseDown(e), { signal: this.controller.signal });
         this.track.canvas.addEventListener('mouseup', e => this.onMouseUp(e), { signal: this.controller.signal });
         this.track.canvas.addEventListener('mousemove', e => this.onMouseMove(e), { signal: this.controller.signal });
-        this.track.canvas.addEventListener('mousewheel', e => this.onScroll(e), { signal: this.controller.signal });
+        this.track.canvas.addEventListener('wheel', e => this.onScroll(e), { signal: this.controller.signal });
 
         this.track.canvas.addEventListener('mouseenter', e => this.onMouseEnter(e), { signal: this.controller.signal });
         this.track.canvas.addEventListener('mouseout', e => this.onMouseOut(e), { signal: this.controller.signal });

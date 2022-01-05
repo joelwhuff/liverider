@@ -1,6 +1,5 @@
 import GameState from './GameState.js';
 import TrackParser from '../parser/TrackParser.js';
-import Track from '../track/Track.js';
 import UI from '../ui/UI.js';
 
 export default class ParserState extends GameState {
@@ -10,31 +9,27 @@ export default class ParserState extends GameState {
         this.initUI();
     }
 
-    async getTrackParser() {
-        let rawTrack = await this.track.fetchRawTrack();
+    getTrackParser() {
+        // if(in collab room) this.parser = new TrackBufferParser(this.track)
         this.parser = new TrackParser(this.track);
-        this.parser.init(rawTrack);
+        this.parser.init(this.track.getRawTrack());
     }
 
     initUI() {
-        if (!this.track.id) {
-            UI.createEditorUI(this);
+        if (true /* collab room */) {
+            UI.createEditorUI(this, this.track);
         } else {
-            UI.createRaceUI(this);
+            UI.createRaceUI(this.track);
         }
     }
 
     fixedUpdate() {}
 
-    update(progress, delta) {
+    update() {
         this.parser.currentStep();
 
         this.parser.progress =
-            this.parser.solidLineData.index +
-            this.parser.sceneryLineData.index +
-            this.parser.itemData.index +
-            this.parser.foregroundSolidLineData.index +
-            this.parser.foregroundSceneryLineData.index;
+            this.parser.solidLineData.index + this.parser.sceneryLineData.index + this.parser.itemData.index;
         if (this.parser.done) {
             this.manager.push('track');
         }
