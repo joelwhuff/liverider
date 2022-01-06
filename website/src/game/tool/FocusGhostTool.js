@@ -1,3 +1,4 @@
+import { FOCUS_GHOST_SVG } from '../constant/ToolConstants.js';
 import Tool from './Tool.js';
 import * as KeyCode from '../keyboard/KeyCode.js';
 import Control from '../keyboard/Control.js';
@@ -14,7 +15,7 @@ export default class FocusGhostTool extends Tool {
         return new Control(KeyCode.DOM_VK_G, Keyboard.CTRL);
     }
     static get icon() {
-        return 'focus';
+        return FOCUS_GHOST_SVG;
     }
 
     constructor(track) {

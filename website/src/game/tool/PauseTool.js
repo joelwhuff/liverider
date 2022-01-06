@@ -1,3 +1,5 @@
+import { makeSVGElement } from '../../util/DOM.js';
+import { PAUSE_SVG, PLAY_SVG } from '../constant/ToolConstants.js';
 import Tool from './Tool.js';
 import * as KeyCode from '../keyboard/KeyCode.js';
 import Control from '../keyboard/Control.js';
@@ -13,14 +15,24 @@ export default class PauseTool extends Tool {
         return new Control(KeyCode.DOM_VK_SPACE);
     }
     static get icon() {
-        return 'pause';
+        return PAUSE_SVG;
     }
 
     constructor(track) {
         super(track);
 
-        this.unpauseIcon = document.createElement('img');
-        this.unpauseIcon.setAttribute('src', `./media/icon/play.svg`);
+        let svg = makeSVGElement('svg', null, {
+            'xmlns': 'http://www.w3.org/2000/svg',
+            'viewBox': '0 0 24 24',
+            'width': '24',
+            'height': '24',
+        });
+
+        for (let element in PLAY_SVG) {
+            makeSVGElement(element, svg, PLAY_SVG[element]);
+        }
+
+        this.unpauseIcon = svg;
     }
 
     run() {

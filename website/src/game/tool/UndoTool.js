@@ -1,3 +1,4 @@
+import { UNDO_SVG } from '../constant/ToolConstants.js';
 import Tool from './Tool.js';
 import * as KeyCode from '../keyboard/KeyCode.js';
 import Control from '../keyboard/Control.js';
@@ -13,7 +14,7 @@ export default class UndoTool extends Tool {
         return new Control(KeyCode.DOM_VK_M);
     }
     static get icon() {
-        return 'undo';
+        return UNDO_SVG;
     }
 
     run() {

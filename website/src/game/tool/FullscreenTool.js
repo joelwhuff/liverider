@@ -1,3 +1,4 @@
+import { FULLSCREEN_SVG } from '../constant/ToolConstants.js';
 import Tool from './Tool.js';
 import * as KeyCode from '../keyboard/KeyCode.js';
 import Control from '../keyboard/Control.js';
@@ -13,7 +14,7 @@ export default class FullscreenTool extends Tool {
         return new Control(KeyCode.DOM_VK_F);
     }
     static get icon() {
-        return 'expand';
+        return FULLSCREEN_SVG;
     }
 
     constructor(track) {

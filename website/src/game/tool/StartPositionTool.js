@@ -1,5 +1,5 @@
+import { START_POSITION_SVG } from '../constant/ToolConstants.js';
 import GhostRunner from '../bike/GhostRunner.js';
-import BikeRenderer from '../bike/instance/renderer/BikeRenderer.js';
 import Control from '../keyboard/Control.js';
 import * as KeyCode from '../keyboard/KeyCode.js';
 import Vector from '../numeric/Vector.js';
@@ -16,7 +16,7 @@ export default class StartPositionTool extends Tool {
         return new Control(KeyCode.DOM_VK_P);
     }
     static get icon() {
-        return 'start';
+        return START_POSITION_SVG;
     }
 
     constructor(track) {

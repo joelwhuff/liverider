@@ -6,7 +6,7 @@ import SolidLineTool from '../tool/item/line/SolidLineTool.js';
 
 export default class UI {
     static createEditorUI(state, track) {
-        UI.makeButtons(state);
+        UI.makeButtons(state, track);
         UI.makeToolbar(track, LEFT_TOOLBAR_EDITING, 'left');
         UI.makeToolbar(track, RIGHT_TOOLBAR, 'right');
 
@@ -60,7 +60,7 @@ export default class UI {
         ui.appendChild(exportButton);
         ui.appendChild(uploadButton);
 
-        document.body.appendChild(ui);
+        state.track.canvas.parentNode.appendChild(ui);
     }
 
     static makeToolbar(track, type, side) {

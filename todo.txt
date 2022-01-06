@@ -1,6 +1,13 @@
+YEEAAAAAAA HAHAHAHAHAH WOOOOOOOOOOOO
+
 have the all ui appended to a container element that is passed into game
 
 have chat bubbles above riders as well as an actual chatbox
+
+could redo start position tool and have it move track
+    when used it should lock camera to spawn and just move spawn and camera
+    and then save the offset which will only move the track when exporting
+    save/cancel button where item options usually appear
 
 figure out why rendering looks slightly blurry at lower zoom levels
 

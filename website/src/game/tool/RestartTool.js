@@ -1,3 +1,4 @@
+import { RESTART_SVG } from '../constant/ToolConstants.js';
 import Tool from './Tool.js';
 import * as KeyCode from '../keyboard/KeyCode.js';
 import Control from '../keyboard/Control.js';
@@ -13,7 +14,7 @@ export default class RestartTool extends Tool {
         return new Control(KeyCode.DOM_VK_RETURN);
     }
     static get icon() {
-        return 'restart';
+        return RESTART_SVG;
     }
 
     run() {

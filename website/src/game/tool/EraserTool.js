@@ -1,3 +1,4 @@
+import { ERASER_SVG } from '../constant/ToolConstants.js';
 import Control from '../keyboard/Control.js';
 import * as KeyCode from '../keyboard/KeyCode.js';
 import Tool from './Tool.js';
@@ -13,7 +14,7 @@ export default class EraserTool extends Tool {
         return new Control(KeyCode.DOM_VK_E);
     }
     static get icon() {
-        return 'eraser';
+        return ERASER_SVG;
     }
 
     constructor(track) {

@@ -6,9 +6,11 @@ export default class Application {
     }
 
     boot() {
+        let gameContainer = document.createElement('div');
+        gameContainer.id = 'game';
+
         let canvas = document.createElement('canvas');
-        canvas.id = 'game';
-        document.body.appendChild(canvas);
+        gameContainer.appendChild(canvas);
 
         let setContextProperties = ctx => {
             ctx.lineCap = 'round';
@@ -23,6 +25,7 @@ export default class Application {
             setContextProperties(canvas.getContext('2d'));
         };
 
+        document.body.appendChild(gameContainer);
         window.addEventListener('resize', () => setCanvasSize());
         setCanvasSize();
 

@@ -1,3 +1,4 @@
+import { REDO_SVG } from '../constant/ToolConstants.js';
 import Tool from './Tool.js';
 import * as KeyCode from '../keyboard/KeyCode.js';
 import Control from '../keyboard/Control.js';
@@ -13,7 +14,7 @@ export default class RedoTool extends Tool {
         return new Control(KeyCode.DOM_VK_N);
     }
     static get icon() {
-        return 'redo';
+        return REDO_SVG;
     }
 
     run() {

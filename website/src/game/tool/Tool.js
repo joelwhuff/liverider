@@ -1,3 +1,4 @@
+import { makeSVGElement } from '../../util/DOM.js';
 import Track from '../track/Track.js';
 import GameObject from '../GameObject.js';
 
@@ -37,15 +38,25 @@ export default class Tool extends GameObject {
         el.classList.add('tool');
         el.title = `${this.constructor.toolName} (${this.constructor.keyLabel})`;
 
-        if (this.constructor.icon) {
-            this.domIcon = document.createElement('img');
+        this.domIcon = document.createElement('img');
 
+        if (this.constructor.icon) {
             if (this.constructor.icon.type === 'b64') {
                 this.domIcon.setAttribute('src', this.constructor.icon.data);
             } else {
-                this.domIcon.setAttribute('src', `./media/icon/${this.constructor.icon}.svg`);
-            }
+                let svg = makeSVGElement('svg', null, {
+                    'xmlns': 'http://www.w3.org/2000/svg',
+                    'viewBox': '0 0 24 24',
+                    'width': '24',
+                    'height': '24',
+                });
 
+                for (let element in this.constructor.icon) {
+                    makeSVGElement(element, svg, this.constructor.icon[element]);
+                }
+
+                this.domIcon = svg;
+            }
             el.appendChild(this.domIcon);
         }
 
