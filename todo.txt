@@ -1,5 +1,3 @@
-YEEAAAAAAA HAHAHAHAHAH WOOOOOOOOOOOO
-
 have the all ui appended to a container element that is passed into game
 
 have chat bubbles above riders as well as an actual chatbox
