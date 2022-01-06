@@ -1,4 +1,4 @@
-import { SOLID_BRUSH_IMAGE } from '../../../constant/ToolConstants.js';
+import { SOLID_BRUSH_SVG } from '../../../constant/ToolConstants.js';
 import SolidLine from '../../../item/line/SolidLine.js';
 import Control from '../../../keyboard/Control.js';
 import * as KeyCode from '../../../keyboard/KeyCode.js';
@@ -15,7 +15,7 @@ export default class SolidBrushTool extends BrushTool {
         return new Control(KeyCode.DOM_VK_A);
     }
     static get icon() {
-        return SOLID_BRUSH_IMAGE;
+        return SOLID_BRUSH_SVG;
     }
     static get lineClass() {
         return SolidLine;

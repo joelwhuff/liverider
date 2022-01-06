@@ -1,4 +1,4 @@
-import { SOLID_LINE_IMAGE } from '../../../constant/ToolConstants.js';
+import { SOLID_LINE_SVG } from '../../../constant/ToolConstants.js';
 import SolidLine from '../../../item/line/SolidLine.js';
 import Control from '../../../keyboard/Control.js';
 import * as KeyCode from '../../../keyboard/KeyCode.js';
@@ -15,7 +15,7 @@ export default class SolidLineTool extends LineTool {
         return new Control(KeyCode.DOM_VK_Q);
     }
     static get icon() {
-        return SOLID_LINE_IMAGE;
+        return SOLID_LINE_SVG;
     }
     static get lineClass() {
         return SolidLine;

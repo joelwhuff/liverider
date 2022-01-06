@@ -1,4 +1,4 @@
-import { SCENERY_LINE_IMAGE } from '../../../constant/ToolConstants.js';
+import { SCENERY_LINE_SVG } from '../../../constant/ToolConstants.js';
 import SceneryLine from '../../../item/line/SceneryLine.js';
 import Control from '../../../keyboard/Control.js';
 import * as KeyCode from '../../../keyboard/KeyCode.js';
@@ -15,7 +15,7 @@ export default class SceneryLineTool extends LineTool {
         return new Control(KeyCode.DOM_VK_W);
     }
     static get icon() {
-        return SCENERY_LINE_IMAGE;
+        return SCENERY_LINE_SVG;
     }
     static get lineClass() {
         return SceneryLine;

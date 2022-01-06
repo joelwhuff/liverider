@@ -1,4 +1,4 @@
-import { SLOWMO_IMAGE } from '../../constant/ToolConstants.js';
+import { SLOWMO_SVG } from '../../constant/ToolConstants.js';
 import SlowMo from '../../item/SlowMo.js';
 import ItemTool from './ItemTool.js';
 import Keyboard from '../../keyboard/Keyboard.js';
@@ -16,7 +16,7 @@ export default class SlowMoTool extends ItemTool {
         return new Control(KeyCode.DOM_VK_S, Keyboard.SHIFT);
     }
     static get icon() {
-        return SLOWMO_IMAGE;
+        return SLOWMO_SVG;
     }
     static get itemClass() {
         return SlowMo;

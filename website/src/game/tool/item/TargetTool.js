@@ -1,4 +1,4 @@
-import { TARGET_IMAGE } from '../../constant/ToolConstants.js';
+import { TARGET_SVG } from '../../constant/ToolConstants.js';
 import Target from '../../item/reachable/Target.js';
 import ItemTool from './ItemTool.js';
 import * as KeyCode from '../../keyboard/KeyCode.js';
@@ -16,7 +16,7 @@ export default class TargetTool extends ItemTool {
         return new Control(KeyCode.DOM_VK_T, Keyboard.SHIFT);
     }
     static get icon() {
-        return TARGET_IMAGE;
+        return TARGET_SVG;
     }
     static get itemClass() {
         return Target;

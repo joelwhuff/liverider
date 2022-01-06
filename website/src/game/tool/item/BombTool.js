@@ -1,4 +1,4 @@
-import { BOMB_IMAGE } from '../../constant/ToolConstants.js';
+import { BOMB_SVG } from '../../constant/ToolConstants.js';
 import Bomb from '../../item/Bomb.js';
 import ItemTool from './ItemTool.js';
 import Control from '../../keyboard/Control.js';
@@ -16,7 +16,7 @@ export default class BombTool extends ItemTool {
         return new Control(KeyCode.DOM_VK_O, Keyboard.SHIFT);
     }
     static get icon() {
-        return BOMB_IMAGE;
+        return BOMB_SVG;
     }
     static get itemClass() {
         return Bomb;

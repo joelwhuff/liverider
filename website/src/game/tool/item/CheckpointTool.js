@@ -1,4 +1,4 @@
-import { CHECKPOINT_IMAGE } from '../../constant/ToolConstants.js';
+import { CHECKPOINT_SVG } from '../../constant/ToolConstants.js';
 import Checkpoint from '../../item/reachable/Checkpoint.js';
 import ItemTool from './ItemTool.js';
 import Keyboard from '../../keyboard/Keyboard.js';
@@ -16,7 +16,7 @@ export default class CheckpointTool extends ItemTool {
         return new Control(KeyCode.DOM_VK_C, Keyboard.SHIFT);
     }
     static get icon() {
-        return CHECKPOINT_IMAGE;
+        return CHECKPOINT_SVG;
     }
     static get itemClass() {
         return Checkpoint;

@@ -35,7 +35,8 @@ body {
 .toolbar {
     position: absolute;
     pointer-events: none;
-    border-bottom: 1px solid #000;
+    margin-top: 50vh;
+    transform: translateY(-50%);
 }
 
 .toolbar.left {
@@ -61,16 +62,27 @@ body {
     align-items: center;
     justify-content: center;
     pointer-events: all;
-    height: 24px;
+    height: 32px;
+    width: 38px;
     background: center center no-repeat;
-    background-color: #fff;
-    border: solid #000;
+    background-color: rgba(255, 255, 255, 0.7);
     position: relative;
 }
 
+svg {
+    transition: 0.2s ease-out;
+    padding: 2px;
+    border-radius: 8px;
+}
 .tool:hover {
     cursor: pointer;
+}
+.tool:hover > svg {
+    transition: 0s;
     background-color: #e7e7e7;
+}
+.tool:active > svg {
+    background-color: #ddd;
 }
 
 .tool.empty {

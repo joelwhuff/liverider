@@ -1,4 +1,4 @@
-import { SCENERY_BRUSH_IMAGE } from '../../../constant/ToolConstants.js';
+import { SCENERY_BRUSH_SVG } from '../../../constant/ToolConstants.js';
 import SceneryLine from '../../../item/line/SceneryLine.js';
 import Control from '../../../keyboard/Control.js';
 import * as KeyCode from '../../../keyboard/KeyCode.js';
@@ -15,7 +15,7 @@ export default class SceneryBrushTool extends BrushTool {
         return new Control(KeyCode.DOM_VK_S);
     }
     static get icon() {
-        return SCENERY_BRUSH_IMAGE;
+        return SCENERY_BRUSH_SVG;
     }
     static get lineClass() {
         return SceneryLine;

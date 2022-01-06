@@ -43,21 +43,11 @@ export default class Tool extends GameObject {
         if (this.constructor.icon) {
             if (this.constructor.icon.type === 'b64') {
                 this.domIcon.setAttribute('src', this.constructor.icon.data);
+                el.appendChild(this.domIcon);
             } else {
-                let svg = makeSVGElement('svg', null, {
-                    'xmlns': 'http://www.w3.org/2000/svg',
-                    'viewBox': '0 0 24 24',
-                    'width': '24',
-                    'height': '24',
-                });
-
-                for (let element in this.constructor.icon) {
-                    makeSVGElement(element, svg, this.constructor.icon[element]);
-                }
-
-                this.domIcon = svg;
+                this.domIcon = this.constructor.icon;
+                el.innerHTML = this.constructor.icon;
             }
-            el.appendChild(this.domIcon);
         }
 
         el.addEventListener('click', () => this.run());

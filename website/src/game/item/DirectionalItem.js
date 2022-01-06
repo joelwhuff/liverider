@@ -32,6 +32,7 @@ export default class DirectionalItem extends Item {
         ctx.moveTo(-7 * this.track.zoomFactor, -10 * this.track.zoomFactor);
         ctx.lineTo(0, 10 * this.track.zoomFactor);
         ctx.lineTo(7 * this.track.zoomFactor, -10 * this.track.zoomFactor);
+        // try changing to closePath
         ctx.lineTo(-7 * this.track.zoomFactor, -10 * this.track.zoomFactor);
         ctx.fill();
         ctx.stroke();

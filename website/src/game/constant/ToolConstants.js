@@ -1,94 +1,46 @@
-export const TARGET_IMAGE = {
-    type: 'b64',
-    data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAA+0lEQVQoU2NkIBMwkqmPAZtGBaBh+VxcDBYgQ799YzgBpCYC8QNkS9A1OrCyMmwxN2dgd3ZmYAEp3LuX4c+JEww//vxh8AVyD8A0I2tUAGq6MmsWA3dCAqoHFixgYEhLY/j2+zeDNsxmZI0TbG0Zcg4dYmDG5m+g3J8jRximAuUKQPJwjUA/nSgtZTBvaMAeXCDxtjaGo0BbbUjW2N3NcBIYWOBAQ3dqNtCp4EBBB3Z2DH8PH2aYguFUoAAocK4CA4cLW+CkpjJ8BYasDrbAAVkCio6tFhYMbMjRcfw4w0+gJh9c0QFznQLIOWgJYALMJmzxiD04cYiSnVYBx/BOD75iif8AAAAASUVORK5CYII=',
-};
-export const CHECKPOINT_IMAGE = {
-    type: 'b64',
-    data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAA60lEQVQoU2NkIBMwkqmPAZdGAaCB+lBDLwLpD+gWYNPYAFRUj6ZwApBfiCyGppFzGQMDfyADw3IOBgYHqLoDQDrtCwPDo4MMDD99YJqRNSYwMHDOZGC4xsbAoIBmIcil0r8ZGL6lARkLQJLIGjcwMOT7MzCAXIUNFAAFJ24EEgFoGrlOMDCUmjMwgLyIDYDEpwID6o0BtWxkAPqRC+jHp0A/gmIDGYD8KAP041esfgRKsm9lYFB0ZGCYzokaqpnfGRjunmNg+G2DLVRBYiCrQJ7JR7NyIlQcnhDwpRxwIADBBSAmKuXgCFVUYQB7ODAP/zl/3wAAAABJRU5ErkJggg==',
-};
-export const BOMB_IMAGE = {
-    type: 'b64',
-    data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAA80lEQVQoU2NkIBMwkqmPAZtGBaBh+VwMDBYgQ78xMJwAUhOB+AGyJegaHVgZGLaYMzCwOzMwsIAU7mVg+APU+eMPA4MvkHsAphlZowJQ05VZDAzcCWjuXwDkpwEt/83AoA2zGVnjBFsGhpxDDAzM2PwNlPtzhIFhKlCuACQP1wj004lSBgbzBhyhBRJvY2A4CrTVhmSN3QwMJ4GBBQ40dKdmA50KDhR0YMfA8PcwA8MUDKcCBUCBcxUYOFzYAieVgeErMGR1sAUOyBJQdGwFuoUNOTqOMzD8BGrywRUdMNcpgJyDlgAmwGyCKaJqksMRIajCAPcZNg+bMA2tAAAAAElFTkSuQmCC',
-};
-export const SLOWMO_IMAGE = {
-    type: 'b64',
-    data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABCklEQVQoU2NkIBMwkqmPAZtGBaBh+ZycnBYgQ79//34CSE0E4gfIlqBrdGBhYdliYmLCbm9vzwJSePDgwT+nT5/+8ffvX18g9wBMM7JGBaCmKxMmTOCOiopC8cGyZcsYCgoKvv3580cbZjOyxgmWlpY5W7duZcbmby8vrz8nTpyYCpQrAMnDNQL9dCIvL8+8vLwca3h1dnYy9Pb2HgXaakOyxkmTJp0EBhY40NCdmg10KjhQ0IG3t/ff48ePT8FwKlAAFDhXgYHDhS1w8vPzvwJDVgdb4IAsAUXHVlNTUzY7OzuwzYcOHfpz6tSpn0BNPriiA+Y6BZBz0BLABJhN2OIRa2jiEiQ7rQIAX99mD5/aTbMAAAAASUVORK5CYII=',
-};
-export const GRAVITY_IMAGE = {
-    type: 'b64',
-    data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAABHElEQVQoU42QzUoCYRSGH+kPs0UtEnKTrdzWtmtIsEVBkuCuoBbdQncwi5KWQlHoSqj7yI2LVrapIBcVNIbUovebGZ3xa9QODN+Zc97n/CUIrSx3NfI/yj01icQgm+SaNHsYPM6qCr5ywxfFYRAKpKjzyUwsuMAPLjvKNWwQIa7QeZUYNiPdpcu3SgcWjuoHquxrlEura0nIlVYhXMQGC+pX44lZFoPS73qXPH+7P+bfUU0kpROcsTyobY5yTEdLpKPz2x1NzmGLI26Z9oR5HeWOc3knk8B1Ce55C2T+mBv6mpNAmOOZC1Y84SEv9MhEofgdfYXDJgd8MEWLij3mODCrZDvosqb38b8dzXUfPLFLzobGdTS5/hWdOPAXFiAzD4GmcBMAAAAASUVORK5CYII=',
-};
-export const BOOST_IMAGE = {
-    type: 'b64',
-    data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAA5klEQVQoU2NkIBMwkqmPAaSxgZOTQfX7d4ZVQPZGYg0Ca5SXZ6h//Zrh9+/fDL+AeDVQbAMhQ8Aa6+sZ6hsagKqBytesYfi1dCkDGzc3w6uvXxmWAeUXAvEFdJegaIRJfvgAN+T31q0MrOzsDM9+/gR7ZSIQPwCpw6oR2XSYId3dDL+uXQO75CbQJdOJ0rgRGGQgjVevgjXewqkRZAtIMdC/v7dsATv1OdSpE7A6FRQ4a9cy/FqyBGzya2jgLMAZOAoKkOj49QscJbDoAEUJTgDyYwIwAbhBEwBexcimUJTkiE1lKOoAvC5w7vOxxigAAAAASUVORK5CYII=',
-};
-export const SOLID_LINE_IMAGE = {
-    type: 'b64',
-    data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAY0lEQVQ4T53S0QmAMAyE4b9LuIlO4bhOoZs4hUQMlNImV/OcjwtcCj+nTLgFOL79TYWOVuACJNiiHbizxC6ycyM4RBEM0QimqAcl1EIZ1XAK1fAEvNy3p+yjvA6DNhLKegxDHzm4IA9ZY5FTAAAAAElFTkSuQmCC',
-};
-export const SCENERY_LINE_IMAGE = {
-    type: 'b64',
-    data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAdElEQVQ4T2NkIBMwEqtv3bp1Yn/+/NkCUh8WFmZGlEYkTaYMDAynidKIromFhcUnKCjoFV4bcWkCORenRnyacGokpAmrRmI0YWgkVhOKRlI0wTWSqgmucdWqVacYGBjAkQuLJ0IpChwdUI0MxGrCG4+EbAQAEzpiD4Q7bNkAAAAASUVORK5CYII=',
-};
-export const SOLID_BRUSH_IMAGE = {
-    type: 'b64',
-    data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAJ0lEQVQ4T2NkIBMwkqmPYaRrPAUNODNsAYgvcMjWiDemRnp04A0cADZMAg80IkHmAAAAAElFTkSuQmCC',
-};
-export const SCENERY_BRUSH_IMAGE = {
-    type: 'b64',
-    data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAALklEQVQ4T2NkIBMwkqmPYURrXLVq1SlQwIWFhZlhC0CcgUO2RkLRNKKjg1DgAACPswgPeqoQowAAAABJRU5ErkJggg==',
-};
-
-// svg
-
-export const CAMERA_SVG = {
-    path: {
-        d: 'M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z',
-    },
-};
-export const CANCEL_CHECKPOINT_SVG = { path: { d: 'M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z' } };
-export const ERASER_SVG = {
-    path: {
-        d: 'M16.24 3.56l4.95 4.94c.78.79.78 2.05 0 2.84L12 20.53a4.008 4.008 0 0 1-5.66 0L2.81 17c-.78-.79-.78-2.05 0-2.84l10.6-10.6c.79-.78 2.05-.78 2.83 0M4.22 15.58l3.54 3.53c.78.79 2.04.79 2.83 0l3.53-3.53l-4.95-4.95l-4.95 4.95z',
-    },
-    rect: {
-        x: 0,
-        y: 0,
-        width: 24,
-        height: 24,
-        fill: 'rgba(0,0,0,0)',
-    },
-};
-export const FOCUS_GHOST_SVG = {
-    path: {
-        d: 'M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z',
-    },
-};
-export const FULLSCREEN_SVG = {
-    path: { d: 'M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z' },
-};
-export const GRID_SNAP_SVG = {
-    path: {
-        d: 'M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8 20H4v-4h4v4zm0-6H4v-4h4v4zm0-6H4V4h4v4zm6 12h-4v-4h4v4zm0-6h-4v-4h4v4zm0-6h-4V4h4v4zm6 12h-4v-4h4v4zm0-6h-4v-4h4v4zm0-6h-4V4h4v4z',
-    },
-};
-export const PAUSE_SVG = { path: { d: 'M6 19h4V5H6v14zm8-14v14h4V5h-4z' } };
-export const PLAY_SVG = { path: { d: 'M8 5v14l11-7z' } };
-export const REDO_SVG = {
-    path: {
-        d: 'M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z',
-    },
-};
-export const RESTART_SVG = { path: { d: 'M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z' } };
-export const START_POSITION_SVG = { path: { d: 'M14 6l-1-2H5v17h2v-7h5l1 2h7V6h-6zm4 8h-4l-1-2H7V6h5l1 2h5v6z' } };
-export const SWITCH_BIKE_SVG = {
-    path: {
-        style: 'stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;',
-        d: 'M 0 4.726562 C 0 8.476562 0.0742188 9.625 0.398438 10.398438 C 0.773438 11.273438 0.773438 11.375 0.398438 11.648438 C 0.0507812 11.898438 0 12.5 0.0507812 16.148438 L 0.125 20.375 L 0.625 18.800781 C 1.074219 17.375 1.199219 17.226562 2 17 C 3.273438 16.648438 5.074219 16.699219 5.648438 17.125 C 6.324219 17.648438 7.101562 17.574219 7.648438 16.976562 C 8.023438 16.574219 8.101562 16.125 8.074219 15.101562 L 8 13.75 L 10.175781 12.148438 C 11.375 11.273438 12.449219 10.601562 12.523438 10.648438 C 12.625 10.699219 12.773438 11.050781 12.851562 11.398438 C 13 11.949219 12.875 12.226562 12.226562 12.851562 C 11.101562 13.949219 10.5 15.375 10.5 17.023438 C 10.5 18.75 10.976562 19.949219 12.125 21.125 C 13.300781 22.273438 14.550781 22.800781 16.300781 22.800781 C 19.648438 22.800781 22.050781 20.375 22.050781 17 C 22.050781 15.300781 21.523438 14.050781 20.351562 12.875 C 19.175781 11.699219 18.5 11.425781 16.273438 11.273438 L 14.449219 11.125 L 13.976562 9.875 C 13.699219 9.175781 13.550781 8.5 13.625 8.324219 C 13.675781 8.148438 13.574219 7.851562 13.375 7.648438 C 13.074219 7.351562 13.074219 7.273438 13.5 7.175781 C 13.800781 7.101562 14 6.824219 14 6.5 C 14 5.625 13.175781 2.824219 12.773438 2.273438 C 12.023438 1.324219 4.25 -0.648438 4.25 0.125 C 4.25 0.699219 5.351562 2.226562 5.925781 2.449219 C 6.523438 2.699219 11.699219 4.25 11.898438 4.25 C 11.925781 4.25 12.050781 4.601562 12.125 5.050781 C 12.273438 5.675781 12.199219 5.898438 11.75 6.25 C 11.351562 6.550781 11.226562 6.851562 11.300781 7.199219 C 11.425781 7.648438 11.25 7.800781 9.925781 8.226562 C 8.050781 8.875 7.75 8.875 7.75 8.273438 C 7.75 7.625 7.449219 7.425781 4.5 6.25 C 3.050781 5.675781 1.851562 5.175781 1.800781 5.125 C 1.75 5.074219 2 4 2.351562 2.726562 C 2.699219 1.425781 3 0.300781 3 0.175781 C 3 0.0742188 2.324219 0 1.5 0 L 0 0 Z M 18.25 13.523438 C 20.875 15 20.898438 18.976562 18.300781 20.449219 C 14.925781 22.351562 11.101562 19 12.574219 15.425781 C 12.773438 14.976562 13.101562 14.476562 13.324219 14.300781 C 13.648438 14.023438 13.773438 14.148438 14.226562 15.425781 C 14.976562 17.5 15.074219 17.625 16.023438 17.625 C 17.050781 17.625 17.300781 16.976562 16.550781 16.300781 C 16.125 15.949219 15.25 13.851562 15.25 13.199219 C 15.25 12.800781 17.324219 13 18.25 13.523438 Z M 18.25 13.523438',
-    },
-};
-export const UNDO_SVG = {
-    path: {
-        d: 'M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z',
-    },
-};
+export const SOLID_LINE_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 32 32" width="24" height="24"><path stroke-linecap="round" stroke-width="2.7" stroke="#000" d="M12 12m8 -8l-16 16"/></svg>';
+export const SCENERY_LINE_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 32 32" width="24" height="24"><path stroke-linecap="round" stroke-width="2.7" stroke="#aaa" d="M12 12m8 -8l-16 16"/></svg>';
+export const SOLID_BRUSH_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 32 32" width="24" height="24"><circle cx="12" cy="12" r="3" fill="#000"/></svg>';
+export const SCENERY_BRUSH_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 32 32" width="24" height="24"><circle cx="12" cy="12" r="3" fill="#aaa"/></svg>';
+export const TARGET_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 32 32" width="24" height="24"><circle cx="12" cy="12" r="7" fill="#ff0" stroke-width="2" stroke="#000"/></svg>';
+export const CHECKPOINT_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 32 32" width="24" height="24"><circle cx="12" cy="12" r="7" fill="#00f" stroke-width="2" stroke="#000"/></svg>';
+export const BOMB_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 32 32" width="24" height="24"><circle cx="12" cy="12" r="7" fill="#f00" stroke-width="2" stroke="#000"/></svg>';
+export const SLOWMO_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 32 32" width="24" height="24"><circle cx="12" cy="12" r="7" fill="#eee" stroke-width="2" stroke="#000"/></svg>';
+export const GRAVITY_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 32 32" width="24" height="24"><path fill="#0f0" stroke-linejoin="round" stroke-width="2" stroke="#000" d="M12 12m-7 -10l7 20l7 -20z"/></svg>';
+export const BOOST_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 32 32" width="24" height="24"><path fill="#ff0" stroke-linejoin="round" stroke-width="2" stroke="#000" d="M12 12m-10 -7l20 7l-20 7z"/></svg>';
+export const CAMERA_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/></svg>';
+export const CANCEL_CHECKPOINT_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg>';
+export const ERASER_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"><path d="M16.24 3.56l4.95 4.94c.78.79.78 2.05 0 2.84L12 20.53a4.008 4.008 0 0 1-5.66 0L2.81 17c-.78-.79-.78-2.05 0-2.84l10.6-10.6c.79-.78 2.05-.78 2.83 0M4.22 15.58l3.54 3.53c.78.79 2.04.79 2.83 0l3.53-3.53l-4.95-4.95l-4.95 4.95z" fill="black"/><rect x="0" y="0" width="24" height="24" fill="rgba(0, 0, 0, 0)" /></svg>';
+export const FOCUS_GHOST_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>';
+export const FULLSCREEN_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>';
+export const GRID_SNAP_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path stroke-linecap="round" stroke-width="1.2" stroke="#000" d="M3 7h18M3 12h18M3 17h18M7 3v18M12 3v18M17 3v18"/></svg>';
+export const PAUSE_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+export const PLAY_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M8 5v14l11-7z"/></svg>';
+export const REDO_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z"/></svg>';
+export const RESTART_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"/><path d="M24 24H0V0h24v24z" fill="none"/></svg>';
+export const START_POSITION_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 6l-1-2H5v17h2v-7h5l1 2h7V6h-6zm4 8h-4l-1-2H7V6h5l1 2h5v6z"/></svg>';
+export const SWITCH_BIKE_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="9" fill="none" stroke-width="2.7" stroke="#000"/><circle cx="12" cy="12" r="5" fill="none"/><circle cx="12" cy="12" r="2.2" fill="#000"/></svg>';
+export const UNDO_SVG =
+    '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>';

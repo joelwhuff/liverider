@@ -21,18 +21,7 @@ export default class PauseTool extends Tool {
     constructor(track) {
         super(track);
 
-        let svg = makeSVGElement('svg', null, {
-            'xmlns': 'http://www.w3.org/2000/svg',
-            'viewBox': '0 0 24 24',
-            'width': '24',
-            'height': '24',
-        });
-
-        for (let element in PLAY_SVG) {
-            makeSVGElement(element, svg, PLAY_SVG[element]);
-        }
-
-        this.unpauseIcon = svg;
+        this.unpauseIcon = PLAY_SVG;
     }
 
     run() {
@@ -44,7 +33,7 @@ export default class PauseTool extends Tool {
         this.dom.title = `${this.track.paused ? 'Unpause' : this.constructor.toolName} (${this.constructor.keyLabel})`;
         let domReplace = this.track.paused ? [this.unpauseIcon, this.domIcon] : [this.domIcon, this.unpauseIcon];
         try {
-            this.dom.replaceChild(domReplace[0], domReplace[1]);
+            this.dom.innerHTML = domReplace[0];
         } catch (e) {
             /* Don't do anything if the pause variable has been handled elsewhere */
         }
