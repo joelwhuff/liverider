@@ -5,21 +5,22 @@ import UI from '../ui/UI.js';
 export default class ParserState extends GameState {
     onEnter() {
         this.getTrackParser();
-
-        this.initUI();
     }
 
     getTrackParser() {
+        UI.clearUI(this);
+        this.track.canvas.style.cursor = 'default';
+
         // if(in collab room) this.parser = new TrackBufferParser(this.track)
         this.parser = new TrackParser(this.track);
         this.parser.init(this.track.getRawTrack());
     }
 
     initUI() {
-        if (true /* collab room */) {
-            UI.createEditorUI(this, this.track);
+        if (this.track.room !== 'collab room') {
+            UI.createEditorUI(this);
         } else {
-            UI.createRaceUI(this.track);
+            UI.createRaceUI(this);
         }
     }
 
@@ -31,6 +32,8 @@ export default class ParserState extends GameState {
         this.parser.progress =
             this.parser.solidLineData.index + this.parser.sceneryLineData.index + this.parser.itemData.index;
         if (this.parser.done) {
+            this.initUI();
+
             this.manager.push('track');
         }
     }

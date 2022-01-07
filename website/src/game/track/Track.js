@@ -28,8 +28,8 @@ export default class Track {
         /** @type {string} */
         this.trackCode = opt.trackCode;
 
-        // this.room = opt.room
-        // this.room.setTrack(this)
+        this.room = opt.room;
+        // this.room.setTrack(this) maybe set track in state manager after its been fully created instead
 
         this.event = new TrackEvent(this);
 

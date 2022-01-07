@@ -5,18 +5,25 @@ import CameraTool from '../tool/CameraTool.js';
 import SolidLineTool from '../tool/item/line/SolidLineTool.js';
 
 export default class UI {
-    static createEditorUI(state, track) {
-        UI.makeButtons(state, track);
-        UI.makeToolbar(track, LEFT_TOOLBAR_EDITING, 'left');
-        UI.makeToolbar(track, RIGHT_TOOLBAR, 'right');
-
-        track.toolManager.setTool(track.toolCollection.toolsByToolName.get(SolidLineTool.toolName));
+    static clearUI(state) {
+        let gameEl = state.manager.track.canvas.parentNode;
+        while (gameEl.lastChild !== gameEl.firstChild) {
+            gameEl.removeChild(gameEl.lastChild);
+        }
     }
 
-    static createRaceUI(track) {
-        UI.makeToolbar(track, LEFT_TOOLBAR_VIEWING, 'left');
+    static createEditorUI(state) {
+        UI.makeButtons(state);
+        UI.makeToolbar(state, LEFT_TOOLBAR_EDITING, 'left');
+        UI.makeToolbar(state, RIGHT_TOOLBAR, 'right');
 
-        track.toolManager.setTool(track.toolCollection.toolsByToolName.get(CameraTool.toolName));
+        state.track.toolManager.setTool(state.track.toolCollection.toolsByToolName.get(SolidLineTool.toolName));
+    }
+
+    static createRaceUI(state) {
+        UI.makeToolbar(state, LEFT_TOOLBAR_VIEWING, 'left');
+
+        state.track.toolManager.setTool(state.track.toolCollection.toolsByToolName.get(CameraTool.toolName));
     }
 
     static makeButtons(state) {
@@ -63,21 +70,21 @@ export default class UI {
         state.track.canvas.parentNode.appendChild(ui);
     }
 
-    static makeToolbar(track, type, side) {
+    static makeToolbar(state, type, className) {
         let toolbarEl = null;
 
         let toolbar = new Toolbar(
             type,
             type.reduce((toolMap, toolClass) => {
-                return { ...toolMap, [toolClass.toolName]: new toolClass(track) };
+                return { ...toolMap, [toolClass.toolName]: new toolClass(state.track) };
             }, {})
         );
 
         toolbarEl = toolbar.getDOM();
         toolbar.registerControls();
-        toolbarEl.classList.add(side);
-        track.canvas.parentNode.appendChild(toolbarEl);
+        toolbarEl.classList.add(className);
+        state.track.canvas.parentNode.appendChild(toolbarEl);
 
-        toolbar.attachToTrack(track);
+        toolbar.attachToTrack(state.track);
     }
 }

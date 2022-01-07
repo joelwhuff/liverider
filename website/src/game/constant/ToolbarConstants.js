@@ -28,7 +28,7 @@ export const LEFT_TOOLBAR_VIEWING = [
         CancelCheckpointTool,
         EmptyTool,
         SwitchBikeTool,
-        // FocusGhostTool,
+        FocusGhostTool,
         EmptyTool,
         CameraTool,
         FullscreenTool,

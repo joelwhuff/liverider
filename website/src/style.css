@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Ubuntu-R';
+    src: url('./font/Ubuntu-R.woff2');
+    /* src: url('./font/Ubuntu-R.woff'); */
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,6 +12,10 @@
 html,
 body {
     height: 100%;
+}
+
+html {
+    font: 18px 'Ubuntu-R';
 }
 
 body {
@@ -29,6 +39,7 @@ body {
 }
 
 #ui button {
+    font: 1rem 'Ubuntu-R';
     margin: 5px;
 }
 
@@ -65,7 +76,7 @@ body {
     height: 32px;
     width: 38px;
     background: center center no-repeat;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.84);
     position: relative;
 }
 
@@ -79,10 +90,10 @@ svg {
 }
 .tool:hover > svg {
     transition: 0s;
-    background-color: #e7e7e7;
+    background-color: rgba(0, 0, 0, 0.14);
 }
 .tool:active > svg {
-    background-color: #ddd;
+    background-color: rgba(0, 0, 0, 0.18);
 }
 
 .tool.empty {

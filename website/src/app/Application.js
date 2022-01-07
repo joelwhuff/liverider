@@ -15,7 +15,7 @@ export default class Application {
         let setContextProperties = ctx => {
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
-            ctx.font = 'bold 15px Ubuntu';
+            ctx.font = 'bold 15px Ubuntu-R';
         };
 
         let setCanvasSize = () => {
