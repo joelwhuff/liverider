@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "prettier": "prettier --write ."
+        "prettier": "prettier --write .",
+        "postinstall": "(cd website && npm i);(cd server && npm i)"
     },
     "keywords": [],
     "author": "",
