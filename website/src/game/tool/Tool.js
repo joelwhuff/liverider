@@ -89,7 +89,7 @@ export default class Tool extends GameObject {
     closeOptions() {}
 
     activate() {
-        this.track.canvas.style.cursor = 'none';
+        this.track.canvas.style.cursor = 'default';
     }
 
     deactivate() {

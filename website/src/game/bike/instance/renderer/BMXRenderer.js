@@ -50,38 +50,7 @@ export default class BMXRenderer {
         let handlebarStem = bikeTransform.scale(0.82, 0.65);
         let handlebarGrips = bikeTransform.scale(0.78, 0.67);
 
-        ctx.strokeStyle = bike.color;
-        ctx.globalAlpha = opacityFactor;
-        ctx.lineWidth = wheelLineWidth * bike.track.zoomFactor;
-
-        // ---------- wheels
-        ctx.beginPath();
-        // back wheel
-        ctx.arc(backWheel.x, backWheel.y, wheelRadius, 0, 2 * Math.PI, true);
-        // front wheel
-        ctx.moveTo(frontWheel.x + wheelRadius, frontWheel.y);
-        ctx.arc(frontWheel.x, frontWheel.y, wheelRadius, 0, 2 * Math.PI, true);
-        ctx.stroke();
-        // ---------- bike parts
-        ctx.lineWidth = 3 * bike.track.zoomFactor;
-        LinePath.render(ctx, [
-            // main structure
-            [backWheel, seatStay, topTube],
-            [steer, downTube, backWheel],
-            // pedals
-            [pedalA, pedalB],
-            // saddle
-            [saddleA, saddleB],
-            // seat tube
-            [downTube, seatTube],
-            // front tube and handlebar
-            [frontWheel, brake, frontFork, headset, handlebarStem, handlebarGrips],
-        ]);
-
-        if (bike.runner.dead) {
-            return;
-        }
-
+        // ---------- body variables
         let hitboxToWheelsMedianDistance = hitbox.sub(backWheel.add(wheelsDistance.scale(0.5)));
 
         let playerTransform = new Transform(seatStay, wheelsDistance, hitboxToWheelsMedianDistance);
@@ -125,15 +94,51 @@ export default class BMXRenderer {
             .add(bodyToHandDistance.scale(0.4))
             .add(bodyToHandDistance90deg.scale(armLengthRatio));
 
+        // shadow leg
+        ctx.strokeStyle = '#000';
+        if (!bike.runner.dead) {
+            ctx.globalAlpha = opacityFactor * 0.5;
+            ctx.lineWidth = 6 * bike.track.zoomFactor;
+            LinePath.render(ctx, [[pedalB, shadowKnee, hip]]);
+        }
+
+        ctx.globalAlpha = opacityFactor;
+        ctx.lineWidth = wheelLineWidth * bike.track.zoomFactor;
+        // ---------- wheels
+        ctx.beginPath();
+        // back wheel
+        ctx.arc(backWheel.x, backWheel.y, wheelRadius, 0, 2 * Math.PI, true);
+        // front wheel
+        ctx.moveTo(frontWheel.x + wheelRadius, frontWheel.y);
+        ctx.arc(frontWheel.x, frontWheel.y, wheelRadius, 0, 2 * Math.PI, true);
+        ctx.stroke();
+        // ---------- bike parts
+        ctx.strokeStyle = bike.color;
+        ctx.lineWidth = 3 * bike.track.zoomFactor;
+        LinePath.render(ctx, [
+            // main structure
+            [backWheel, seatStay, topTube],
+            [steer, downTube, backWheel],
+            // pedals
+            [pedalA, pedalB],
+            // saddle
+            [saddleA, saddleB],
+            // seat tube
+            [downTube, seatTube],
+            // front tube and handlebar
+            [frontWheel, brake, frontFork, headset, handlebarStem, handlebarGrips],
+        ]);
+
+        if (bike.runner.dead) {
+            return;
+        }
+
+        ctx.strokeStyle = '#000';
         ctx.lineCap = 'round';
         ctx.lineWidth = 6 * bike.track.zoomFactor;
-        ctx.globalAlpha = 0.5 * opacityFactor;
 
         // ---------- player
-        // shadow leg
-        LinePath.render(ctx, [[pedalB, shadowKnee, hip]]);
         // leg
-        ctx.globalAlpha = opacityFactor;
         LinePath.render(ctx, [[pedalA, knee, hip]]);
         // body
         ctx.lineWidth = 8 * bike.track.zoomFactor;
@@ -143,8 +148,15 @@ export default class BMXRenderer {
         ctx.beginPath();
         ctx.moveTo(headCenter.x + headRadius, headCenter.y);
         ctx.arc(headCenter.x, headCenter.y, headRadius, 0, 2 * Math.PI, true);
+        // ballcap
+        let hatFront = playerTransform.scale(0.4, 1.1);
+        let hatBack = playerTransform.scale(0.05, 1.05);
+        ctx.moveTo(hatFront.x, hatFront.y);
+        ctx.lineTo(hatBack.x, hatBack.y);
+        // stroke head and ballcap at same time (no homo)
         ctx.stroke();
-        // head gear
+
+        /* black hat
         let hatFrontBottom = playerTransform.scale(0.35, 1.15);
         let hatBackBottom = playerTransform.scale(-0.05, 1.1);
         let hatFront = playerTransform.scale(0.25, 1.13);
@@ -155,6 +167,8 @@ export default class BMXRenderer {
         ctx.fillStyle = bike.color;
         LinePath.render(ctx, [[hatFrontBottom, hatFront, hatFrontTop, hatBackTop, hatBack, hatBackBottom]]);
         ctx.fill();
+        */
+
         // arm
         ctx.lineWidth = 5 * bike.track.zoomFactor;
         LinePath.render(ctx, [[body, elbow, handlebarGrips]]);

@@ -56,7 +56,7 @@ body {
 }
 
 .toolbar.left .tool {
-    border-width: 0 1px 0 0;
+    margin-left: 8px;
 }
 
 .toolbar.right {
@@ -65,7 +65,7 @@ body {
 }
 
 .toolbar.right .tool {
-    border-width: 0 0 0 1px;
+    margin-right: 8px;
 }
 
 .tool {
@@ -73,16 +73,16 @@ body {
     align-items: center;
     justify-content: center;
     pointer-events: all;
-    height: 32px;
-    width: 38px;
+    height: 36px;
+    width: 36px;
     background: center center no-repeat;
-    background-color: rgba(255, 255, 255, 0.84);
+    background-color: rgba(255, 255, 255, 0.9);
     position: relative;
 }
 
 svg {
-    transition: 0.2s ease-out;
-    padding: 2px;
+    transition: 0.16s ease-out;
+    padding: 3px;
     border-radius: 8px;
 }
 .tool:hover {
@@ -90,14 +90,13 @@ svg {
 }
 .tool:hover > svg {
     transition: 0s;
-    background-color: rgba(0, 0, 0, 0.14);
+    background-color: rgba(0, 0, 0, 0.08);
 }
 .tool:active > svg {
     background-color: rgba(0, 0, 0, 0.18);
 }
 
 .tool.empty {
-    border-width: 1px 0 1px 0 !important;
     background-color: transparent;
     pointer-events: none;
 }

@@ -2,8 +2,10 @@ import './style.css';
 
 import Application from './app/Application.js';
 
+let app = null;
+
 let bootApp = () => {
-    let app = new Application();
+    app = new Application();
     app.boot();
 };
 

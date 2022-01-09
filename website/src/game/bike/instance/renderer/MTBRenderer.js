@@ -55,55 +55,7 @@ export default class MTBRenderer {
         let headset = hitboxTransform.scale(0.73, 0.77);
         let handlebarGrips = hitboxTransform.scale(0.7, 0.8);
 
-        ctx.strokeStyle = bike.color;
-        ctx.globalAlpha = opacityFactor;
-        ctx.lineWidth = wheelLineWidth * bike.track.zoomFactor;
-
-        // ---------- wheels
-        ctx.beginPath();
-        // back wheel
-        ctx.arc(backWheel.x, backWheel.y, wheelRadius, 0, 2 * Math.PI, true);
-        // front wheel
-        ctx.moveTo(frontWheel.x + wheelRadius, frontWheel.y);
-        ctx.arc(frontWheel.x, frontWheel.y, wheelRadius, 0, 2 * Math.PI, true);
-        ctx.stroke();
-        // ---------- wheels axes
-        ctx.fillStyle = bike.color;
-        ctx.globalAlpha = 0.5 * opacityFactor;
-        ctx.beginPath();
-        // back wheel
-        ctx.arc(backWheel.x, backWheel.y, wheelRadius * 0.5, 0, 2 * Math.PI, true);
-        // front wheel
-        ctx.moveTo(frontWheel.x + wheelRadius, frontWheel.y);
-        ctx.arc(frontWheel.x, frontWheel.y, wheelRadius * 0.4, 0, 2 * Math.PI, true);
-        ctx.fill();
-        ctx.globalAlpha = opacityFactor;
-        // ---------- bike parts
-        ctx.lineWidth = 5 * bike.track.zoomFactor;
-        LinePath.render(ctx, [
-            // main structure
-            [backWheel, chainStay],
-            [topTube, seatTube, chainStay],
-        ]);
-
-        ctx.lineWidth = 2 * bike.track.zoomFactor;
-        LinePath.render(ctx, [
-            [topTube, downTube],
-            [seatPostA, seatPostB, saddle],
-            [saddleA, saddleB],
-            [pedalA, pedalB],
-        ]);
-
-        ctx.lineWidth = bike.track.zoomFactor;
-        LinePath.render(ctx, [[steer, steerConnector]]);
-
-        ctx.lineWidth = 3 * bike.track.zoomFactor;
-        LinePath.render(ctx, [[frontWheel, frontFork, headset, handlebarGrips]]);
-
-        if (bike.runner.dead) {
-            return;
-        }
-
+        // ---------- body variables
         let crossFrameSaddle = hitboxTransform.scale(0.3, 0.25);
         let playerTransform = new Transform(crossFrameSaddle, wheelsDistance, hitBoxDistance);
 
@@ -146,15 +98,68 @@ export default class MTBRenderer {
         let armLengthRatio = sumOfArmPartsLengthsSquared / bodyToHandDistance.lengthSquared();
         let elbow = hand.add(bodyToHandDistance.scale(0.3)).add(bodyToHandDistance90deg.scale(armLengthRatio));
 
+        ctx.strokeStyle = '#000';
+
+        if (!bike.runner.dead) {
+            ctx.globalAlpha = opacityFactor * 0.5;
+            ctx.lineWidth = 6 * bike.track.zoomFactor;
+            LinePath.render(ctx, [[pedalB, shadowKnee, hip]]);
+        }
+
+        ctx.globalAlpha = opacityFactor;
+        ctx.lineWidth = wheelLineWidth * bike.track.zoomFactor;
+        // ---------- wheels
+        ctx.beginPath();
+        // back wheel
+        ctx.arc(backWheel.x, backWheel.y, wheelRadius, 0, 2 * Math.PI, true);
+        // front wheel
+        ctx.moveTo(frontWheel.x + wheelRadius, frontWheel.y);
+        ctx.arc(frontWheel.x, frontWheel.y, wheelRadius, 0, 2 * Math.PI, true);
+        ctx.stroke();
+        // ---------- wheels axes
+        ctx.fillStyle = '#000';
+        ctx.globalAlpha = 0.5 * opacityFactor;
+        ctx.beginPath();
+        // back wheel
+        ctx.arc(backWheel.x, backWheel.y, wheelRadius * 0.5, 0, 2 * Math.PI, true);
+        // front wheel
+        ctx.moveTo(frontWheel.x + wheelRadius, frontWheel.y);
+        ctx.arc(frontWheel.x, frontWheel.y, wheelRadius * 0.4, 0, 2 * Math.PI, true);
+        ctx.fill();
+        // ---------- bike parts
+        ctx.globalAlpha = opacityFactor;
+        ctx.strokeStyle = bike.color;
+        ctx.lineWidth = 5 * bike.track.zoomFactor;
+        LinePath.render(ctx, [
+            // main structure
+            [backWheel, chainStay],
+            [topTube, seatTube, chainStay],
+        ]);
+
+        ctx.lineWidth = 2 * bike.track.zoomFactor;
+        LinePath.render(ctx, [
+            [topTube, downTube],
+            [seatPostA, seatPostB, saddle],
+            [saddleA, saddleB],
+            [pedalA, pedalB],
+        ]);
+
+        ctx.lineWidth = bike.track.zoomFactor;
+        LinePath.render(ctx, [[steer, steerConnector]]);
+
+        ctx.lineWidth = 3 * bike.track.zoomFactor;
+        LinePath.render(ctx, [[frontWheel, frontFork, headset, handlebarGrips]]);
+
+        if (bike.runner.dead) {
+            return;
+        }
+
+        ctx.strokeStyle = '#000';
         ctx.lineCap = 'round';
         ctx.lineWidth = 6 * bike.track.zoomFactor;
-        ctx.globalAlpha = 0.5 * opacityFactor;
 
         // ---------- player
-        // shadow leg
-        LinePath.render(ctx, [[pedalB, shadowKnee, hip]]);
         // leg
-        ctx.globalAlpha = opacityFactor;
         LinePath.render(ctx, [[pedalA, knee, hip]]);
         // body
         ctx.lineWidth = 8 * bike.track.zoomFactor;
@@ -164,14 +169,15 @@ export default class MTBRenderer {
         ctx.beginPath();
         ctx.moveTo(headCenter.x + headRadius, headCenter.y);
         ctx.arc(headCenter.x, headCenter.y, headRadius, 0, 2 * Math.PI, true);
+        // ballcap
+        let hatFront = playerTransform.scale(0.41, 1.155);
+        let hatBack = playerTransform.scale(0.1, 1.05);
+        ctx.moveTo(hatFront.x, hatFront.y);
+        ctx.lineTo(hatBack.x, hatBack.y);
+        // stroke head and ballcap at same time (no homo)
         ctx.stroke();
-        // head gear
-        ctx.lineWidth = 2 * bike.track.zoomFactor;
-        ctx.beginPath();
-        ctx.moveTo(headCenter.x + headRadius, headCenter.y);
-        ctx.arc(headCenter.x, headCenter.y, headRadius, 0, 2 * Math.PI, true);
-        ctx.stroke();
-        // head gear
+
+        /* black hat
         let hatFrontBottom = playerTransform.scale(0.37, 1.19);
         let hatBackBottom = playerTransform.scale(0.02, 1.14);
         let hatFront = playerTransform.scale(0.28, 1.17);
@@ -182,6 +188,8 @@ export default class MTBRenderer {
         ctx.fillStyle = bike.color;
         LinePath.render(ctx, [[hatFrontBottom, hatFront, hatFrontTop, hatBackTop, hatBack, hatBackBottom]]);
         ctx.fill();
+        */
+
         // arm
         ctx.lineWidth = 5 * bike.track.zoomFactor;
         LinePath.render(ctx, [[body, elbow, hand]]);

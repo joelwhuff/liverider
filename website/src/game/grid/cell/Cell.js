@@ -20,16 +20,13 @@ export default class Cell {
     push(item) {
         if (item instanceof SceneryLine) {
             this.scenery.push(item);
-            this.addScenery(item);
         } else if (item instanceof SolidLine) {
             this.lines.push(item);
-            this.addLine(item);
         } else if (item instanceof Item) {
             this.objects.push(item);
-            this.addItem(item);
         }
 
-        // this.clear();
+        this.clear();
     }
 
     remove(item) {
@@ -43,12 +40,6 @@ export default class Cell {
 
         this.clear();
     }
-
-    addScenery() {}
-
-    addLine() {}
-
-    addItem() {}
 
     clear() {}
 }

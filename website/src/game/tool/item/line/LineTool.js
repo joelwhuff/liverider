@@ -1,5 +1,6 @@
 import { MAX_LINE_LENGTH, MIN_LINE_LENGTH } from '../../../constant/TrackConstants.js';
 import Line from '../../../item/line/Line.js';
+import SolidLine from '../../../item/line/SolidLine.js';
 import LinePath from '../../../numeric/LinePath.js';
 import Vector from '../../../numeric/Vector.js';
 import Tool from '../../Tool.js';
@@ -12,7 +13,7 @@ export default class LineTool extends Tool {
     constructor(track) {
         super(track);
         this.foreground = false;
-        this.lastLine = new Vector();
+        this.lastLine = new Vector(40, 50);
     }
 
     onMouseDown(e) {
@@ -121,20 +122,25 @@ export default class LineTool extends Tool {
     render(ctx) {
         let mousePx = this.track.mousePos.toPixel(this.track);
 
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = '#000';
-        ctx.lineCap = 'round';
+        // ctx.lineWidth = 2;
+        // ctx.strokeStyle = '#000';
+        // ctx.lineCap = 'round';
 
-        ctx.beginPath();
-        ctx.moveTo(mousePx.x - 10, mousePx.y);
-        ctx.lineTo(mousePx.x + 10, mousePx.y);
-        ctx.moveTo(mousePx.x, mousePx.y - 10);
-        ctx.lineTo(mousePx.x, mousePx.y + 10);
-        ctx.stroke();
+        // ctx.beginPath();
+        // ctx.moveTo(mousePx.x - 10, mousePx.y);
+        // ctx.lineTo(mousePx.x + 10, mousePx.y);
+        // ctx.moveTo(mousePx.x, mousePx.y - 10);
+        // ctx.lineTo(mousePx.x, mousePx.y + 10);
+        // ctx.stroke();
 
         if (this.mouseDown || this.isHolding()) {
             this.renderLineInfo(ctx, mousePx);
         }
+
+        ctx.beginPath();
+        ctx.fillStyle = '#48f';
+        ctx.arc(mousePx.x, mousePx.y, this.track.zoomFactor, 0, Math.PI * 2);
+        ctx.fill();
 
         this.renderLineSize(ctx, mousePx);
     }
@@ -142,23 +148,23 @@ export default class LineTool extends Tool {
     renderLineSize(ctx, mousePx) {}
 
     renderLineInfo(ctx, mousePx) {
-        ctx.strokeStyle = this.checkLineLength() ? '#00f' : '#f00';
+        ctx.strokeStyle = !this.checkLineLength() ? '#f00' : this.constructor.lineClass === SolidLine ? '#000' : '#aaa';
         ctx.lineWidth = this.track.zoomFactor * 2;
 
         let startPos = this.isHolding() ? this.lastLine : this.track.lastClick;
 
         LinePath.render(ctx, [[startPos.toPixel(this.track), mousePx]]);
 
-        let length = startPos.distanceTo(this.track.mousePos);
-        let distance = this.track.mousePos.sub(startPos);
-        let angle = (-Math.atan2(distance.y, distance.x) / Math.PI) * 180;
+        // let length = startPos.distanceTo(this.track.mousePos);
+        // let distance = this.track.mousePos.sub(startPos);
+        // let angle = (-Math.atan2(distance.y, distance.x) / Math.PI) * 180;
 
-        ctx.lineWidth = 0.5;
-        ctx.fillStyle = '#777';
-        ctx.fillText(Math.round(length), mousePx.x + 3, mousePx.y - 3);
+        // ctx.lineWidth = 0.5;
+        // ctx.fillStyle = '#777';
+        // ctx.fillText(Math.round(length), mousePx.x + 3, mousePx.y - 3);
 
-        ctx.textAlign = 'right';
-        ctx.fillText(Math.round(angle) + '°', mousePx.x - 3, mousePx.y - 3);
-        ctx.textAlign = 'left';
+        // ctx.textAlign = 'right';
+        // ctx.fillText(Math.round(angle) + '°', mousePx.x - 3, mousePx.y - 3);
+        // ctx.textAlign = 'left';
     }
 }

@@ -30,6 +30,6 @@ export default class BrushTool extends LineTool {
     }
 
     renderLineSize(ctx, mousePx) {
-        ctx.fillText(this.size, mousePx.x + 3, mousePx.y + 12);
+        ctx.fillText(this.size, mousePx.x + 3, mousePx.y - 6);
     }
 }

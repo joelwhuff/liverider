@@ -25,7 +25,7 @@ export default class Bike {
         this.slow = false;
         this.slowParity = 0;
 
-        this.color = '#000';
+        this.color = '#f00';
         this.headGear = 'hat';
 
         this.rotationFactor = 0;

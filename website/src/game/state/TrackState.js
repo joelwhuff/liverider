@@ -95,12 +95,12 @@ export default class TrackState extends GameState {
             let cell = cache.cell(x, y);
             ctx.drawImage(
                 cell.getCanvas(this.track.zoomFactor),
-                Math.floor(
+                Math.round(
                     this.track.canvas.width / 2 -
                         this.track.camera.x * this.track.zoomFactor +
                         cell.x * this.track.zoomFactor
                 ),
-                Math.floor(
+                Math.round(
                     this.track.canvas.height / 2 -
                         this.track.camera.y * this.track.zoomFactor +
                         cell.y * this.track.zoomFactor

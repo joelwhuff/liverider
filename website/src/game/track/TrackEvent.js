@@ -49,11 +49,9 @@ export default class TrackEvent {
 
     onMouseDown(e) {
         e.preventDefault();
-        if (e.button !== 2) {
-            this.track.focalPoint = null;
-            this.track.lastClick.set(this.track.mousePos);
-            this.track.toolManager.onMouseDown(e);
-        }
+        this.track.focalPoint = null;
+        this.track.lastClick.set(this.track.mousePos);
+        this.track.toolManager.onMouseDown(e);
     }
 
     onMouseUp(e) {

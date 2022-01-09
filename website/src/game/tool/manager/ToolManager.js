@@ -1,5 +1,6 @@
 import GameObject from '../../GameObject.js';
 import Track from '../../track/Track.js';
+import CameraTool from '../CameraTool.js';
 import Tool from '../Tool.js';
 
 export default class ToolManager extends GameObject {
@@ -8,6 +9,7 @@ export default class ToolManager extends GameObject {
         /** @type {Track} */
         this.track = track;
         this.tool = null;
+        this.rightTool = new CameraTool(this.track);
         this.active = false;
         this.optionsOpened = false;
     }
@@ -44,16 +46,22 @@ export default class ToolManager extends GameObject {
     }
 
     onMouseDown(e) {
-        if (this.tool) {
+        if (this.tool && e.button === 0) {
             this.active = true;
             this.tool.onMouseDown(e);
+        }
+        if (this.rightTool && e.button === 2) {
+            this.rightTool.mouseDown = true;
         }
     }
 
     onMouseUp(e) {
-        if (this.tool) {
+        if (this.tool && e.button === 0) {
             this.active = true;
             this.tool.onMouseUp(e);
+        }
+        if (this.rightTool && e.button === 2) {
+            this.rightTool.mouseDown = false;
         }
     }
 
@@ -61,6 +69,9 @@ export default class ToolManager extends GameObject {
         if (this.tool) {
             this.active = true;
             this.tool.onMouseMove(e);
+        }
+        if (this.rightTool) {
+            this.rightTool.onMouseMove(e);
         }
     }
 

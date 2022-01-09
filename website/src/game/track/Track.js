@@ -142,9 +142,9 @@ export default class Track {
         };
 
         let mainLayerRestrict = restrict.get('mainLayer');
-        let foregroundLayerRestrict = restrict.get('foregroundLayer');
+        // let foregroundLayerRestrict = restrict.get('foregroundLayer');
         let mainLayerActive = [...mainLayerRestrict.values()].some(Boolean);
-        let foregroundLayerActive = [...foregroundLayerRestrict.values()].some(Boolean);
+        // let foregroundLayerActive = [...foregroundLayerRestrict.values()].some(Boolean);
 
         if (mainLayerActive) {
             checkCell(this.grid.cell(x, y), mainLayerRestrict);
@@ -153,12 +153,12 @@ export default class Track {
             checkCell(this.grid.cell(x + 1, y + 1), mainLayerRestrict);
         }
 
-        if (foregroundLayerActive) {
-            checkCell(this.foregroundGrid.cell(x, y), foregroundLayerRestrict);
-            checkCell(this.foregroundGrid.cell(x, y + 1), foregroundLayerRestrict);
-            checkCell(this.foregroundGrid.cell(x + 1, y), foregroundLayerRestrict);
-            checkCell(this.foregroundGrid.cell(x + 1, y + 1), foregroundLayerRestrict);
-        }
+        // if (foregroundLayerActive) {
+        //     checkCell(this.foregroundGrid.cell(x, y), foregroundLayerRestrict);
+        //     checkCell(this.foregroundGrid.cell(x, y + 1), foregroundLayerRestrict);
+        //     checkCell(this.foregroundGrid.cell(x + 1, y), foregroundLayerRestrict);
+        //     checkCell(this.foregroundGrid.cell(x + 1, y + 1), foregroundLayerRestrict);
+        // }
 
         return deleted;
     }

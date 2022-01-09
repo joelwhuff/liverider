@@ -20,9 +20,9 @@ export default class EraserTool extends Tool {
     constructor(track) {
         super(track);
 
-        this.size = 15;
-        this.minSize = 5;
-        this.maxSize = 40;
+        this.size = 22;
+        this.minSize = 2;
+        this.maxSize = 62;
 
         this.restrict = new Map();
         this.restrict.set('foregroundLayer', new Map());
@@ -55,7 +55,7 @@ export default class EraserTool extends Tool {
 
     onScroll(e) {
         if (this.isHolding()) {
-            this.size = Math.max(this.minSize, Math.min(this.maxSize, this.size + 5 * -Math.sign(e.deltaY)));
+            this.size = Math.max(this.minSize, Math.min(this.maxSize, this.size + 4 * -Math.sign(e.deltaY)));
         } else {
             super.onScroll(e);
         }
@@ -151,7 +151,7 @@ export default class EraserTool extends Tool {
         let pos = this.track.mousePos.toPixel(this.track);
         ctx.beginPath();
         ctx.arc(pos.x, pos.y, this.size * this.track.zoomFactor, 0, 2 * Math.PI, true);
-        ctx.fillStyle = '#ffb6c1';
+        ctx.fillStyle = 'rgba(0,0,0,0.18)';
         ctx.fill();
     }
 }
