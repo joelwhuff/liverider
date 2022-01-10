@@ -27,7 +27,12 @@ export default {
         path: join(cwd(), 'dist'),
         clean: true,
     },
-    module: { rules: [{ test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader'] }] },
+    module: {
+        rules: [
+            { test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader'] },
+            { test: /\.(woff|woff2)/, type: 'asset/resource', generator: { filename: '[name][ext]' } },
+        ],
+    },
     plugins: [
         new HtmlWebpackPlugin({ template: './src/template.html', minify: TERSER_HTML_OPTIONS }),
         new MiniCssExtractPlugin({ filename: '[contenthash].css' }),
