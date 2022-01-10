@@ -16,11 +16,7 @@ export default class GeneratorState extends GameState {
         this.generator.currentStep();
 
         this.generator.progress =
-            this.generator.lineData.index +
-            this.generator.foregroundLineData.index +
-            this.generator.sceneryData.index +
-            this.generator.foregroundSceneryData.index +
-            this.generator.objectData.index;
+            this.generator.lineData.index + this.generator.sceneryData.index + this.generator.objectData.index;
 
         if (this.generator.done) {
             let downloadLink = document.createElement('a');

@@ -10,13 +10,7 @@ export default class TrackGenerator {
         this.memReset();
 
         let grid = this.track.grid;
-        let foregroundGrid = this.track.foregroundGrid;
-        this.length =
-            grid.totalSolidLines.length +
-            grid.totalSceneryLines.length +
-            grid.totalObjects.length +
-            foregroundGrid.totalSolidLines.length +
-            foregroundGrid.totalSceneryLines.length;
+        this.length = grid.totalSolidLines.length + grid.totalSceneryLines.length + grid.totalObjects.length;
     }
 
     memReset() {
@@ -24,9 +18,7 @@ export default class TrackGenerator {
         this.currentStep = this.generateLines;
         this.progress = 0;
         this.lineData = this.emptyData();
-        this.foregroundLineData = this.emptyData();
         this.sceneryData = this.emptyData();
-        this.foregroundSceneryData = this.emptyData();
         this.objectData = this.emptyData();
     }
 
@@ -62,20 +54,8 @@ export default class TrackGenerator {
         }
 
         if (this.objectData.index >= this.track.grid.totalObjects.length) {
-            this.currentStep = this.generateForegroundLines;
+            this.currentStep = this.finish;
         }
-    }
-
-    generateForegroundLines() {
-        this.generate(
-            this.foregroundLineData,
-            this.track.foregroundGrid.totalSolidLines,
-            this.generateForegroundScenery
-        );
-    }
-
-    generateForegroundScenery() {
-        this.generate(this.foregroundSceneryData, this.track.foregroundGrid.totalSceneryLines, this.finish);
     }
 
     finish() {
@@ -86,16 +66,10 @@ export default class TrackGenerator {
     cleanup() {
         this.track.grid.totalSolidLines.forEach((line, key) => (line.recorded = false));
         this.track.grid.totalSceneryLines.forEach((line, key) => (line.recorded = false));
-        this.track.foregroundGrid.totalSolidLines.forEach((line, key) => (line.recorded = false));
-        this.track.foregroundGrid.totalSceneryLines.forEach((line, key) => (line.recorded = false));
     }
 
     getCode() {
-        return (
-            `${this.lineData.code}#${this.sceneryData.code}#${this.objectData.code}#` +
-            `${this.foregroundLineData.code}#${this.foregroundSceneryData.code}#` +
-            `${this.track.playerRunner.bikeClass.bikeName}#${this.track.origin.toString()}`
-        );
+        return `${this.lineData.code}#${this.sceneryData.code}#${this.objectData.code}#${this.track.playerRunner.bikeClass.bikeName}`;
     }
 
     emptyData() {
