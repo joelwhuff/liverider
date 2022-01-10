@@ -4,7 +4,7 @@
     "description": "",
     "scripts": {
         "prettier": "prettier --write .",
-        "postinstall": "(cd website && npm i);(cd server && npm i)"
+        "postinstall": "cd website && npm i && cd ../server && npm i"
     },
     "keywords": [],
     "author": "",
