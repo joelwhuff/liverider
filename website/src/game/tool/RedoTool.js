@@ -9,7 +9,7 @@ export default class RedoTool extends Tool {
         return 'Redo';
     }
     static get keyLabel() {
-        return 'N';
+        return 'Control+Y';
     }
     static get key() {
         return new Control(KeyCode.DOM_VK_Y, Keyboard.CTRL);

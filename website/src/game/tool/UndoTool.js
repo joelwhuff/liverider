@@ -9,7 +9,7 @@ export default class UndoTool extends Tool {
         return 'Undo';
     }
     static get keyLabel() {
-        return 'M';
+        return 'Control+Z';
     }
     static get key() {
         return new Control(KeyCode.DOM_VK_Z, Keyboard.CTRL);
