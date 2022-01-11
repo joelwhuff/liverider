@@ -1,5 +1,6 @@
 import Track from '../track/Track.js';
 import Tool from './Tool.js';
+import EmptyTool from './EmptyTool.js';
 
 export default class Toolbar {
     /**
@@ -30,9 +31,18 @@ export default class Toolbar {
         let el = document.createElement('div');
         el.classList.add('toolbar');
 
-        for (let tool in this.tools) {
-            el.appendChild(this.instances[this.tools[tool].toolName].getDOM());
+        let groupEl = document.createElement('div');
+        groupEl.classList.add('toolbar-group');
+        for (let tool of this.tools) {
+            if (tool === EmptyTool) {
+                el.appendChild(groupEl);
+                groupEl = document.createElement('div');
+                groupEl.classList.add('toolbar-group');
+            } else {
+                groupEl.appendChild(this.instances[tool.toolName].getDOM());
+            }
         }
+        el.appendChild(groupEl);
 
         return el;
     }

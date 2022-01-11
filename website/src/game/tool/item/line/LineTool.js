@@ -148,7 +148,7 @@ export default class LineTool extends Tool {
     renderLineSize(ctx, mousePx) {}
 
     renderLineInfo(ctx, mousePx) {
-        ctx.strokeStyle = !this.checkLineLength() ? '#f00' : this.constructor.lineClass === SolidLine ? '#000' : '#aaa';
+        ctx.strokeStyle = this.constructor.lineClass === SolidLine ? '#000' : '#aaa';
         ctx.lineWidth = this.track.zoomFactor * 2;
 
         let startPos = this.isHolding() ? this.lastLine : this.track.lastClick;

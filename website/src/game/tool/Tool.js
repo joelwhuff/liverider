@@ -38,16 +38,9 @@ export default class Tool extends GameObject {
         el.classList.add('tool');
         el.title = `${this.constructor.toolName} (${this.constructor.keyLabel})`;
 
-        this.domIcon = document.createElement('img');
-
         if (this.constructor.icon) {
-            if (this.constructor.icon.type === 'b64') {
-                this.domIcon.setAttribute('src', this.constructor.icon.data);
-                el.appendChild(this.domIcon);
-            } else {
-                this.domIcon = this.constructor.icon;
-                el.innerHTML = this.constructor.icon;
-            }
+            this.domIcon = this.constructor.icon;
+            el.innerHTML = this.constructor.icon;
         }
 
         el.addEventListener('click', () => this.run());

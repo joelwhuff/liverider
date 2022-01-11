@@ -21,10 +21,13 @@ export default class ToolManager extends GameObject {
     setTool(tool) {
         if (this.tool) {
             this.tool.deactivate();
+            this.tool.dom.classList.remove('selected');
         }
 
         this.tool = tool;
         this.tool.activate();
+
+        tool.dom.classList.add('selected');
     }
 
     fixedUpdate() {
