@@ -10,10 +10,10 @@ export default class SlowMoTool extends ItemTool {
         return 'Slow-Motion';
     }
     static get keyLabel() {
-        return 'Shift+S';
+        return '6';
     }
     static get key() {
-        return new Control(KeyCode.DOM_VK_S, Keyboard.SHIFT);
+        return new Control(KeyCode.DOM_VK_6);
     }
     static get icon() {
         return SLOWMO_SVG;

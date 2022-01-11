@@ -10,10 +10,10 @@ export default class BombTool extends ItemTool {
         return 'Bomb';
     }
     static get keyLabel() {
-        return 'Shift+O';
+        return '5';
     }
     static get key() {
-        return new Control(KeyCode.DOM_VK_O, Keyboard.SHIFT);
+        return new Control(KeyCode.DOM_VK_5);
     }
     static get icon() {
         return BOMB_SVG;

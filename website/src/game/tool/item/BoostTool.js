@@ -10,10 +10,10 @@ export default class BoostTool extends DirectionalItemTool {
         return 'Boost';
     }
     static get keyLabel() {
-        return 'Shift+B';
+        return '3';
     }
     static get key() {
-        return new Control(KeyCode.DOM_VK_B, Keyboard.SHIFT);
+        return new Control(KeyCode.DOM_VK_3);
     }
     static get icon() {
         return BOOST_SVG;

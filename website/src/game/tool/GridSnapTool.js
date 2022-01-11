@@ -18,6 +18,11 @@ export default class GridSnapTool extends Tool {
     }
 
     run() {
+        if (this.track.gridDetail === 1) {
+            this.dom.classList.add('selected');
+        } else {
+            this.dom.classList.remove('selected');
+        }
         this.track.gridDetail = 11 - this.track.gridDetail;
     }
 }

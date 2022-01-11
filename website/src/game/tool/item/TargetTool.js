@@ -10,10 +10,10 @@ export default class TargetTool extends ItemTool {
         return 'Target';
     }
     static get keyLabel() {
-        return 'Shift+T';
+        return '1';
     }
     static get key() {
-        return new Control(KeyCode.DOM_VK_T, Keyboard.SHIFT);
+        return new Control(KeyCode.DOM_VK_1);
     }
     static get icon() {
         return TARGET_SVG;

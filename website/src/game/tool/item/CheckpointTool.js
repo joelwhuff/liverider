@@ -10,10 +10,10 @@ export default class CheckpointTool extends ItemTool {
         return 'Checkpoint';
     }
     static get keyLabel() {
-        return 'Shift+C';
+        return '2';
     }
     static get key() {
-        return new Control(KeyCode.DOM_VK_C, Keyboard.SHIFT);
+        return new Control(KeyCode.DOM_VK_2);
     }
     static get icon() {
         return CHECKPOINT_SVG;

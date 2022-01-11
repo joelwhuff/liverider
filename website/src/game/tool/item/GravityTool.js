@@ -10,10 +10,10 @@ export default class GravityTool extends DirectionalItemTool {
         return 'Gravity';
     }
     static get keyLabel() {
-        return 'Shift+G';
+        return '4';
     }
     static get key() {
-        return new Control(KeyCode.DOM_VK_G, Keyboard.SHIFT);
+        return new Control(KeyCode.DOM_VK_4);
     }
     static get icon() {
         return GRAVITY_SVG;
