@@ -68,28 +68,18 @@ export default class LineTool extends Tool {
     }
 
     openOptions() {
-        let foregroundLabel = document.createElement('label');
-        foregroundLabel.setAttribute('for', 'foregroundCheckbox');
-        foregroundLabel.textContent = 'Foreground:';
+        let options = document.createElement('div');
+        options.id = 'tool-options';
 
-        let foregroundCheckbox = document.createElement('input');
-        foregroundCheckbox.id = 'foregroundCheckbox';
-        foregroundCheckbox.type = 'checkbox';
-        foregroundCheckbox.checked = this.foreground;
+        let solid = document.createElement('div');
+        solid.classList.add('option', 'solid');
 
-        let buttonOk = document.createElement('button');
-        buttonOk.textContent = 'OK';
-        buttonOk.addEventListener('click', () => this.hideOptions());
+        let scenery = document.createElement('div');
+        scenery.classList.add('option', 'scenery');
 
-        let foregroundDiv = document.createElement('div');
-        let buttonDiv = document.createElement('div');
+        options.append(solid, scenery);
 
-        foregroundDiv.appendChild(foregroundLabel);
-        foregroundDiv.appendChild(foregroundCheckbox);
-        buttonDiv.appendChild(buttonOk);
-
-        options.appendChild(foregroundDiv);
-        options.appendChild(buttonDiv);
+        this.track.canvas.parentElement.appendChild(options);
     }
 
     closeOptions() {

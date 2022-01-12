@@ -101,7 +101,7 @@ export default class Tool extends GameObject {
     }
 
     onMouseMove(e) {
-        // this.track.focalPoint = null;
+        this.track.focalPoint = null;
     }
 
     onScroll(e) {

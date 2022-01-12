@@ -3,6 +3,11 @@
     src: url('./font/Ubuntu-R.woff2');
     /* src: url('./font/Ubuntu-R.woff'); */
 }
+@font-face {
+    font-family: 'Ubuntu-B';
+    src: url('./font/Ubuntu-B.woff2');
+    /* src: url('./font/Ubuntu-R.woff'); */
+}
 
 * {
     margin: 0;
@@ -25,23 +30,17 @@ body {
 }
 
 #game {
-    position: relative;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
     height: 100%;
-    background-color: #fff;
 }
 
-#ui {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: rgb(87, 0, 226);
+#game-options {
+    background-color: #5812c9;
     user-select: none;
 }
 
-.ui-button {
-    position: relative;
+#game-options .item {
     display: inline-block;
     padding: 0.3rem 0.85rem;
     box-sizing: border-box;
@@ -54,37 +53,84 @@ body {
     outline: none;
     vertical-align: middle;
 }
-.ui-button:hover {
+#game-options .item:hover {
     cursor: pointer;
     background-color: #eee;
 }
 
-.ui-settings {
-    position: relative;
+#game-options .settings {
     display: inline-block;
     width: 50px;
     height: 50px;
     margin: 0 6px 0 6px;
+    padding: 4px;
     border-radius: 50%;
     transition: 0.2s ease-in-out;
     overflow: hidden;
     vertical-align: middle;
 }
-.ui-settings:hover {
+#game-options .settings:hover {
     cursor: pointer;
     transition: 0.2s ease-in;
     transform: rotate(51.43deg);
 }
 
+#game-options .chat {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    width: 40px;
+    height: 40px;
+    margin: 5px 10px;
+    padding: 6px;
+    border-radius: 5px;
+}
+#game-options .chat:hover {
+    cursor: pointer;
+    /* filter: brightness(0.9); */
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+#game-content {
+    display: flex;
+    /* justify-content: center;
+    align-items: center; */
+    height: 100%;
+    width: 100%;
+}
+
+#game-screen {
+    position: relative;
+    flex: 1 1 auto;
+    height: 100%;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.game-chat {
+    position: relative;
+    flex: 0 1 0;
+    height: 100%;
+    transition: 0.4s ease-out;
+    background-color: #ddd;
+}
+.game-chat.open {
+    flex: 0 1 300px;
+}
+
 .toolbar {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
     pointer-events: none;
-    margin-top: 50vh;
-    transform: translateY(-50%);
 }
 
 .toolbar-group {
-    margin: 26px 0px;
+    margin: 13px 0px;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.94);
 }
@@ -137,4 +183,35 @@ body {
 .tool.empty {
     background-color: transparent;
     pointer-events: none;
+}
+
+#tool-options {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 12px;
+    border-radius: 10px;
+    background-color: yellow;
+}
+
+#tool-options .option {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: 0 5px;
+}
+#tool-options .option:hover {
+    cursor: pointer;
+}
+
+#tool-options .option.solid {
+    border-radius: 50%;
+    background-color: #000;
+}
+
+#tool-options .option.scenery {
+    border-radius: 50%;
+    background-color: #aaa;
 }
