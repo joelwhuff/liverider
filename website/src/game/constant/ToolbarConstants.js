@@ -13,14 +13,13 @@ import RestartTool from '../tool/RestartTool.js';
 import CancelCheckpointTool from '../tool/CancelCheckpointTool.js';
 import UndoTool from '../tool/UndoTool.js';
 import RedoTool from '../tool/RedoTool.js';
-import SolidLineTool from '../tool/item/line/SolidLineTool.js';
-import SceneryLineTool from '../tool/item/line/SceneryLineTool.js';
-import SolidBrushTool from '../tool/item/line/SolidBrushTool.js';
-import SceneryBrushTool from '../tool/item/line/SceneryBrushTool.js';
+import LineTool from '../tool/item/line/LineTool.js';
+import BrushTool from '../tool/item/line/BrushTool.js';
 import GridSnapTool from '../tool/GridSnapTool.js';
 import SwitchBikeTool from '../tool/SwitchBikeTool.js';
 import FocusGhostTool from '../tool/FocusGhostTool.js';
 import StartPositionTool from '../tool/StartPositionTool.js';
+import ItemSelectorTool from '../tool/item/ItemSelectorTool.js';
 
 export const LEFT_TOOLBAR_VIEWING = [
         PauseTool,
@@ -29,9 +28,9 @@ export const LEFT_TOOLBAR_VIEWING = [
         EmptyTool,
         SwitchBikeTool,
         FocusGhostTool,
-        EmptyTool,
+        // EmptyTool,
         // CameraTool,
-        FullscreenTool,
+        // FullscreenTool,
     ],
     LEFT_TOOLBAR_EDITING = [
         PauseTool,
@@ -40,28 +39,28 @@ export const LEFT_TOOLBAR_VIEWING = [
         EmptyTool,
         SwitchBikeTool,
         // FocusGhostTool,
-        EmptyTool,
-        FullscreenTool,
+        // EmptyTool,
+        // FullscreenTool,
         EmptyTool,
         UndoTool,
         RedoTool,
     ],
     RIGHT_TOOLBAR = [
-        SolidBrushTool,
-        SceneryBrushTool,
-        SolidLineTool,
-        SceneryLineTool,
+        LineTool,
+        BrushTool,
+        ItemSelectorTool,
         EraserTool,
-        EmptyTool,
-        CameraTool,
-        GridSnapTool,
-        EmptyTool,
-        TargetTool,
-        CheckpointTool,
-        BoostTool,
-        GravityTool,
-        BombTool,
-        SlowMoTool,
         // EmptyTool,
-        // StartPositionTool,
-    ];
+        CameraTool,
+        StartPositionTool,
+        EmptyTool,
+        //TargetTool,
+        //CheckpointTool,
+        //BoostTool,
+        //GravityTool,
+        //BombTool,
+        //SlowMoTool,
+        // EmptyTool,
+        GridSnapTool,
+    ],
+    ITEM_OPTIONS = [TargetTool, CheckpointTool, BoostTool, GravityTool, BombTool, SlowMoTool];

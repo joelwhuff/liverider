@@ -3,7 +3,7 @@ import { TRACK_DEFAULT } from '../constant/TrackConstants.js';
 import Toolbar from '../tool/Toolbar.js';
 import Track from '../track/Track.js';
 import CameraTool from '../tool/CameraTool.js';
-import SolidLineTool from '../tool/item/line/SolidLineTool.js';
+import LineTool from '../tool/item/line/LineTool.js';
 
 export default class UI {
     static clearUI(state) {
@@ -34,6 +34,52 @@ export default class UI {
         let chat = document.createElement('div');
         chat.classList.add('game-chat');
         let chatOpen = false;
+
+        let postMessage = () => {
+            if (typeof chatInput.value !== 'string' || chatInput.value.trim() === '') {
+                return;
+            }
+            let msgNameEl = document.createElement('div');
+            msgNameEl.classList.add('message', 'name');
+            msgNameEl.textContent = 'Joel';
+            msgNameEl.style.color = '#f00';
+            let msgEl = document.createElement('div');
+            msgEl.classList.add('message');
+            msgEl.textContent = chatInput.value;
+
+            chatInput.value = '';
+
+            if (chatInputContainer.nextElementSibling) {
+                chat.insertBefore(msgEl, chatInputContainer.nextElementSibling);
+                chat.insertBefore(msgNameEl, chatInputContainer.nextElementSibling);
+            } else {
+                chat.appendChild(msgNameEl);
+                chat.appendChild(msgEl);
+            }
+        };
+
+        let chatInputContainer = document.createElement('div');
+        chatInputContainer.classList.add('input-cntr');
+
+        let chatInput = document.createElement('input');
+        chatInput.classList.add('input');
+        chatInput.setAttribute('placeholder', 'Message');
+        chatInput.addEventListener('mousedown', () => {});
+        chatInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                postMessage();
+            }
+        });
+
+        let chatPost = document.createElement('button');
+        chatPost.textContent = 'Post';
+        chatPost.classList.add('post');
+        chatPost.addEventListener('click', () => {
+            postMessage();
+        });
+
+        chatInputContainer.append(chatInput, chatPost);
+        chat.appendChild(chatInputContainer);
 
         let chatButton = document.createElement('div');
         chatButton.classList.add('chat');
@@ -80,7 +126,7 @@ export default class UI {
         UI.makeToolbar(state, LEFT_TOOLBAR_EDITING, 'left');
         UI.makeToolbar(state, RIGHT_TOOLBAR, 'right');
 
-        state.track.toolManager.setTool(state.track.toolCollection.toolsByToolName.get(SolidLineTool.toolName));
+        state.track.toolManager.setTool(state.track.toolCollection.toolsByToolName.get(LineTool.toolName));
     }
 
     static createRaceUI(state) {

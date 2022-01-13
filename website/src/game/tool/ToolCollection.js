@@ -1,5 +1,3 @@
-import Tool from './Tool.js';
-
 export default class ToolCollection {
     constructor() {
         this.toolsByToolName = new Map();
@@ -8,9 +6,13 @@ export default class ToolCollection {
 
     setTools(instances) {
         for (let tool in instances) {
-            this.toolsByToolName.set(instances[tool].constructor.toolName, instances[tool]);
-            this.toolsByKeyLabel.set(instances[tool].constructor.keyLabel, instances[tool]);
+            this.setTool(instances[tool]);
         }
+    }
+
+    setTool(instance) {
+        this.toolsByToolName.set(instance.constructor.toolName, instance);
+        this.toolsByKeyLabel.set(instance.constructor.keyLabel, instance);
     }
 
     getByToolName(toolName) {

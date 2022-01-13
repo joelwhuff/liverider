@@ -1,4 +1,4 @@
-import { ERASER_SVG } from '../constant/ToolConstants.js';
+import { ERASER_SVG, SOLID_SVG, SCENERY_SVG, ITEMS_SVG } from '../constant/ToolConstants.js';
 import Control from '../keyboard/Control.js';
 import * as KeyCode from '../keyboard/KeyCode.js';
 import Tool from './Tool.js';
@@ -25,14 +25,11 @@ export default class EraserTool extends Tool {
         this.maxSize = 62;
 
         this.restrict = new Map();
-        this.restrict.set('foregroundLayer', new Map());
-        this.restrict.get('foregroundLayer').set('line', true);
-        this.restrict.get('foregroundLayer').set('scenery', true);
-        this.restrict.get('foregroundLayer').set('object', false); // no objects in foreground
-        this.restrict.set('mainLayer', new Map());
-        this.restrict.get('mainLayer').set('line', true);
-        this.restrict.get('mainLayer').set('scenery', true);
-        this.restrict.get('mainLayer').set('object', true);
+        this.restrict.set('line', true);
+        this.restrict.set('scenery', true);
+        this.restrict.set('object', true);
+
+        this.makeOptions();
     }
 
     onMouseDown(e) {
@@ -61,90 +58,59 @@ export default class EraserTool extends Tool {
         }
     }
 
-    openOptions() {
-        let foregroundLineLabel = document.createElement('label');
-        foregroundLineLabel.setAttribute('for', 'foregroundLineCheckbox');
-        foregroundLineLabel.textContent = 'Foreground Line:';
+    makeOptions() {
+        this.optionsEl = document.createElement('div');
+        this.optionsEl.id = 'tool-options';
 
-        let foregroundLineCheckbox = document.createElement('input');
-        foregroundLineCheckbox.id = 'foregroundLineCheckbox';
-        foregroundLineCheckbox.type = 'checkbox';
-        foregroundLineCheckbox.checked = this.restrict.get('foregroundLayer').get('line');
+        let solid = document.createElement('div');
+        solid.classList.add('tool', 'option');
+        solid.innerHTML = SOLID_SVG;
 
-        let foregroundSceneryLabel = document.createElement('label');
-        foregroundSceneryLabel.setAttribute('for', 'foregroundSceneryCheckbox');
-        foregroundSceneryLabel.textContent = 'Foreground Scenery:';
+        let scenery = document.createElement('div');
+        scenery.classList.add('tool', 'option');
+        scenery.innerHTML = SCENERY_SVG;
 
-        let foregroundSceneryCheckbox = document.createElement('input');
-        foregroundSceneryCheckbox.id = 'foregroundSceneryCheckbox';
-        foregroundSceneryCheckbox.type = 'checkbox';
-        foregroundSceneryCheckbox.checked = this.restrict.get('foregroundLayer').get('scenery');
+        let items = document.createElement('div');
+        items.classList.add('tool', 'option');
+        items.innerHTML = ITEMS_SVG;
 
-        let lineLabel = document.createElement('label');
-        lineLabel.setAttribute('for', 'lineCheckbox');
-        lineLabel.textContent = 'Line:';
+        let toggleSolid = () => {
+            if (this.restrict.get('line')) {
+                this.restrict.set('line', false);
+                solid.classList.remove('selected');
+            } else {
+                this.restrict.set('line', true);
+                solid.classList.add('selected');
+            }
+        };
+        let toggleScenery = () => {
+            if (this.restrict.get('scenery')) {
+                this.restrict.set('scenery', false);
+                scenery.classList.remove('selected');
+            } else {
+                this.restrict.set('scenery', true);
+                scenery.classList.add('selected');
+            }
+        };
+        let toggleItems = () => {
+            if (this.restrict.get('object')) {
+                this.restrict.set('object', false);
+                items.classList.remove('selected');
+            } else {
+                this.restrict.set('object', true);
+                items.classList.add('selected');
+            }
+        };
 
-        let lineCheckbox = document.createElement('input');
-        lineCheckbox.id = 'lineCheckbox';
-        lineCheckbox.type = 'checkbox';
-        lineCheckbox.checked = this.restrict.get('mainLayer').get('line');
+        this.restrict.get('line') && solid.classList.add('selected');
+        this.restrict.get('scenery') && scenery.classList.add('selected');
+        this.restrict.get('object') && items.classList.add('selected');
 
-        let sceneryLabel = document.createElement('label');
-        sceneryLabel.setAttribute('for', 'sceneryCheckbox');
-        sceneryLabel.textContent = 'Scenery:';
+        solid.addEventListener('click', toggleSolid);
+        scenery.addEventListener('click', toggleScenery);
+        items.addEventListener('click', toggleItems);
 
-        let sceneryCheckbox = document.createElement('input');
-        sceneryCheckbox.id = 'sceneryCheckbox';
-        sceneryCheckbox.type = 'checkbox';
-        sceneryCheckbox.checked = this.restrict.get('mainLayer').get('scenery');
-
-        let objectLabel = document.createElement('label');
-        objectLabel.setAttribute('for', 'objectCheckbox');
-        objectLabel.textContent = 'Object:';
-
-        let objectCheckbox = document.createElement('input');
-        objectCheckbox.id = 'objectCheckbox';
-        objectCheckbox.type = 'checkbox';
-        objectCheckbox.checked = this.restrict.get('mainLayer').get('object');
-
-        let buttonOk = document.createElement('button');
-        buttonOk.textContent = 'OK';
-        buttonOk.addEventListener('click', () => this.hideOptions());
-
-        let foregroundLineDiv = document.createElement('div');
-        let foregroundSceneryDiv = document.createElement('div');
-        let lineDiv = document.createElement('div');
-        let sceneryDiv = document.createElement('div');
-        let objectDiv = document.createElement('div');
-        let buttonDiv = document.createElement('div');
-
-        foregroundLineDiv.appendChild(foregroundLineLabel);
-        foregroundLineDiv.appendChild(foregroundLineCheckbox);
-        foregroundSceneryDiv.appendChild(foregroundSceneryLabel);
-        foregroundSceneryDiv.appendChild(foregroundSceneryCheckbox);
-        lineDiv.appendChild(lineLabel);
-        lineDiv.appendChild(lineCheckbox);
-        sceneryDiv.appendChild(sceneryLabel);
-        sceneryDiv.appendChild(sceneryCheckbox);
-        objectDiv.appendChild(objectLabel);
-        objectDiv.appendChild(objectCheckbox);
-
-        buttonDiv.appendChild(buttonOk);
-
-        options.appendChild(foregroundLineDiv);
-        options.appendChild(foregroundSceneryDiv);
-        options.appendChild(lineDiv);
-        options.appendChild(sceneryDiv);
-        options.appendChild(objectDiv);
-        options.appendChild(buttonDiv);
-    }
-
-    closeOptions() {
-        this.restrict.get('foregroundLayer').set('line', foregroundLineCheckbox.checked);
-        this.restrict.get('foregroundLayer').set('scenery', foregroundSceneryCheckbox.checked);
-        this.restrict.get('mainLayer').set('line', lineCheckbox.checked);
-        this.restrict.get('mainLayer').set('scenery', sceneryCheckbox.checked);
-        this.restrict.get('mainLayer').set('object', objectCheckbox.checked);
+        this.optionsEl.append(solid, scenery, items);
     }
 
     render(ctx) {

@@ -141,24 +141,12 @@ export default class Track {
             deleted.push(...cell.checkDelete(eraserPoint, radius, restrict));
         };
 
-        let mainLayerRestrict = restrict.get('mainLayer');
-        // let foregroundLayerRestrict = restrict.get('foregroundLayer');
-        let mainLayerActive = [...mainLayerRestrict.values()].some(Boolean);
-        // let foregroundLayerActive = [...foregroundLayerRestrict.values()].some(Boolean);
-
-        if (mainLayerActive) {
-            checkCell(this.grid.cell(x, y), mainLayerRestrict);
-            checkCell(this.grid.cell(x, y + 1), mainLayerRestrict);
-            checkCell(this.grid.cell(x + 1, y), mainLayerRestrict);
-            checkCell(this.grid.cell(x + 1, y + 1), mainLayerRestrict);
+        if ([...restrict.values()].some(Boolean)) {
+            checkCell(this.grid.cell(x, y), restrict);
+            checkCell(this.grid.cell(x, y + 1), restrict);
+            checkCell(this.grid.cell(x + 1, y), restrict);
+            checkCell(this.grid.cell(x + 1, y + 1), restrict);
         }
-
-        // if (foregroundLayerActive) {
-        //     checkCell(this.foregroundGrid.cell(x, y), foregroundLayerRestrict);
-        //     checkCell(this.foregroundGrid.cell(x, y + 1), foregroundLayerRestrict);
-        //     checkCell(this.foregroundGrid.cell(x + 1, y), foregroundLayerRestrict);
-        //     checkCell(this.foregroundGrid.cell(x + 1, y + 1), foregroundLayerRestrict);
-        // }
 
         return deleted;
     }

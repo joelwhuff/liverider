@@ -1,6 +1,7 @@
 import GameObject from '../../GameObject.js';
 import Track from '../../track/Track.js';
 import CameraTool from '../CameraTool.js';
+import ItemTool from '../item/ItemTool.js';
 import Tool from '../Tool.js';
 
 export default class ToolManager extends GameObject {
@@ -10,8 +11,8 @@ export default class ToolManager extends GameObject {
         this.track = track;
         this.tool = null;
         this.rightTool = new CameraTool(this.track);
+        this.itemSelector = null;
         this.active = false;
-        this.optionsOpened = false;
     }
 
     /**
@@ -19,15 +20,21 @@ export default class ToolManager extends GameObject {
      * @param {Tool} tool
      */
     setTool(tool) {
-        if (this.tool) {
-            this.tool.deactivate();
-            this.tool.dom.classList.remove('selected');
+        if (this.tool !== tool) {
+            if (!(tool instanceof ItemTool) && this.itemSelector) {
+                this.itemSelector.deactivate();
+            }
+
+            if (this.tool) {
+                this.tool.deactivate();
+                this.tool.dom.classList.remove('selected');
+            }
+
+            this.tool = tool;
+            this.tool.activate();
+
+            tool.dom.classList.add('selected');
         }
-
-        this.tool = tool;
-        this.tool.activate();
-
-        tool.dom.classList.add('selected');
     }
 
     fixedUpdate() {

@@ -1,6 +1,22 @@
+import { SOLID_BRUSH_SVG } from '../../../constant/ToolConstants.js';
+import * as KeyCode from '../../../keyboard/KeyCode.js';
+import Control from '../../../keyboard/Control.js';
 import LineTool from './LineTool.js';
 
 export default class BrushTool extends LineTool {
+    static get toolName() {
+        return 'Brush';
+    }
+    static get keyLabel() {
+        return 'A';
+    }
+    static get key() {
+        return new Control(KeyCode.DOM_VK_A);
+    }
+    static get icon() {
+        return SOLID_BRUSH_SVG;
+    }
+
     constructor(track) {
         super(track);
         this.size = 20;

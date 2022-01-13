@@ -24,9 +24,20 @@ html {
     font: 18px 'Ubuntu-R';
 }
 
+::placeholder {
+    font-family: 'Ubuntu-R';
+}
+
 body {
     background-color: #000;
     overflow: hidden;
+}
+
+button {
+    font: 1rem 'Ubuntu-R';
+}
+button:hover {
+    cursor: pointer;
 }
 
 #game {
@@ -36,7 +47,8 @@ body {
 }
 
 #game-options {
-    background-color: #5812c9;
+    background-color: #5600c7;
+    /* background-color: rgb(15, 87, 51); */
     user-select: none;
 }
 
@@ -45,9 +57,8 @@ body {
     padding: 0.3rem 0.85rem;
     box-sizing: border-box;
     margin: 0 5px;
-    font: 1rem 'Ubuntu-R';
     background-color: #fff;
-    color: #111;
+    color: #222;
     border-radius: 4px;
     border: none;
     outline: none;
@@ -114,9 +125,58 @@ body {
     height: 100%;
     transition: 0.4s ease-out;
     background-color: #ddd;
+    /* background: linear-gradient(90deg, #bbb, #eee); */
+    overflow-x: hidden;
+    border-left: none;
 }
 .game-chat.open {
     flex: 0 1 300px;
+    /* border-left: 1px solid #777; */
+}
+
+.game-chat .input-cntr {
+    display: flex;
+    margin: 10px 16px 0 16px;
+    padding-bottom: 12px;
+    /* border-bottom: 2px solid #bbb; */
+}
+
+.game-chat .input {
+    flex: 1 1 auto;
+    padding-left: 20px;
+    outline: none;
+    border: none;
+    border-radius: 15px;
+    font: 15px 'Ubuntu-R';
+}
+
+.game-chat .input:focus {
+    outline: 1px solid #777;
+}
+
+.game-chat .post {
+    height: 30px;
+    margin-left: 10px;
+    padding: 0 14px;
+    border-radius: 16px;
+    border: none;
+    background-color: #fff;
+    color: #222;
+}
+
+.game-chat .message {
+    font-size: 0.8rem;
+    margin: 0 16px;
+    color: #222;
+}
+
+.game-chat .message.name {
+    font-family: 'Ubuntu-B';
+    margin-top: 10px;
+}
+
+.game-chat .post:hover {
+    background-color: #fbfbfb;
 }
 
 .toolbar {
@@ -156,13 +216,13 @@ body {
     align-items: center;
     justify-content: center;
     pointer-events: all;
-    height: 40px;
-    width: 40px;
+    height: 44px;
+    width: 44px;
 }
 
 .tool svg {
     transition: 0.16s ease-out;
-    margin: 0 5px 0 5px;
+    margin: 0 5px;
     padding: 2px;
     border-radius: 8px;
 }
@@ -189,29 +249,43 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    margin-left: 50%;
+    margin: 10px 0 0 50%;
+    padding: 1px 10px;
     transform: translateX(-50%);
-    padding: 6px 12px;
-    border-radius: 10px;
+    /* padding: 6px 12px; */
+    border-radius: 8px;
     background-color: yellow;
+    background-color: rgba(255, 255, 255, 0.94);
+    animation: appear 0.15s ease-out;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -30px);
+    }
 }
 
 #tool-options .option {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    margin: 0 5px;
+    display: inline-flex;
+    width: 60px;
+    height: 60px;
 }
 #tool-options .option:hover {
     cursor: pointer;
 }
 
-#tool-options .option.solid {
-    border-radius: 50%;
-    background-color: #000;
+#tool-options .option.item {
+    width: 42px;
+    height: 42px;
 }
 
-#tool-options .option.scenery {
+#tool-options svg {
     border-radius: 50%;
-    background-color: #aaa;
+    margin: 0 3px;
+    padding: 0;
+}
+
+#tool-options .option:hover {
+    cursor: pointer;
 }

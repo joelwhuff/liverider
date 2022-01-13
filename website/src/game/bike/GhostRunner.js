@@ -48,7 +48,7 @@ export default class GhostRunner extends BikeRunner {
             .toPixel(this.track);
 
         ctx.save();
-        ctx.font = `bold ${Math.min(25 * this.track.zoomFactor, 15)}px Ubuntu`;
+        ctx.font = `${Math.min(25 * this.track.zoomFactor, 15)}px Ubuntu-B`;
 
         let ghostNameMetrics = ctx.measureText(this.ghostName);
         let ghostNameWidth = ghostNameMetrics.width;

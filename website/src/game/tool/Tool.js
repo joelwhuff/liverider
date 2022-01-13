@@ -25,6 +25,8 @@ export default class Tool extends GameObject {
         this.track = track;
         this.mouseDown = false;
         this.alwaysRender = false;
+
+        this.optionsEl = null;
     }
 
     registerControls() {
@@ -44,7 +46,10 @@ export default class Tool extends GameObject {
         }
 
         el.addEventListener('click', () => this.run());
-        el.addEventListener('contextmenu', e => this.showOptions(e));
+        el.addEventListener('contextmenu', e => {
+            e.preventDefault();
+            // this.run();
+        });
 
         this.dom = el;
         return el;
@@ -58,36 +63,28 @@ export default class Tool extends GameObject {
         this.track.toolManager.setTool(this);
     }
 
-    showOptions(e) {
-        e.preventDefault();
-        if (!this.track.toolManager.optionsOpened && this.track.toolManager.tool === this) {
-            this.track.toolManager.optionsOpened = true;
-            this.openOptions();
+    makeOptions() {}
+
+    showOptions() {
+        if (this.optionsEl !== null) {
+            this.track.canvas.parentElement.appendChild(this.optionsEl);
         }
     }
 
     hideOptions() {
-        if (this.track.toolManager.optionsOpened) {
-            this.track.toolManager.optionsOpened = false;
-            this.closeOptions();
-            options.innerHTML = null;
-            this.run();
+        if (this.optionsEl !== null) {
+            this.track.canvas.parentElement.removeChild(this.optionsEl);
         }
     }
 
-    openOptions() {
-        this.hideOptions();
-    }
-
-    closeOptions() {}
-
     activate() {
         this.track.canvas.style.cursor = 'default';
+        this.showOptions();
     }
 
     deactivate() {
-        this.hideOptions();
         this.mouseDown = false;
+        this.hideOptions();
     }
 
     onMouseDown(e) {

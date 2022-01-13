@@ -64,7 +64,7 @@ export default class Line extends Item {
      */
     getEnd() {
         this.recorded = true;
-        let end = ' ' + this.endPos.toString();
+        let end = ' ' + this.endPos.sub(this.track.origin).toString();
         let gridCoords = Grid.gridCoords(this.endPos, this.grid.cellSize);
         /** @type {PhysicsCell} */
         let nextGrid = this.grid.cell(gridCoords.x, gridCoords.y);
@@ -80,7 +80,7 @@ export default class Line extends Item {
      * @returns {string}
      */
     toString() {
-        return this.pos.toString() + this.getEnd();
+        return this.pos.sub(this.track.origin).toString() + this.getEnd();
     }
 
     /**
