@@ -16,6 +16,8 @@ export default class TrackEvent {
 
         this.mouseIn = false;
 
+        this.gameInFocus = true;
+
         this.attach();
     }
 
@@ -92,11 +94,15 @@ export default class TrackEvent {
     }
 
     onKeyDown(e) {
-        this.keyboard.onKeyDown(e);
+        if (this.gameInFocus) {
+            this.keyboard.onKeyDown(e);
+        }
     }
 
     onKeyUp(e) {
-        this.keyboard.onKeyUp(e);
+        if (this.gameInFocus) {
+            this.keyboard.onKeyUp(e);
+        }
     }
 
     onKeyboardDown(e) {

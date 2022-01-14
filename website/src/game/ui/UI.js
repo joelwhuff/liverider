@@ -1,3 +1,4 @@
+import { makeElement } from '../../util/DOM.js';
 import { LEFT_TOOLBAR_EDITING, LEFT_TOOLBAR_VIEWING, RIGHT_TOOLBAR } from '../constant/ToolbarConstants.js';
 import { TRACK_DEFAULT } from '../constant/TrackConstants.js';
 import Toolbar from '../tool/Toolbar.js';
@@ -13,115 +14,15 @@ export default class UI {
         }
     }
 
-    static makeGameUI(container) {
-        let options = document.createElement('div');
-        options.id = 'game-options';
-
-        let settingsButton = document.createElement('div');
-        settingsButton.classList.add('settings');
-        settingsButton.innerHTML =
-            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="#fff" d="M79.875 47.332a29.81 29.81 0 0 0-1.794-7.897l7.96-6.804a40.146 40.146 0 0 0-11.102-13.893l-8.395 6.239a29.87 29.87 0 0 0-7.296-3.517l-.356-10.455C56.031 10.355 53.058 10 50 10s-6.031.355-8.892 1.004l-.356 10.456a29.872 29.872 0 0 0-7.296 3.517l-8.395-6.239a40.146 40.146 0 0 0-11.102 13.893l7.96 6.804a29.828 29.828 0 0 0-1.794 7.897L10 50.009a39.831 39.831 0 0 0 3.948 17.34l10.286-1.982a30.134 30.134 0 0 0 5.054 6.324l-4.217 9.579a39.835 39.835 0 0 0 16.021 7.721l4.86-9.271c1.325.179 2.674.28 4.048.28s2.723-.101 4.047-.279l4.86 9.271a39.835 39.835 0 0 0 16.021-7.721l-4.217-9.579a30.16 30.16 0 0 0 5.054-6.324l10.286 1.982a39.831 39.831 0 0 0 3.948-17.34l-10.124-2.678zM50 65c-8.284 0-15-6.716-15-15 0-8.284 6.716-15 15-15s15 6.716 15 15c0 8.284-6.716 15-15 15z"/></svg>';
-        options.appendChild(settingsButton);
-
-        let content = document.createElement('div');
-        content.id = 'game-content';
-
-        let screen = document.createElement('div');
-        screen.id = 'game-screen';
-
-        let canvas = document.createElement('canvas');
-
-        let chat = document.createElement('div');
-        chat.classList.add('game-chat');
-        let chatOpen = false;
-
-        let postMessage = () => {
-            if (typeof chatInput.value !== 'string' || chatInput.value.trim() === '') {
-                return;
-            }
-            let msgNameEl = document.createElement('div');
-            msgNameEl.classList.add('message', 'name');
-            msgNameEl.textContent = 'Joel';
-            msgNameEl.style.color = '#f00';
-            let msgEl = document.createElement('div');
-            msgEl.classList.add('message');
-            msgEl.textContent = chatInput.value;
-
-            chatInput.value = '';
-
-            if (chatInputContainer.nextElementSibling) {
-                chat.insertBefore(msgEl, chatInputContainer.nextElementSibling);
-                chat.insertBefore(msgNameEl, chatInputContainer.nextElementSibling);
-            } else {
-                chat.appendChild(msgNameEl);
-                chat.appendChild(msgEl);
-            }
-        };
-
-        let chatInputContainer = document.createElement('div');
-        chatInputContainer.classList.add('input-cntr');
-
-        let chatInput = document.createElement('input');
-        chatInput.classList.add('input');
-        chatInput.setAttribute('placeholder', 'Message');
-        chatInput.addEventListener('mousedown', () => {});
-        chatInput.addEventListener('keydown', e => {
-            if (e.key === 'Enter') {
-                postMessage();
-            }
-        });
-
-        let chatPost = document.createElement('button');
-        chatPost.textContent = 'Post';
-        chatPost.classList.add('post');
-        chatPost.addEventListener('click', () => {
-            postMessage();
-        });
-
-        chatInputContainer.append(chatInput, chatPost);
-        chat.appendChild(chatInputContainer);
-
-        let chatButton = document.createElement('div');
-        chatButton.classList.add('chat');
-        chatButton.innerHTML =
-            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><path fill="#fff" d="M54,2H6C2.748,2,0,4.748,0,8v33c0,3.252,2.748,6,6,6h28.558l9.703,10.673C44.454,57.885,44.724,58,45,58c0.121,0,0.243-0.022,0.361-0.067C45.746,57.784,46,57.413,46,57V47h8c3.252,0,6-2.748,6-6V8C60,4.748,57.252,2,54,2z"/></svg>';
-        chatButton.addEventListener('click', () => {
-            if (chatOpen) {
-                chat.classList.remove('open');
-            } else {
-                chat.classList.add('open');
-            }
-            chatOpen = !chatOpen;
-        });
-        options.appendChild(chatButton);
-
-        screen.appendChild(canvas);
-        content.append(screen, chat);
-        container.append(options, content);
-
-        let setContextProperties = ctx => {
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.font = '16px Ubuntu-R';
-        };
-
-        let setCanvasSize = () => {
-            canvas.width = screen.clientWidth;
-            canvas.height = screen.clientHeight;
-
-            setContextProperties(canvas.getContext('2d'));
-        };
-
-        // new ResizeObserver(() => {
-        //     setCanvasSize();
-        // }).observe(screen);
-
-        // setCanvasSize();
-
-        return canvas;
-    }
-
     static createEditorUI(state) {
+        let buttons = document.querySelectorAll('#game-options .item');
+        if (buttons.length) {
+            let gameOptions = document.getElementById('game-options');
+            gameOptions.removeChild(document.getElementById('import'));
+            buttons.forEach(button => {
+                gameOptions.removeChild(button);
+            });
+        }
         UI.makeButtons(state);
         UI.makeToolbar(state, LEFT_TOOLBAR_EDITING, 'left');
         UI.makeToolbar(state, RIGHT_TOOLBAR, 'right');
@@ -133,6 +34,75 @@ export default class UI {
         UI.makeToolbar(state, LEFT_TOOLBAR_VIEWING, 'left');
 
         state.track.toolManager.setTool(state.track.toolCollection.toolsByToolName.get(CameraTool.toolName));
+    }
+
+    static makeGameUI(container, game) {
+        let options = makeElement('div', ['id', 'game-options']);
+
+        let settingsButton = makeElement('div', ['class', 'settings'], options);
+        settingsButton.innerHTML =
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="#fff" d="M79.875 47.332a29.81 29.81 0 0 0-1.794-7.897l7.96-6.804a40.146 40.146 0 0 0-11.102-13.893l-8.395 6.239a29.87 29.87 0 0 0-7.296-3.517l-.356-10.455C56.031 10.355 53.058 10 50 10s-6.031.355-8.892 1.004l-.356 10.456a29.872 29.872 0 0 0-7.296 3.517l-8.395-6.239a40.146 40.146 0 0 0-11.102 13.893l7.96 6.804a29.828 29.828 0 0 0-1.794 7.897L10 50.009a39.831 39.831 0 0 0 3.948 17.34l10.286-1.982a30.134 30.134 0 0 0 5.054 6.324l-4.217 9.579a39.835 39.835 0 0 0 16.021 7.721l4.86-9.271c1.325.179 2.674.28 4.048.28s2.723-.101 4.047-.279l4.86 9.271a39.835 39.835 0 0 0 16.021-7.721l-4.217-9.579a30.16 30.16 0 0 0 5.054-6.324l10.286 1.982a39.831 39.831 0 0 0 3.948-17.34l-10.124-2.678zM50 65c-8.284 0-15-6.716-15-15 0-8.284 6.716-15 15-15s15 6.716 15 15c0 8.284-6.716 15-15 15z"/></svg>';
+
+        let content = makeElement('div', ['id', 'game-content']);
+
+        let screen = makeElement('div', ['id', 'game-screen'], content);
+
+        let canvas = makeElement('canvas', [], screen);
+
+        let chat = makeElement('div', ['class', 'game-chat'], content);
+        let chatOpen = false;
+
+        let postMessage = () => {
+            if (typeof chatInput.value !== 'string' || chatInput.value.trim() === '') {
+                return;
+            }
+
+            let msgContainer = makeElement('div', ['message-container']);
+            makeElement('div', ['class', 'message name', 'style', 'color: #f00;'], msgContainer, 'Joel');
+            makeElement('div', ['class', 'message'], msgContainer, chatInput.value);
+
+            chatInput.value = '';
+
+            chatMessages.prepend(msgContainer);
+        };
+
+        let chatInputContainer = makeElement('div', ['class', 'input-ctr'], chat);
+
+        let chatInput = makeElement(
+            'input',
+            ['class', 'input', 'placeholder', 'Message', 'spellcheck', 'false'],
+            chatInputContainer
+        );
+        chatInput.addEventListener('mousedown', () => {
+            game.stateManager.track.event.gameInFocus = false;
+        });
+        chatInput.addEventListener('blur', () => {
+            game.stateManager.track.event.gameInFocus = true;
+        });
+        chatInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                postMessage();
+            }
+        });
+
+        let chatPost = makeElement('button', ['class', 'post'], chatInputContainer, 'Post');
+        chatPost.addEventListener('click', () => {
+            postMessage();
+        });
+
+        let chatMessages = makeElement('div', ['class', 'messages'], chat);
+
+        let chatButton = makeElement('div', ['class', 'chat'], options);
+        chatButton.innerHTML =
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><path fill="#fff" d="M54,2H6C2.748,2,0,4.748,0,8v33c0,3.252,2.748,6,6,6h28.558l9.703,10.673C44.454,57.885,44.724,58,45,58c0.121,0,0.243-0.022,0.361-0.067C45.746,57.784,46,57.413,46,57V47h8c3.252,0,6-2.748,6-6V8C60,4.748,57.252,2,54,2z"/></svg>';
+        chatButton.addEventListener('click', () => {
+            chatOpen ? chat.classList.remove('open') : chat.classList.add('open');
+            chatOpen = !chatOpen;
+        });
+
+        container.append(options, content);
+
+        return canvas;
     }
 
     static makeButtons(state) {

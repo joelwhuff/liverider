@@ -12,7 +12,7 @@ export default class Game {
      * @param {{}} opt
      */
     constructor(container, opt) {
-        this.canvas = UI.makeGameUI(container);
+        this.canvas = UI.makeGameUI(container, this);
 
         /** @type {StateManager} */
         this.stateManager = new StateManager(this, this.canvas, opt);

@@ -118,7 +118,7 @@ export default class LineTool extends Tool {
         solid.addEventListener('click', setSolid);
         scenery.addEventListener('click', setScenery);
         document.addEventListener('keydown', e => {
-            if (e.key.toLowerCase() === 's') {
+            if (this.track.event.gameInFocus && e.key.toLowerCase() === 's') {
                 toggleLineClass();
             }
         });
