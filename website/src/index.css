@@ -1,12 +1,11 @@
 @font-face {
-    font-family: 'Ubuntu-R';
-    src: url('./font/Ubuntu-R.woff2');
-    /* src: url('./font/Ubuntu-R.woff'); */
+    font-family: 'Ubuntu';
+    src: url('./font/Ubuntu-R.woff2') format('woff2');
 }
 @font-face {
-    font-family: 'Ubuntu-B';
-    src: url('./font/Ubuntu-B.woff2');
-    /* src: url('./font/Ubuntu-R.woff'); */
+    font-family: 'Ubuntu';
+    src: url('./font/Ubuntu-B.woff2') format('woff2');
+    font-weight: bold;
 }
 
 * {
@@ -21,11 +20,11 @@ body {
 }
 
 html {
-    font: 18px 'Ubuntu-R';
+    font: 18px 'Ubuntu', sans-serif;
 }
 
 ::placeholder {
-    font-family: 'Ubuntu-R';
+    font-family: 'Ubuntu';
 }
 
 body {
@@ -34,7 +33,7 @@ body {
 }
 
 button {
-    font: 1rem 'Ubuntu-R';
+    font: 1rem 'Ubuntu';
 }
 button:hover {
     cursor: pointer;
@@ -152,7 +151,7 @@ button:hover {
     outline: none;
     border: none;
     border-radius: 15px;
-    font: 15px 'Ubuntu-R';
+    font: 15px 'Ubuntu';
 }
 
 .game-chat .input:focus {
@@ -184,7 +183,7 @@ button:hover {
 }
 
 .game-chat .message.name {
-    font: 15px 'Ubuntu-B';
+    font: bold 15px 'Ubuntu';
     margin-top: 10px;
 }
 

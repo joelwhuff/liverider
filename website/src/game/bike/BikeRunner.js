@@ -8,7 +8,7 @@ import Bike from './instance/Bike.js';
 import Ragdoll from '../entity/Ragdoll.js';
 
 export default class BikeRunner extends GameObject {
-    constructor(track, bikeClass) {
+    constructor(track, bikeClass, color) {
         super();
         /** @type {Track} */
         this.track = track;
@@ -20,6 +20,7 @@ export default class BikeRunner extends GameObject {
 
         /** @type {Bike} */
         this.instance = null;
+        this.color = color;
         /** @type {Bike} */
         this.initialBike = null;
         this.bikeClass = bikeClass;
@@ -43,7 +44,9 @@ export default class BikeRunner extends GameObject {
         this.initialBike = this.instance.clone();
     }
 
-    assignColor() {}
+    assignColor() {
+        this.instance.color = this.color;
+    }
 
     startFrom(snapshot) {
         this.done = false;
@@ -54,26 +57,29 @@ export default class BikeRunner extends GameObject {
         this.targetsReached = new Map();
         this.checkpointsReached = new Map();
 
-        this.upPressed = false;
-        this.downPressed = false;
-        this.leftPressed = false;
-        this.rightPressed = false;
-        this.turnPressed = false;
+        // changing keypresses to old state will cuase playerRunner updateControls
+        // to send new keydown messages to server, which break socket runners
 
-        this.track.time = 0;
+        // this.upPressed = false;
+        // this.downPressed = false;
+        // this.leftPressed = false;
+        // this.rightPressed = false;
+        // this.turnPressed = false;
+
+        // this.track.time = 0;
 
         if (snapshot) {
             bike = snapshot.bike;
             this.targetsReached = new Map(snapshot.targetsReached);
             this.checkpointsReached = new Map(snapshot.checkpointsReached);
 
-            this.upPressed = snapshot.upPressed;
-            this.downPressed = snapshot.downPressed;
-            this.leftPressed = snapshot.leftPressed;
-            this.rightPressed = snapshot.rightPressed;
-            this.turnPressed = snapshot.turnPressed;
+            // this.upPressed = snapshot.upPressed;
+            // this.downPressed = snapshot.downPressed;
+            // this.leftPressed = snapshot.leftPressed;
+            // this.rightPressed = snapshot.rightPressed;
+            // this.turnPressed = snapshot.turnPressed;
 
-            this.track.time = snapshot.time;
+            // this.track.time = snapshot.time;
         }
 
         this.targetsReached.forEach((target, targetId) => {

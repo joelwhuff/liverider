@@ -18,6 +18,7 @@ export default class CancelCheckpointTool extends Tool {
     }
 
     run() {
+        this.track.room.sendBuffer([2, this.track.time]);
         this.track.playerRunner.popCheckpoint();
         this.track.ghostRunners.forEach(runner => {
             runner.popCheckpoint();

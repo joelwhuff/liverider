@@ -1,4 +1,3 @@
-import { makeSVGElement } from '../../util/DOM.js';
 import { PAUSE_SVG, PLAY_SVG } from '../constant/ToolConstants.js';
 import Tool from './Tool.js';
 import * as KeyCode from '../keyboard/KeyCode.js';
@@ -25,8 +24,10 @@ export default class PauseTool extends Tool {
     }
 
     run() {
-        this.track.paused = !this.track.paused;
-        this.updateDOM();
+        // this.track.room.sendBuffer([3, this.track.time]);
+        this.track.pause(!this.track.paused);
+        // this.track.paused = !this.track.paused;
+        // this.updateDOM();
     }
 
     updateDOM() {

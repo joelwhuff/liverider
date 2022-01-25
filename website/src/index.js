@@ -1,4 +1,4 @@
-import './style.css';
+import './index.css';
 
 import Application from './app/Application.js';
 

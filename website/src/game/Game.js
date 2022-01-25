@@ -1,4 +1,5 @@
 import { GAME_UPS } from './constant/GameConstants.js';
+import Application from '../app/Application.js';
 import GeneratorState from './state/GeneratorState.js';
 import ParserState from './state/ParserState.js';
 import StateManager from './state/StateManager.js';
@@ -10,8 +11,11 @@ export default class Game {
      *
      * @param {HTMLCanvasElement} canvas
      * @param {{}} opt
+     * @param {Application} app
      */
-    constructor(container, opt) {
+    constructor(container, opt, app) {
+        this.app = app;
+
         this.canvas = UI.makeGameUI(container, this);
 
         /** @type {StateManager} */
@@ -40,7 +44,7 @@ export default class Game {
     setContextProperties() {
         this.ctx.lineCap = 'round';
         this.ctx.lineJoin = 'round';
-        this.ctx.font = '15px Ubuntu-B';
+        this.ctx.font = 'bold 15px Ubuntu';
     }
 
     setCanvasSize() {
@@ -56,6 +60,7 @@ export default class Game {
         let now = performance.now();
         let delta = now - this.lastTime;
 
+        // delta must be accurate for live racing
         // if (delta > 1000) {
         //     delta = this.frameDuration;
         // }

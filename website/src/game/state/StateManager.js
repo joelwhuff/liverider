@@ -1,13 +1,15 @@
 import GameObject from '../GameObject.js';
 import Track from '../track/Track.js';
 import GameState from './GameState.js';
+import RaceRoom from '../room/RaceRoom.js';
 
 export default class StateManager extends GameObject {
     constructor(game, canvas, opt) {
         super();
 
         this.game = game;
-        this.track = new Track(canvas, opt);
+        this.room = new RaceRoom(game.app.ws);
+        this.track = new Track(canvas, opt, this.room);
 
         /** @type {Map<String, GameState>} */
         this.states = new Map();

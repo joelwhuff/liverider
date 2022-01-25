@@ -1,4 +1,3 @@
-import { makeSVGElement } from '../../util/DOM.js';
 import Track from '../track/Track.js';
 import GameObject from '../GameObject.js';
 

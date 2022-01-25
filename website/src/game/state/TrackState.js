@@ -17,9 +17,11 @@ export default class TrackState extends GameState {
                     runner.fixedUpdate();
                 }
             });
-
-            this.track.time++;
         }
+        this.track.time++;
+        this.track.socketRunners.forEach(runner => {
+            runner.fixedUpdate();
+        });
     }
 
     update(progress, delta) {
@@ -35,6 +37,11 @@ export default class TrackState extends GameState {
         if (this.track.focalPoint) {
             this.track.camera.selfAdd(this.track.focalPoint.displayPos.sub(this.track.camera).scale(delta / 200));
         }
+        this.track.socketRunners.forEach(runner => {
+            if (!runner.paused) {
+                runner.update(progress, delta);
+            }
+        });
     }
 
     /**
@@ -56,6 +63,9 @@ export default class TrackState extends GameState {
             }
         }
 
+        this.track.socketRunners.forEach(runner => {
+            runner.render(ctx);
+        });
         this.track.ghostRunners.forEach(runner => {
             runner.render(ctx);
         });
@@ -66,18 +76,39 @@ export default class TrackState extends GameState {
         ctx.lineWidth = 0.5;
         ctx.fillStyle = '#000';
         ctx.fillText(Time.format(this.track.time * this.manager.game.frameDuration), 12, 20);
-        ctx.fillText(`${this.track.playerRunner.targetsReached.size}/${this.track.targets.size}`, 12, 36);
+        // ctx.fillText(`${this.track.playerRunner.targetsReached.size}/${this.track.targets.size}`, 12, 36);
 
-        this.track.ghostRunners.forEach((runner, index) => {
-            let ghostTime = Math.max(0, runner.finalTime - this.track.time);
-            let remainingTimeText =
-                ghostTime > 0 ? Time.format(ghostTime * this.manager.game.frameDuration) : 'finished!';
-            let text = `${runner.ghostName}: ${remainingTimeText} - ${runner.targetsReached.size}/${this.track.targets.size}`;
+        // `${
+        //     this.track.playerRunner.finished
+        //         ? 'finished!'
+        //         : Time.format(this.track.time * this.manager.game.frameDuration)
+        // }`;
+
+        let text = `${this.track.user.name} - ${this.track.playerRunner.targetsReached.size}/${this.track.targets.size}`;
+        let textMetrics = ctx.measureText(text);
+
+        ctx.fillStyle = this.track.user.color;
+        ctx.fillText(text, this.track.canvas.width - 20 - textMetrics.width, 18);
+
+        let i = 0;
+        this.track.socketRunners.forEach(runner => {
+            let text = `${runner.name} - ${runner.targetsReached.size}/${this.track.targets.size}`;
             let textMetrics = ctx.measureText(text);
 
             ctx.fillStyle = runner.instance.color;
-            ctx.fillText(text, this.track.canvas.width - 30 - textMetrics.width, 15 * (1 + index));
+            ctx.fillText(text, this.track.canvas.width - 20 - textMetrics.width, 18 * (2 + i));
+            ++i;
         });
+        // this.track.ghostRunners.forEach((runner, index) => {
+        //     let ghostTime = Math.max(0, runner.finalTime - this.track.time);
+        //     let remainingTimeText =
+        //         ghostTime > 0 ? Time.format(ghostTime * this.manager.game.frameDuration) : 'finished!';
+        //     let text = `${runner.ghostName}: ${remainingTimeText} - ${runner.targetsReached.size}/${this.track.targets.size}`;
+        //     let textMetrics = ctx.measureText(text);
+
+        //     ctx.fillStyle = runner.instance.color;
+        //     ctx.fillText(text, this.track.canvas.width - 30 - textMetrics.width, 15 * (1 + index));
+        // });
     }
 
     /**

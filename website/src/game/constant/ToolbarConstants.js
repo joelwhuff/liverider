@@ -28,8 +28,8 @@ export const LEFT_TOOLBAR_VIEWING = [
         EmptyTool,
         SwitchBikeTool,
         FocusGhostTool,
-        // EmptyTool,
-        // CameraTool,
+        EmptyTool,
+        CameraTool,
         // FullscreenTool,
     ],
     LEFT_TOOLBAR_EDITING = [

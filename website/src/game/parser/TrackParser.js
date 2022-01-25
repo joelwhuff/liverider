@@ -1,12 +1,11 @@
 import SolidLine from '../item/line/SolidLine.js';
 import SceneryLine from '../item/line/SceneryLine.js';
 import Vector from '../numeric/Vector.js';
-import { ITEM_LIST, LINE, LINE_FOREGROUND } from '../constant/ItemConstants.js';
+import { ITEM_LIST } from '../constant/ItemConstants.js';
 import DirectionalItem from '../item/DirectionalItem.js';
 import Track from '../track/Track.js';
 import Item from '../item/Item.js';
 import Line from '../item/line/Line.js';
-import Toolbar from '../tool/Toolbar.js';
 import { BIKE_MAP } from '../constant/BikeConstants.js';
 
 export default class TrackParser {
@@ -93,7 +92,9 @@ export default class TrackParser {
 
     parseBike() {
         this.progressLabel = 'Bike';
-        this.track.playerRunner.bikeClass = BIKE_MAP[this.codeBike] || BIKE_MAP['BMX'];
+        let bikeClass = BIKE_MAP[this.codeBike] || BIKE_MAP['BMX'];
+        this.track.bikeClass = bikeClass;
+        this.track.playerRunner.bikeClass = bikeClass;
         this.track.playerRunner.createBike();
         this.track.focalPoint = this.track.playerRunner.instance.hitbox;
 

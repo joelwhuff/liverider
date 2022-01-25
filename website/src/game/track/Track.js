@@ -1,4 +1,5 @@
 import GhostRunner from '../bike/GhostRunner.js';
+import SocketRunner from '../bike/GhostRunner.js';
 import BMX from '../bike/instance/BMX.js';
 import PlayerRunner from '../bike/PlayerRunner.js';
 import { CACHE_CELL_SIZE, GRID_CELL_SIZE } from '../constant/GridConstants.js';
@@ -22,14 +23,14 @@ export default class Track {
      *
      * @param {{}} opt
      */
-    constructor(canvas, opt = {}) {
+    constructor(canvas, opt = {}, room) {
         /** @type {HTMLCanvasElement} */
         this.canvas = canvas;
         /** @type {string} */
         this.trackCode = opt.trackCode;
 
-        this.room = opt.room;
-        // this.room.setTrack(this) maybe set track in state manager after its been fully created instead
+        this.room = room;
+        room.track = this;
 
         this.event = new TrackEvent(this);
 
@@ -57,9 +58,14 @@ export default class Track {
         this.paused = false;
         this.time = 0;
 
-        this.playerRunner = new PlayerRunner(this, BMX);
+        this.user = { name: opt.name, color: opt.color };
+
+        this.bikeClass = null;
+        this.playerRunner = new PlayerRunner(this, BMX, this.user.color);
         /** @type {Array<GhostRunner>} */
         this.ghostRunners = new Array();
+        /** @type {Map<string, SocketRunner>} */
+        this.socketRunners = new Map();
 
         this.undoManager = new UndoManager();
     }
@@ -162,6 +168,7 @@ export default class Track {
     }
 
     pause(paused) {
+        this.room.sendBuffer([paused ? 3 : 4, this.time]);
         this.paused = paused;
         this.toolCollection.getByToolName(PauseTool.toolName).updateDOM();
     }

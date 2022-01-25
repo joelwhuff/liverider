@@ -3,7 +3,6 @@ import { SWITCH_BIKE_SVG } from '../constant/ToolConstants.js';
 import Tool from './Tool.js';
 import * as KeyCode from '../keyboard/KeyCode.js';
 import Control from '../keyboard/Control.js';
-import StartPositionTool from './StartPositionTool.js';
 
 export default class SwitchBikeTool extends Tool {
     static get toolName() {
@@ -20,6 +19,7 @@ export default class SwitchBikeTool extends Tool {
     }
 
     run() {
+        this.track.room.sendBuffer([5, this.track.time]);
         this.track.playerRunner.bikeClass = SWITCH_MAP[this.track.playerRunner.bikeClass.bikeName];
         this.track.playerRunner.createBike();
         this.track.playerRunner.reset();

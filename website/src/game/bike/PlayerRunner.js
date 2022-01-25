@@ -6,8 +6,12 @@ import BikeRenderer from './instance/renderer/BikeRenderer.js';
 import Keyboard from '../keyboard/Keyboard.js';
 
 export default class PlayerRunner extends BikeRunner {
-    constructor(track, bikeClass) {
-        super(track, bikeClass);
+    static get type() {
+        return 'player';
+    }
+
+    constructor(track, bikeClass, color) {
+        super(track, bikeClass, color);
 
         this.track.event.keyboard.registerControl('Up', new Control(KeyCode.DOM_VK_UP));
         this.track.event.keyboard.registerControl('Down', new Control(KeyCode.DOM_VK_DOWN));
@@ -18,8 +22,10 @@ export default class PlayerRunner extends BikeRunner {
 
     onHitTarget() {
         if (this.targetsReached.size >= this.track.targets.size) {
-            let ghostString = GhostParser.generate(this);
-            console.log(ghostString);
+            // let ghostString = GhostParser.generate(this);
+            // console.log(ghostString);
+            this.finished = true;
+            this.finalTime = this.track.time;
         }
     }
 
@@ -38,12 +44,16 @@ export default class PlayerRunner extends BikeRunner {
         controls.set('rightPressed', this.track.event.keyboard.isDown('Right'));
         controls.set('turnPressed', this.track.event.keyboard.isDown('Z'));
 
+        let i = 0;
         controls.forEach((pressed, mapKey) => {
             // this[mapKey] refers to the this.xxxPressed properties of BikeRunner
             if (pressed !== this[mapKey]) {
-                this.instance.keyLog.get(mapKey).push(this.track.time.toString());
+                this.track.room.sendBuffer([0, i, this.track.time]);
+
+                // this.instance.keyLog.get(mapKey).push(this.track.time.toString());
                 this[mapKey] = pressed;
             }
+            ++i;
         });
 
         if ([...controls.values()].some(Boolean)) {
@@ -54,5 +64,28 @@ export default class PlayerRunner extends BikeRunner {
 
     renderInstance(ctx) {
         BikeRenderer.render(ctx, this.instance, 1);
+
+        if (this.track.paused) {
+            let bikePos = this.instance.backWheel.displayPos
+                .add(this.instance.frontWheel.displayPos)
+                .add(this.instance.hitbox.displayPos)
+                .scale(1 / 3)
+                .toPixel(this.track);
+
+            ctx.save();
+            ctx.font = `bold ${Math.min(25 * this.track.zoomFactor, 15)}px Ubuntu`;
+
+            let text = 'paused';
+
+            let textMetrics = ctx.measureText(text);
+            let textWidth = textMetrics.width;
+            ctx.fillStyle = '#000';
+
+            let textX = bikePos.x - textWidth / 2;
+            let textY = bikePos.y - this.instance.hitbox.size * 4 * this.track.zoomFactor;
+
+            ctx.fillText(text, textX, textY);
+            ctx.restore();
+        }
     }
 }
