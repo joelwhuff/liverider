@@ -1,24 +1,20 @@
 import Random from './Random.js';
 
 export default class Color {
-    static #setValueBrightness(color, brightness = 1) {
-        return Math.max(0, Math.min(255, Math.round(color * brightness)));
+    static #setValueBrightness(value, brightness = 1) {
+        return Math.max(0, Math.min(255, Math.round(value * brightness)));
     }
 
     static #generateValues(brightness) {
         let values = [Random.generateInt(165, 255), Random.generateInt(0, 220), Random.generateInt(0, 90)].map(value =>
-            this.#setValueBrightness(value)
+            this.#setValueBrightness(value, brightness)
         );
 
         let r = values.splice(Random.generateInt(0, 2), 1)[0];
         let g = values.splice(Random.generateInt(0, 1), 1)[0];
         let b = values[0];
 
-        return [
-            this.#setValueBrightness(r, brightness),
-            this.#setValueBrightness(g, brightness),
-            this.#setValueBrightness(b, brightness),
-        ];
+        return [r, g, b];
     }
 
     static #valueToHex(value) {
