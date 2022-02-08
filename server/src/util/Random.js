@@ -7,7 +7,7 @@ export default class Random {
         return Math.floor(this.generateFloat(min, max + 1));
     }
 
-    static generateFixed(min, max) {
+    static generateFixed(min, max, digits) {
         return parseFloat(this.generateFloat(min, max).toFixed(digits));
     }
 }
