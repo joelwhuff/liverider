@@ -7,10 +7,19 @@ import RaceActiveMessage from './message/RaceActiveMessage.js';
 
 export default class RaceRoom extends Room {
     addClient(client) {
-        super.addClient(client);
+        // client is officially added to room when 'parserdone' message is received
+        client.id = this.clientId++;
+        client.room = this;
 
         client.name = 'user' + client.id;
         client.setMessageParser(this.constructor.messageStages.get('initialization'));
+
+        client.send(
+            JSON.stringify({
+                type: 'join',
+                data: { user: { name: client.name, color: client.color } },
+            })
+        );
     }
 
     deleteClient(clientId) {

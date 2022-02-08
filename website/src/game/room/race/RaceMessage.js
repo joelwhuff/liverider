@@ -25,12 +25,8 @@ export default class RaceMessage {
     }
 
     static 'keylog'(room, data) {
-        let runner = new SocketRunner(
-            room.track,
-            room.track.bikeClass,
-            room.users.get(data.id).name,
-            room.users.get(data.id).color
-        );
+        let user = room.users.get(data.id);
+        let runner = new SocketRunner(room.track, room.track.bikeClass, user.name, user.color);
         for (let key in data.keys) {
             runner.keys.get(key).push(...data.keys[key]);
         }

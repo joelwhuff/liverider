@@ -13,7 +13,7 @@ export default class Game {
      * @param {{}} opt
      */
     constructor(container, opt) {
-        this.user = opt.user || { name: 'me', color: '#000' };
+        this.user = opt.user ?? { name: 'me', color: '#000' };
 
         this.ui = new UI(this, container);
 
