@@ -2,11 +2,13 @@ import Random from './Random.js';
 
 export default class Color {
     static #setValueBrightness(color, brightness = 1) {
-        return Math.max(0, Math.min(255, color * brightness));
+        return Math.max(0, Math.min(255, Math.round(color * brightness)));
     }
 
     static #generateValues(brightness) {
-        let values = [Random.generateInt(165, 255), Random.generateInt(0, 220), Random.generateInt(0, 90)];
+        let values = [Random.generateInt(165, 255), Random.generateInt(0, 220), Random.generateInt(0, 90)].map(value =>
+            this.#setValueBrightness(value)
+        );
 
         let r = values.splice(Random.generateInt(0, 2), 1)[0];
         let g = values.splice(Random.generateInt(0, 1), 1)[0];
@@ -39,8 +41,8 @@ export default class Color {
      * @returns {string} CSS hex value
      */
     static randomHex(brightness) {
-        let [r, g, b] = this.#generateValues(brightness);
+        let [r, g, b] = this.#generateValues(brightness).map(this.#valueToHex);
 
-        return `#${this.#valueToHex(r)}${this.#valueToHex(g)}${this.#valueToHex(b)}`;
+        return `#${r}${g}${b}`;
     }
 }
