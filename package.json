@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
+        "dev": "node server/src/index.js & cd website && npm run dev && fg",
         "prettier": "prettier --write .",
         "postinstall": "cd website && npm i && cd ../server && npm i"
     },
