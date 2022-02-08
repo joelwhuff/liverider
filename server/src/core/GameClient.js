@@ -18,7 +18,7 @@ export default class GameClient {
 
         this.id = 0;
         this.name = 'test';
-        this.color = Color.randomHex(0.7);
+        this.color = Color.randomHex();
 
         this.keyLog = [
             [] /* upPressed */,

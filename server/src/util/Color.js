@@ -6,7 +6,7 @@ export default class Color {
     }
 
     static #generateValues(brightness) {
-        let values = [Random.generateInt(128, 255), Random.generateInt(0, 255), Random.generateInt(0, 128)].map(value =>
+        let values = [Random.generateInt(170, 255), Random.generateInt(0, 255), Random.generateInt(0, 85)].map(value =>
             this.#setValueBrightness(value, brightness)
         );
 
