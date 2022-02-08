@@ -1,4 +1,7 @@
 import Cell from './Cell.js';
+import SceneryLine from '../../item/line/SceneryLine.js';
+import Item from '../../item/Item.js';
+import SolidLine from '../../item/line/SolidLine.js';
 
 export default class RenderCell extends Cell {
     constructor(x, y, size) {
@@ -11,8 +14,20 @@ export default class RenderCell extends Cell {
         this.canvas = new Map();
     }
 
+    push(item) {
+        if (item instanceof SceneryLine) {
+            this.scenery.push(item);
+            this.renderLine(item, '#aaa', 'destination-over');
+        } else if (item instanceof SolidLine) {
+            this.lines.push(item);
+            this.renderLine(item, '#000');
+        } else if (item instanceof Item) {
+            this.objects.push(item);
+        }
+    }
+
     /**
-     * @return {number} zoom
+     * @param {number} zoom
      * @return {HTMLCanvasElement}
      */
     getCanvas(zoom) {
@@ -23,8 +38,19 @@ export default class RenderCell extends Cell {
         return this.canvas.get(zoom);
     }
 
+    renderLine(line, strokeStyle, globalCompositeOperation = 'source-over') {
+        this.canvas.forEach((canvas, zoom) => {
+            let context = canvas.getContext('2d');
+
+            context.globalCompositeOperation = globalCompositeOperation;
+            context.strokeStyle = strokeStyle;
+
+            line.renderCache(context, this.x * zoom, this.y * zoom, zoom);
+        });
+    }
+
     /**
-     * @return {number} zoom
+     * @param {number} zoom
      * @return {HTMLCanvasElement}
      */
     renderCache(zoom) {
@@ -38,16 +64,22 @@ export default class RenderCell extends Cell {
         context.lineWidth = Math.max(2 * zoom, 0.5);
         context.strokeStyle = '#aaa';
 
-        context.beginPath();
+        let offsetLeft = this.x * zoom;
+        let offsetTop = this.y * zoom;
+
         for (let i = this.scenery.length - 1; i >= 0; --i) {
-            this.scenery[i].renderCache(context, this.x * zoom, this.y * zoom, zoom);
+            let sceneryLine = this.scenery[i];
+            context.moveTo(sceneryLine.pos.x * zoom - offsetLeft, sceneryLine.pos.y * zoom - offsetTop);
+            context.lineTo(sceneryLine.endPos.x * zoom - offsetLeft, sceneryLine.endPos.y * zoom - offsetTop);
         }
         context.stroke();
 
-        context.strokeStyle = '#000';
         context.beginPath();
+        context.strokeStyle = '#000';
         for (let i = this.lines.length - 1; i >= 0; --i) {
-            this.lines[i].renderCache(context, this.x * zoom, this.y * zoom, zoom);
+            let line = this.lines[i];
+            context.moveTo(line.pos.x * zoom - offsetLeft, line.pos.y * zoom - offsetTop);
+            context.lineTo(line.endPos.x * zoom - offsetLeft, line.endPos.y * zoom - offsetTop);
         }
         context.stroke();
 

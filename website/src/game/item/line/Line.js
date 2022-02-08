@@ -87,8 +87,10 @@ export default class Line extends Item {
      * @param {CanvasRenderingContext2D} ctx
      */
     renderCache(ctx, offsetLeft, offsetTop, zoom) {
+        ctx.beginPath();
         ctx.moveTo(this.pos.x * zoom - offsetLeft, this.pos.y * zoom - offsetTop);
         ctx.lineTo(this.endPos.x * zoom - offsetLeft, this.endPos.y * zoom - offsetTop);
+        ctx.stroke();
     }
 
     render(ctx) {}

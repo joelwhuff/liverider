@@ -44,6 +44,7 @@ export default class Game {
         this.ctx.lineCap = 'round';
         this.ctx.lineJoin = 'round';
         this.ctx.font = 'bold 15px Ubuntu';
+        this.ctx.imageSmoothingEnabled = false;
     }
 
     setCanvasSize() {

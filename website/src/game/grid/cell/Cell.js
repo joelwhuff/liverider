@@ -25,8 +25,6 @@ export default class Cell {
         } else if (item instanceof Item) {
             this.objects.push(item);
         }
-
-        this.clear();
     }
 
     remove(item) {

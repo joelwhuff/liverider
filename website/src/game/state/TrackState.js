@@ -45,7 +45,6 @@ export default class TrackState extends GameState {
     }
 
     /**
-     *
      * @param {CanvasRenderingContext2D} ctx
      */
     render(ctx) {
@@ -109,9 +108,6 @@ export default class TrackState extends GameState {
     }
 
     /**
-     * Draws images 1px top left to avoid thin lines
-     * @see RenderCell
-     *
      * @param {CanvasRenderingContext2D} ctx
      * @param {Grid} cache
      * @param {number} x
