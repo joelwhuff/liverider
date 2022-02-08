@@ -6,7 +6,7 @@ export default class Color {
     }
 
     static #generateValues(brightness) {
-        let values = [Random.generateInt(165, 255), Random.generateInt(0, 220), Random.generateInt(0, 90)].map(value =>
+        let values = [Random.generateInt(128, 255), Random.generateInt(0, 255), Random.generateInt(0, 128)].map(value =>
             this.#setValueBrightness(value, brightness)
         );
 
@@ -27,9 +27,7 @@ export default class Color {
      * @returns {string} CSS rgb value
      */
     static randomRGB(brightness) {
-        let [r, g, b] = this.#generateValues(brightness);
-
-        return `rgb(${r},${g},${b})`;
+        return `rgb(${this.#generateValues(brightness).join(',')})`;
     }
 
     /**
@@ -37,8 +35,6 @@ export default class Color {
      * @returns {string} CSS hex value
      */
     static randomHex(brightness) {
-        let [r, g, b] = this.#generateValues(brightness).map(this.#valueToHex);
-
-        return `#${r}${g}${b}`;
+        return '#' + this.#generateValues(brightness).map(this.#valueToHex).join('');
     }
 }
