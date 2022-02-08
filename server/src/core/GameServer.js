@@ -2,17 +2,20 @@ import { WebSocketServer } from 'ws';
 
 import GameClient from './GameClient.js';
 
-export default class GameServer extends WebSocketServer {
+export default class GameServer {
     constructor(options) {
-        super(options);
+        this.wss = new WebSocketServer(options);
+
+        this.blacklist = new Array();
 
         this.clients = new Set();
 
         this.rooms = new Map();
+        this.roomId = 0;
     }
 
     init() {
-        this.on('connection', (ws, req) => {
+        this.wss.on('connection', (ws, req) => {
             this.onConnection(ws, req);
         });
     }
@@ -20,6 +23,7 @@ export default class GameServer extends WebSocketServer {
     onConnection(ws, req) {
         let client = new GameClient(ws, this);
         client.registerListeners();
+        this.addClientToRoom(client, 0);
 
         this.clients.add(client);
     }
@@ -29,7 +33,11 @@ export default class GameServer extends WebSocketServer {
     }
 
     addRoom(room) {
-        this.rooms.set(GameServer.roomId++, room);
+        this.rooms.set(this.roomId++, room);
+    }
+
+    getRoom(id) {
+        return this.rooms.get(id);
     }
 
     hasRoom(id) {
@@ -39,6 +47,11 @@ export default class GameServer extends WebSocketServer {
     deleteRoom(id) {
         this.rooms.delete(id);
     }
-}
 
-GameServer.roomId = 0;
+    addClientToRoom(client, roomId) {
+        let room = this.getRoom(roomId);
+        if (room) {
+            room.addClient(client);
+        }
+    }
+}

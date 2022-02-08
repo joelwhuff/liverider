@@ -1,19 +1,20 @@
 export default class Room {
-    constructor() {
+    constructor(server) {
+        this.server = server;
+
         this.clients = new Map();
         this.clientId = 0;
     }
 
     addClient(client) {
-        let id = this.clientId++;
-        client.id = id;
-        client.info.name = 'user' + id;
-        this.clients.set(id, client);
+        client.id = this.clientId++;
+        this.clients.set(client.id, client);
+
+        client.room = this;
     }
 
-    deleteClient(id) {
-        this.clients.delete(id);
-        this.broadcast(JSON.stringify({ type: 'user_dc', data: id }));
+    deleteClient(clientId) {
+        this.clients.delete(clientId);
     }
 
     broadcast(msg) {
@@ -28,5 +29,9 @@ export default class Room {
                 client.send(msg);
             }
         });
+    }
+
+    sendToClient(clientId, msg) {
+        this.clients.get(clientId).send(msg);
     }
 }
