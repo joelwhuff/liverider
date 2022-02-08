@@ -1,4 +1,4 @@
-LiveRider is a live/multiplayer version of FreeRider built using of tomiy's [OpenRider](https://github.com/tomiy/openrider)
+LiveRider is a live/multiplayer version of FreeRider built on top of tomiy's [OpenRider](https://github.com/tomiy/openrider)
 
 # How to run
 
