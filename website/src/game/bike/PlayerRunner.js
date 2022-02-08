@@ -10,8 +10,8 @@ export default class PlayerRunner extends BikeRunner {
         return 'player';
     }
 
-    constructor(track, bikeClass, color) {
-        super(track, bikeClass, color);
+    constructor(track, bikeClass, name, color) {
+        super(track, bikeClass, name, color);
 
         this.track.event.keyboard.registerControl('Up', new Control(KeyCode.DOM_VK_UP));
         this.track.event.keyboard.registerControl('Down', new Control(KeyCode.DOM_VK_DOWN));
@@ -24,7 +24,7 @@ export default class PlayerRunner extends BikeRunner {
         if (this.targetsReached.size >= this.track.targets.size) {
             // let ghostString = GhostParser.generate(this);
             // console.log(ghostString);
-            this.finished = true;
+            this.done = true;
             this.finalTime = this.track.time;
         }
     }

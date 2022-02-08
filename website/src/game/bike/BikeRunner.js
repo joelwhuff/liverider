@@ -8,19 +8,22 @@ import Bike from './instance/Bike.js';
 import Ragdoll from '../entity/Ragdoll.js';
 
 export default class BikeRunner extends GameObject {
-    constructor(track, bikeClass, color) {
+    constructor(track, bikeClass, name, color) {
         super();
         /** @type {Track} */
         this.track = track;
 
+        this.name = name;
+        this.color = color;
+
         this.done = false;
+        this.finalTime = 0;
         this.snapshots = new Array();
         this.targetsReached = new Map();
         this.checkpointsReached = new Map();
 
         /** @type {Bike} */
         this.instance = null;
-        this.color = color;
         /** @type {Bike} */
         this.initialBike = null;
         this.bikeClass = bikeClass;

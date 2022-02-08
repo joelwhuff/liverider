@@ -3,6 +3,10 @@ import Track from '../../track/Track.js';
 import Bike from './Bike.js';
 
 export default class BMX extends Bike {
+    static get bikeName() {
+        return 'BMX';
+    }
+
     /**
      *
      * @param {Track} track
@@ -45,5 +49,3 @@ export default class BMX extends Bike {
         this.frontWheel.displayPos = this.frontWheel.pos.clone();
     }
 }
-
-BMX.bikeName = 'BMX';

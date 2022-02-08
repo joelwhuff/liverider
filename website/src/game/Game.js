@@ -9,23 +9,22 @@ import UI from './ui/UI.js';
 export default class Game {
     /**
      *
-     * @param {HTMLCanvasElement} canvas
+     * @param {HTMLElement} container
      * @param {{}} opt
-     * @param {Application} app
      */
-    constructor(container, opt, app) {
-        this.app = app;
+    constructor(container, opt) {
+        this.user = opt.user || { name: 'me', color: '#000' };
 
-        this.canvas = UI.makeGameUI(container, this);
+        this.ui = new UI(this, container);
 
         /** @type {StateManager} */
-        this.stateManager = new StateManager(this, this.canvas, opt);
+        this.stateManager = new StateManager(this, this.ui.canvas, { ...opt, user: this.user });
         this.stateManager.addState(ParserState, 'parser');
         this.stateManager.addState(TrackState, 'track');
         this.stateManager.addState(GeneratorState, 'generator');
 
         /** @type {CanvasRenderingContext2D} */
-        this.ctx = this.canvas.getContext('2d');
+        this.ctx = this.ui.canvas.getContext('2d');
 
         /** @type {number} */
         this.lastTime = performance.now();
@@ -48,8 +47,8 @@ export default class Game {
     }
 
     setCanvasSize() {
-        this.canvas.width = this.canvas.parentElement.clientWidth;
-        this.canvas.height = this.canvas.parentElement.clientHeight;
+        this.ui.canvas.width = this.ui.canvas.parentElement.clientWidth;
+        this.ui.canvas.height = this.ui.canvas.parentElement.clientHeight;
 
         this.setContextProperties();
     }
@@ -77,8 +76,8 @@ export default class Game {
         this.stateManager.update(this.progress, delta);
 
         if (
-            this.canvas.width !== this.canvas.parentElement.clientWidth ||
-            this.canvas.height !== this.canvas.parentElement.clientHeight
+            this.ui.canvas.width !== this.ui.canvas.parentElement.clientWidth ||
+            this.ui.canvas.height !== this.ui.canvas.parentElement.clientHeight
         ) {
             this.setCanvasSize();
         }

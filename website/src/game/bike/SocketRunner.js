@@ -3,13 +3,11 @@ import BikeRunner from './BikeRunner.js';
 import BikeRenderer from './instance/renderer/BikeRenderer.js';
 
 export default class SocketRunner extends BikeRunner {
-    constructor(track, bikeClass, color, name) {
-        super(track, bikeClass, color);
+    constructor(track, bikeClass, name, color) {
+        super(track, bikeClass, name, color);
 
         this.time = 0;
         this.paused = false;
-
-        this.name = name;
 
         this.keys = new Map();
         this.keys.set('upPressed', new Array());
@@ -26,13 +24,13 @@ export default class SocketRunner extends BikeRunner {
     }
 
     // todo
-    // go through all socket code and make sure there is no potential for bugs / fix pressing keys before parser is done error
+    // fix pressing keys before parser is done error
     // add queue for toolControls
-    // if new time is less than current time, runupdates, test by setting delay to 0ms or something
+    // think about what happens when multiple frames are dropped
 
     onHitTarget() {
         if (this.targetsReached.size >= this.track.targets.size) {
-            this.finished = true;
+            this.done = true;
             this.finalTime = this.time;
         }
     }
@@ -42,9 +40,19 @@ export default class SocketRunner extends BikeRunner {
     }
 
     runUpdates(time) {
-        super.createBike();
+        this.upPressed = false;
+        this.downPressed = false;
+        this.leftPressed = false;
+        this.rightPressed = false;
+        this.turnPressed = false;
 
         this.time = 0;
+
+        this.bikeClass = this.track.bikeClass;
+        super.createBike();
+        super.reset();
+        this.restart();
+
         while (this.time < time) {
             this.fixedUpdate();
         }
@@ -155,5 +163,45 @@ export default class SocketRunner extends BikeRunner {
 
         ctx.fillText(text, nameX, nameY);
         ctx.restore();
+    }
+
+    parseKeyPress(key, time) {
+        // this[0] = new Array()
+        switch (key) {
+            case 0:
+                this.keys.get('upPressed').push(time);
+                break;
+            case 1:
+                this.keys.get('downPressed').push(time);
+                break;
+            case 2:
+                this.keys.get('leftPressed').push(time);
+                break;
+            case 3:
+                this.keys.get('rightPressed').push(time);
+                break;
+            case 4:
+                this.keys.get('turnPressed').push(time);
+                break;
+            case 5:
+                this.restartPressed.push(time);
+                break;
+            case 6:
+                this.cancelPressed.push(time);
+                break;
+            case 7:
+                this.pausePressed.push(time);
+                break;
+            case 8:
+                this.unpausePressed.push(time);
+                break;
+            case 9:
+                this.switchBikePressed.push(time);
+                break;
+        }
+
+        if (time < this.time) {
+            this.runUpdates(this.time - 2);
+        }
     }
 }

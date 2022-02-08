@@ -1,7 +1,6 @@
 import GameState from './GameState.js';
 import TrackParser from '../parser/TrackParser.js';
-import UI from '../ui/UI.js';
-import RaceRoom from '../room/RaceRoom.js';
+import EmptyRoom from '../room/empty/EmptyRoom.js';
 
 export default class ParserState extends GameState {
     onEnter() {
@@ -9,7 +8,7 @@ export default class ParserState extends GameState {
     }
 
     getTrackParser() {
-        UI.clearUI(this);
+        this.manager.game.ui.clearUI(this);
         this.track.canvas.style.cursor = 'default';
 
         // if(in collab room) this.parser = new TrackBufferParser(this.track)
@@ -18,10 +17,10 @@ export default class ParserState extends GameState {
     }
 
     initUI() {
-        if (this.track.room instanceof RaceRoom) {
-            UI.createRaceUI(this);
+        if (this.track.room instanceof EmptyRoom) {
+            this.manager.game.ui.createEditorUI(this);
         } else {
-            UI.createEditorUI(this);
+            this.manager.game.ui.createRaceUI(this);
         }
     }
 
@@ -33,10 +32,9 @@ export default class ParserState extends GameState {
         this.parser.progress =
             this.parser.solidLineData.index + this.parser.sceneryLineData.index + this.parser.itemData.index;
         if (this.parser.done) {
-            this.initUI();
-
-            this.manager.room.sendJSON({ type: 'parser_done' });
+            this.manager.room.sendJSON({ type: 'parserdone' });
             this.manager.push('track');
+            this.initUI();
         }
     }
 

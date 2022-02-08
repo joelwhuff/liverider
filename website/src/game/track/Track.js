@@ -23,14 +23,13 @@ export default class Track {
      *
      * @param {{}} opt
      */
-    constructor(canvas, opt = {}, room) {
+    constructor(canvas, opt = {}) {
         /** @type {HTMLCanvasElement} */
         this.canvas = canvas;
         /** @type {string} */
         this.trackCode = opt.trackCode;
 
-        this.room = room;
-        room.track = this;
+        this.room = null;
 
         this.event = new TrackEvent(this);
 
@@ -58,10 +57,10 @@ export default class Track {
         this.paused = false;
         this.time = 0;
 
-        this.user = { name: opt.name, color: opt.color };
+        this.user = opt.user;
 
         this.bikeClass = null;
-        this.playerRunner = new PlayerRunner(this, BMX, this.user.color);
+        this.playerRunner = new PlayerRunner(this, BMX, this.user.name, this.user.color);
         /** @type {Array<GhostRunner>} */
         this.ghostRunners = new Array();
         /** @type {Map<string, SocketRunner>} */
@@ -168,7 +167,7 @@ export default class Track {
     }
 
     pause(paused) {
-        this.room.sendBuffer([paused ? 3 : 4, this.time]);
+        this.room.sendBuffer([0, paused ? 7 : 8, this.time]);
         this.paused = paused;
         this.toolCollection.getByToolName(PauseTool.toolName).updateDOM();
     }

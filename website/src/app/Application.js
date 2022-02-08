@@ -12,7 +12,7 @@ export default class Application {
     }
 
     initConnection() {
-        this.ws = new WebSocket('ws://10.0.0.201:80');
+        this.ws = new WebSocket('ws://localhost:80');
 
         this.ws.binaryType = 'arraybuffer';
 
@@ -22,7 +22,7 @@ export default class Application {
         });
         this.ws.addEventListener('open', e => {
             console.log(`Connection to localhost established`);
-            this.ws.send(JSON.stringify({ type: 'join', data: 0 }));
+            this.ws.send(JSON.stringify({ type: 'join', data: 1 }));
         });
         this.ws.addEventListener('close', e => {
             console.log(`Connection to localhost has been closed`);
@@ -31,27 +31,22 @@ export default class Application {
         this.ws.onmessage = e => this.onMessage(e);
     }
 
-    runGame(data) {
+    bootGame(user) {
         let gameContainer = document.createElement('div');
         gameContainer.id = 'game';
 
         document.body.appendChild(gameContainer);
 
-        this.game = new Game(gameContainer, { trackCode: data.trackCode, name: data.name, color: data.color }, this);
+        this.game = new Game(gameContainer, { ws: this.ws, user: user });
         this.game.run();
-        this.game.stateManager.push('parser');
+        this.game.stateManager.room.sendJSON({ type: 'ready' });
     }
 
     onMessage(e) {
         let msg = JSON.parse(e.data);
 
-        switch (msg.type) {
-            case 'join':
-                if (!!msg.data) {
-                    this.runGame(msg.data);
-                } else {
-                }
-                break;
+        if (msg.type === 'join') {
+            this.bootGame(msg.data.user);
         }
     }
 }

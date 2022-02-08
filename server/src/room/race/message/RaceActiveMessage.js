@@ -5,7 +5,6 @@ export default class RaceActiveMessage {
     }
 
     static 'time'(sender, data) {
-        console.log('time');
         sender.room.sendToClient(
             data.id,
             JSON.stringify({

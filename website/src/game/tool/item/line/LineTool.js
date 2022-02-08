@@ -78,6 +78,8 @@ export default class LineTool extends Tool {
     }
 
     makeOptions() {
+        // make options once when tool is added to toolbar, then add class for hidden/open
+
         this.optionsEl = document.createElement('div');
         this.optionsEl.id = 'tool-options';
         this.optionsEl.addEventListener('contextmenu', e => {

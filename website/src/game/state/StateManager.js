@@ -1,15 +1,24 @@
 import GameObject from '../GameObject.js';
 import Track from '../track/Track.js';
 import GameState from './GameState.js';
-import RaceRoom from '../room/RaceRoom.js';
+import RaceRoom from '../room/race/RaceRoom.js';
+import EmptyRoom from '../room/empty/EmptyRoom.js';
 
 export default class StateManager extends GameObject {
     constructor(game, canvas, opt) {
         super();
 
         this.game = game;
-        this.room = new RaceRoom(game.app.ws);
-        this.track = new Track(canvas, opt, this.room);
+
+        this.track = new Track(canvas, opt);
+
+        if (opt.ws) {
+            this.room = new RaceRoom(this, opt.ws);
+        } else {
+            this.room = new EmptyRoom();
+        }
+
+        this.track.room = this.room;
 
         /** @type {Map<String, GameState>} */
         this.states = new Map();

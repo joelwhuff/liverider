@@ -78,37 +78,34 @@ export default class TrackState extends GameState {
         ctx.fillText(Time.format(this.track.time * this.manager.game.frameDuration), 12, 20);
         // ctx.fillText(`${this.track.playerRunner.targetsReached.size}/${this.track.targets.size}`, 12, 36);
 
-        // `${
-        //     this.track.playerRunner.finished
-        //         ? 'finished!'
-        //         : Time.format(this.track.time * this.manager.game.frameDuration)
-        // }`;
+        [this.track.playerRunner, ...this.track.socketRunners.values()]
+            .sort((a, b) => {
+                if (a.finalTime) {
+                    if (!b.finalTime) return -1;
+                    return a.finalTime - b.finalTime;
+                }
+                return b.targetsReached.size - a.targetsReached.size;
+            })
+            .forEach((runner, index) => {
+                let text = `${runner.name} - ${
+                    runner.done ? 'finished!' : `${runner.targetsReached.size}/${this.track.targets.size}`
+                }`;
+                let textMetrics = ctx.measureText(text);
 
-        let text = `${this.track.user.name} - ${this.track.playerRunner.targetsReached.size}/${this.track.targets.size}`;
-        let textMetrics = ctx.measureText(text);
+                ctx.fillStyle = runner.color;
+                ctx.fillText(text, this.track.canvas.width - 20 - textMetrics.width, 18 * (1 + index));
+            });
 
-        ctx.fillStyle = this.track.user.color;
-        ctx.fillText(text, this.track.canvas.width - 20 - textMetrics.width, 18);
-
-        let i = 0;
-        this.track.socketRunners.forEach(runner => {
-            let text = `${runner.name} - ${runner.targetsReached.size}/${this.track.targets.size}`;
+        this.track.ghostRunners.forEach((runner, index) => {
+            let ghostTime = Math.max(0, runner.finalTime - this.track.time);
+            let remainingTimeText =
+                ghostTime > 0 ? Time.format(ghostTime * this.manager.game.frameDuration) : 'finished!';
+            let text = `${runner.ghostName}: ${remainingTimeText} - ${runner.targetsReached.size}/${this.track.targets.size}`;
             let textMetrics = ctx.measureText(text);
 
             ctx.fillStyle = runner.instance.color;
-            ctx.fillText(text, this.track.canvas.width - 20 - textMetrics.width, 18 * (2 + i));
-            ++i;
+            ctx.fillText(text, this.track.canvas.width - 30 - textMetrics.width, 15 * (1 + index));
         });
-        // this.track.ghostRunners.forEach((runner, index) => {
-        //     let ghostTime = Math.max(0, runner.finalTime - this.track.time);
-        //     let remainingTimeText =
-        //         ghostTime > 0 ? Time.format(ghostTime * this.manager.game.frameDuration) : 'finished!';
-        //     let text = `${runner.ghostName}: ${remainingTimeText} - ${runner.targetsReached.size}/${this.track.targets.size}`;
-        //     let textMetrics = ctx.measureText(text);
-
-        //     ctx.fillStyle = runner.instance.color;
-        //     ctx.fillText(text, this.track.canvas.width - 30 - textMetrics.width, 15 * (1 + index));
-        // });
     }
 
     /**

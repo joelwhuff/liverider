@@ -4,14 +4,18 @@
 }
 @font-face {
     font-family: 'Ubuntu';
-    src: url('./font/Ubuntu-B.woff2') format('woff2');
     font-weight: bold;
+    src: url('./font/Ubuntu-B.woff2') format('woff2');
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+::placeholder {
+    font-family: 'Ubuntu';
 }
 
 html,
@@ -21,10 +25,6 @@ body {
 
 html {
     font: 18px 'Ubuntu', sans-serif;
-}
-
-::placeholder {
-    font-family: 'Ubuntu';
 }
 
 body {
@@ -86,7 +86,34 @@ button:hover {
     transform: rotate(51.43deg);
 }
 
+#screen-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* background-color: rgba(255, 255, 255, 0.7); */
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+#settings {
+    margin: 70px auto;
+    width: 700px;
+    height: 460px;
+    background-color: #fff;
+    border-radius: 10px;
+    animation: pop 0.2s ease-out;
+}
+
+@keyframes pop {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+}
+
 #game-options .chat {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -101,6 +128,18 @@ button:hover {
     cursor: pointer;
     /* filter: brightness(0.9); */
     background-color: rgba(255, 255, 255, 0.4);
+}
+
+.chat.alert::after {
+    content: '';
+    position: absolute;
+    background-color: #f00;
+    top: 2px;
+    right: 1px;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #fff;
+    border-radius: 50%;
 }
 
 #game-content {
@@ -147,7 +186,7 @@ button:hover {
 
 .game-chat .input {
     flex: 0 1 auto;
-    padding-left: 20px;
+    padding-left: 18px;
     outline: none;
     border: none;
     border-radius: 15px;
@@ -167,9 +206,6 @@ button:hover {
     background-color: #fff;
     color: #222;
     transition: 0.2s ease-in-out;
-}
-.game-chat .post:hover {
-    /* filter: brightness(0.98); */
 }
 .game-chat .post:active {
     transition: none;
@@ -192,9 +228,7 @@ button:hover {
     width: 300px;
     overflow-y: scroll;
     background-color: #ddd;
-}
-
-.game-chat .message-container {
+    padding-bottom: 10px;
 }
 
 .toolbar {

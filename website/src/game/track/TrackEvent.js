@@ -50,7 +50,7 @@ export default class TrackEvent {
     }
 
     onMouseDown(e) {
-        e.preventDefault();
+        // e.preventDefault();
         this.track.focalPoint = null;
         this.track.lastClick.set(this.track.mousePos);
         this.track.toolManager.onMouseDown(e);
