@@ -126,11 +126,7 @@ export default class RaceRoom extends Room {
 
     displayResults(results) {
         this.raceResults = new RaceResults(this.stateManager.game.ui.gameScreen, this.stateManager);
-        this.raceResults.render([
-            { name: 'friker', finalTime: 2134 },
-            { name: 'nigg', finalTime: 8172 },
-            { name: 'loser idiot' },
-        ]);
+        this.raceResults.render([{ name: 'test', finalTime: 2134 }, { name: 'testt' }]);
     }
 
     render(ctx) {
