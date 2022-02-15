@@ -20,7 +20,6 @@ import TrackEvent from './TrackEvent.js';
 
 export default class Track {
     /**
-     *
      * @param {{}} opt
      */
     constructor(canvas, opt = {}) {
@@ -29,7 +28,7 @@ export default class Track {
         /** @type {string} */
         this.trackCode = opt.trackCode;
 
-        this.room = null;
+        this.room = opt.room;
 
         this.event = new TrackEvent(this);
 
@@ -55,9 +54,10 @@ export default class Track {
 
         this.toolCollection = new ToolCollection();
         this.paused = false;
+        this.stopped = false;
         this.time = 0;
 
-        this.user = opt.user;
+        this.user = opt.user || { name: 'me', color: '#000' };
 
         this.bikeClass = null;
         this.playerRunner = new PlayerRunner(this, BMX, this.user.name, this.user.color);
@@ -167,7 +167,7 @@ export default class Track {
     }
 
     pause(paused) {
-        this.room.sendBuffer([0, paused ? 7 : 8, this.time]);
+        this.room.sendFloat64Array([0, paused ? 7 : 8, this.time]);
         this.paused = paused;
         this.toolCollection.getByToolName(PauseTool.toolName).updateDOM();
     }

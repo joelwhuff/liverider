@@ -22,7 +22,7 @@ export default class UI {
 
         this.chatButton = null;
         this.chatInput = null;
-        this.chatIsOpen = false;
+        this.chatIsOpen = true;
 
         this.screenOverlay = document.createElement('div');
         this.screenOverlay.id = 'screen-overlay';
@@ -71,7 +71,7 @@ export default class UI {
         this.gameScreen.appendChild(this.canvas);
 
         let chat = document.createElement('div');
-        chat.classList.add('game-chat');
+        chat.classList.add('game-chat', 'open');
 
         let chatInputContainer = document.createElement('div');
         chatInputContainer.classList.add('input-ctr');
@@ -190,7 +190,11 @@ export default class UI {
     sendMessage() {
         if (typeof this.chatInput.value === 'string' && this.chatInput.value.trim() !== '') {
             this.game.stateManager.room.sendJSON({ type: 'message', data: this.chatInput.value });
-            this.addMessage(this.game.user.name, this.game.user.color, this.chatInput.value);
+            this.addMessage(
+                this.game.stateManager.track.user.name,
+                this.game.stateManager.track.user.color,
+                this.chatInput.value
+            );
         }
 
         this.chatInput.value = '';
@@ -234,9 +238,9 @@ export default class UI {
                 reader.onload = () => {
                     state.track.event.detach();
                     state.track = new Track(state.track.canvas, {
-                        room: state.manager.room,
-                        user: state.manager.game.user,
                         trackCode: reader.result,
+                        room: state.manager.room,
+                        user: state.track.user,
                     });
                     state.getTrackParser();
                     state.manager.pop();
@@ -259,9 +263,9 @@ export default class UI {
         uploadButton.addEventListener('click', () => {
             state.track.event.detach();
             state.track = new Track(state.track.canvas, {
-                room: state.manager.room,
-                user: state.manager.game.user,
                 trackCode: TRACK_DEFAULT,
+                room: state.manager.room,
+                user: state.track.user,
             });
             state.getTrackParser();
             state.manager.pop();

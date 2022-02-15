@@ -18,7 +18,7 @@ export default class RestartTool extends Tool {
     }
 
     run() {
-        this.track.room.sendBuffer([0, 5, this.track.time]);
+        this.track.room.sendFloat64Array([0, 5, this.track.time]);
         this.track.restart();
     }
 }

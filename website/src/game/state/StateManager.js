@@ -10,15 +10,14 @@ export default class StateManager extends GameObject {
 
         this.game = game;
 
-        this.track = new Track(canvas, opt);
-
         if (opt.ws) {
             this.room = new RaceRoom(this, opt.ws);
         } else {
             this.room = new EmptyRoom();
         }
+        opt.room = this.room;
 
-        this.track.room = this.room;
+        this.track = new Track(canvas, opt);
 
         /** @type {Map<String, GameState>} */
         this.states = new Map();

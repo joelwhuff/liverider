@@ -13,12 +13,10 @@ export default class Game {
      * @param {{}} opt
      */
     constructor(container, opt) {
-        this.user = opt.user ?? { name: 'me', color: '#000' };
-
         this.ui = new UI(this, container);
 
         /** @type {StateManager} */
-        this.stateManager = new StateManager(this, this.ui.canvas, { ...opt, user: this.user });
+        this.stateManager = new StateManager(this, this.ui.canvas, opt);
         this.stateManager.addState(ParserState, 'parser');
         this.stateManager.addState(TrackState, 'track');
         this.stateManager.addState(GeneratorState, 'generator');

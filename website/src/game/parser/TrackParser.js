@@ -141,9 +141,9 @@ export default class TrackParser {
             this.solidLineData.code = split[i++].split(',');
             this.sceneryLineData.code = split[i++].split(',');
             this.itemData.code = split[i++].split(',');
-            this.codeBike = split[i++] || 'BMX';
+            this.codeBike = split[i++] || 'MTB';
         } catch (err) {
-            this.codeBike = 'BMX';
+            this.codeBike = 'MTB';
         }
     }
 

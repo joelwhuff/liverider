@@ -33,6 +33,7 @@ export default class ParserState extends GameState {
             this.parser.solidLineData.index + this.parser.sceneryLineData.index + this.parser.itemData.index;
         if (this.parser.done) {
             this.manager.room.sendJSON({ type: 'parserdone' });
+            this.manager.room.setMessageParser('active');
             this.manager.push('track');
             this.initUI();
         }

@@ -7,6 +7,7 @@ export default class SocketRunner extends BikeRunner {
         super(track, bikeClass, name, color);
 
         this.time = 0;
+        this.stopped = false;
         this.paused = false;
 
         this.keys = new Map();
@@ -24,14 +25,13 @@ export default class SocketRunner extends BikeRunner {
     }
 
     // todo
-    // fix pressing keys before parser is done error
     // add queue for toolControls
-    // think about what happens when multiple frames are dropped
 
     onHitTarget() {
         if (this.targetsReached.size >= this.track.targets.size) {
             this.done = true;
             this.finalTime = this.time;
+            this.stopped = true;
         }
     }
 
@@ -59,11 +59,13 @@ export default class SocketRunner extends BikeRunner {
     }
 
     fixedUpdate() {
-        this.updateToolControls();
-        if (!this.paused) {
-            super.fixedUpdate();
+        if (!this.stopped) {
+            this.updateToolControls();
+            if (!this.paused) {
+                super.fixedUpdate();
+            }
+            ++this.time;
         }
-        ++this.time;
     }
 
     restart() {
@@ -80,11 +82,6 @@ export default class SocketRunner extends BikeRunner {
     }
 
     updateToolControls() {
-        // at some point make a toolupdate queue, updateToolControls will run the tools in the proper
-        // order they were pressed, in case pause and restart are pressed on same track time, it would
-        // be handled accurately
-        // perhaps queue for everything for simplicity
-
         if (this.restartPressed.includes(this.time)) {
             this.restart();
         }
@@ -166,7 +163,6 @@ export default class SocketRunner extends BikeRunner {
     }
 
     parseKeyPress(key, time) {
-        // this[0] = new Array()
         switch (key) {
             case 0:
                 this.keys.get('upPressed').push(time);

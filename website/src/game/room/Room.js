@@ -6,6 +6,8 @@ export default class Room {
 
         this.track = stateManager.track;
 
+        this.messageParser = null;
+
         this.users = new Map();
 
         this.init();
@@ -13,8 +15,10 @@ export default class Room {
 
     init() {
         this.ws.onmessage = e => this.onMessage(e);
+    }
 
-        this.messageParser = this.constructor.messageParser;
+    setMessageParser(key) {
+        this.messageParser = this.constructor.messageStages.get(key);
     }
 
     send(msg) {
@@ -31,7 +35,7 @@ export default class Room {
     /**
      * @param {number[]} arr
      */
-    sendBuffer(arr) {
+    sendFloat64Array(arr) {
         this.send(new Float64Array(arr));
     }
 
@@ -46,5 +50,8 @@ export default class Room {
         }
     }
 
-    render() {}
+    /**
+     * @param {CanvasRenderingContext2D} ctx
+     */
+    render(ctx) {}
 }

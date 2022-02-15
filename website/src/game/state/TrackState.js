@@ -7,18 +7,20 @@ import Time from '../numeric/Time.js';
 export default class TrackState extends GameState {
     fixedUpdate() {
         this.track.toolManager.fixedUpdate();
-        if (!this.track.paused) {
-            // Run playerRunner before the ghosts so that when it saves a checkpoint
-            // the physics from the ghosts don't get updated because if they do they run
-            // twice on the same time increment, and they break!
-            this.track.playerRunner.fixedUpdate();
-            this.track.ghostRunners.forEach(runner => {
-                if (!runner.done) {
-                    runner.fixedUpdate();
-                }
-            });
+        if (!this.track.stopped) {
+            if (!this.track.paused) {
+                // Run playerRunner before the ghosts so that when it saves a checkpoint
+                // the physics from the ghosts don't get updated because if they do they run
+                // twice on the same time increment, and they break!
+                this.track.playerRunner.fixedUpdate();
+                this.track.ghostRunners.forEach(runner => {
+                    if (!runner.done) {
+                        runner.fixedUpdate();
+                    }
+                });
+            }
+            this.track.time++;
         }
-        this.track.time++;
         this.track.socketRunners.forEach(runner => {
             runner.fixedUpdate();
         });
@@ -26,7 +28,7 @@ export default class TrackState extends GameState {
 
     update(progress, delta) {
         this.track.toolManager.update(progress, delta);
-        if (!this.track.paused) {
+        if (!this.track.stopped && !this.track.paused) {
             this.track.ghostRunners.forEach(runner => {
                 if (!runner.done) {
                     runner.update(progress, delta);
@@ -38,7 +40,7 @@ export default class TrackState extends GameState {
             this.track.camera.selfAdd(this.track.focalPoint.displayPos.sub(this.track.camera).scale(delta / 200));
         }
         this.track.socketRunners.forEach(runner => {
-            if (!runner.paused) {
+            if (!runner.stopped && !runner.paused) {
                 runner.update(progress, delta);
             }
         });
@@ -105,6 +107,8 @@ export default class TrackState extends GameState {
             ctx.fillStyle = runner.instance.color;
             ctx.fillText(text, this.track.canvas.width - 30 - textMetrics.width, 15 * (1 + index));
         });
+
+        this.manager.room.render(ctx);
     }
 
     /**

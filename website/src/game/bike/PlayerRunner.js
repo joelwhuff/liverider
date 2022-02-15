@@ -18,14 +18,21 @@ export default class PlayerRunner extends BikeRunner {
         this.track.event.keyboard.registerControl('Left', new Control(KeyCode.DOM_VK_LEFT));
         this.track.event.keyboard.registerControl('Right', new Control(KeyCode.DOM_VK_RIGHT));
         this.track.event.keyboard.registerControl('Z', new Control(KeyCode.DOM_VK_Z, Keyboard.NONE, true));
+
+        this.timeAtLastTarget = 0;
     }
 
     onHitTarget() {
+        this.timeAtLastTarget = this.track.time;
         if (this.targetsReached.size >= this.track.targets.size) {
-            // let ghostString = GhostParser.generate(this);
-            // console.log(ghostString);
+            this.track.room.sendJSON({ type: 'finish', data: this.track.time });
             this.done = true;
             this.finalTime = this.track.time;
+
+            this.track.stopped = true;
+
+            // let ghostString = GhostParser.generate(this);
+            // console.log(ghostString);
         }
     }
 
@@ -48,7 +55,7 @@ export default class PlayerRunner extends BikeRunner {
         controls.forEach((pressed, mapKey) => {
             // this[mapKey] refers to the this.xxxPressed properties of BikeRunner
             if (pressed !== this[mapKey]) {
-                this.track.room.sendBuffer([0, i, this.track.time]);
+                this.track.room.sendFloat64Array([0, i, this.track.time]);
 
                 // this.instance.keyLog.get(mapKey).push(this.track.time.toString());
                 this[mapKey] = pressed;

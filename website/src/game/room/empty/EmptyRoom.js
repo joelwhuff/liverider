@@ -5,5 +5,7 @@ export default class EmptyRoom {
 
     sendJSON() {}
 
-    sendBuffer() {}
+    sendFloat64Array() {}
+
+    render() {}
 }
