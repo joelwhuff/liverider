@@ -118,7 +118,7 @@ export default class RaceRoom extends Room {
     stage2LobbyCountdown() {
         this.state = {
             name: 'stage2LobbyCountdown',
-            delay: 10000,
+            delay: 20000,
         };
 
         this.delayStart = performance.now();
@@ -153,7 +153,7 @@ export default class RaceRoom extends Room {
     }
 
     stage4Racing() {
-        this.state = { name: 'stage4Racing', delay: 3000 };
+        this.state = { name: 'stage4Racing', delay: 5000 };
 
         this.delayStart = performance.now();
         super.broadcast(
