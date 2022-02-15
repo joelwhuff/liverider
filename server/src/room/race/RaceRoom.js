@@ -187,4 +187,3 @@ RaceRoom.messageStages.set('loading', RaceLoadingMessage);
 RaceRoom.messageStages.set('active', RaceActiveMessage);
 
 RaceRoom.LOBBY_TRACK_CODE = fs.readFileSync('server/tracks/mockba.txt', 'utf8');
-RaceRoom.RACE_TRACK_CODE = fs.readFileSync('server/tracks/test.txt', 'utf8');
