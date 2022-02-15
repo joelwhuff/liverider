@@ -23,7 +23,7 @@ export default class GameServer {
     onConnection(ws, req) {
         let client = new GameClient(ws, this);
         client.registerListeners();
-        this.addClientToRoom(client, 0);
+        this.getRoom(0).addClient(client);
 
         this.clients.add(client);
     }
@@ -46,12 +46,5 @@ export default class GameServer {
 
     deleteRoom(id) {
         this.rooms.delete(id);
-    }
-
-    addClientToRoom(client, roomId) {
-        let room = this.getRoom(roomId);
-        if (room) {
-            room.addClient(client);
-        }
     }
 }

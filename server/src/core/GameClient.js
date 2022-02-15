@@ -1,11 +1,12 @@
-import WebSocket, { WebSocketServer } from 'ws';
+import WebSocket from 'ws';
 
+import GameServer from './GameServer.js';
 import Color from '../util/Color.js';
 
 export default class GameClient {
     /**
      * @param {WebSocket} ws
-     * @param {WebSocketServer} server
+     * @param {GameServer} server
      */
     constructor(ws, server) {
         this.ws = ws;
@@ -18,20 +19,7 @@ export default class GameClient {
 
         this.id = 0;
         this.name = 'test';
-        this.color = Color.randomHex();
-
-        this.keyLog = [
-            [] /* upPressed */,
-            [] /* downPressed */,
-            [] /* leftPressed */,
-            [] /* rightPressed */,
-            [] /* turnPressed */,
-            [] /* restartPressed */,
-            [] /* cancelPressed */,
-            [] /* pausePressed */,
-            [] /* unpausePressed */,
-            [] /* switchBikePressed */,
-        ];
+        this.color = Color.randomHex(0.6);
     }
 
     registerListeners() {
@@ -54,6 +42,23 @@ export default class GameClient {
 
     setMessageParser(parser) {
         this.messageParser = parser;
+    }
+
+    resetRaceProps() {
+        this.stopped = true;
+
+        this.keyLog = [
+            [] /* upPressed */,
+            [] /* downPressed */,
+            [] /* leftPressed */,
+            [] /* rightPressed */,
+            [] /* turnPressed */,
+            [] /* restartPressed */,
+            [] /* cancelPressed */,
+            [] /* pausePressed */,
+            [] /* unpausePressed */,
+            [] /* switchBikePressed */,
+        ];
     }
 
     onError(e) {}
@@ -80,7 +85,12 @@ export default class GameClient {
     }
 
     parseBuffer(data) {
-        this.messageParser[new Float64Array(data, 0, 1)[0]]?.(this, new Float64Array(data, 8));
+        try {
+            this.messageParser[new Float64Array(data, 0, 1)[0]](this, new Float64Array(data, 8));
+        } catch (err) {
+            console.log(err);
+            this.destroy();
+        }
     }
 
     parseJSON(data) {
@@ -88,9 +98,12 @@ export default class GameClient {
             let msg = JSON.parse(data.toString());
             this.messageParser[msg.type](this, msg.data);
         } catch (err) {
+            console.log(err);
             this.destroy();
         }
     }
 
-    destroy() {}
+    destroy() {
+        console.log(`client ${this.name} destroyed itself`);
+    }
 }

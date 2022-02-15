@@ -1,0 +1,6 @@
+export const JOIN = 100,
+    READY = 101,
+    JOIN_SUCCEEDED = 1,
+    JOIN_FAILED = 0,
+    ROOM_DOES_NOT_EXIST = 0,
+    INCORRECT_PASSWORD = 1;

@@ -1,13 +1,29 @@
 export default class Random {
-    static generateFloat(min, max) {
+    static float(min, max) {
         return Math.random() * (max - min) + min;
     }
 
-    static generateInt(min, max) {
-        return Math.floor(this.generateFloat(min, max + 1));
+    static int(min, max) {
+        return Math.floor(this.float(min, max + 1));
     }
 
-    static generateFixed(min, max, digits) {
-        return parseFloat(this.generateFloat(min, max).toFixed(digits));
+    static fixed(min, max, digits) {
+        return parseFloat(this.float(min, max).toFixed(digits));
+    }
+
+    static character() {
+        return '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'[this.int(0, 61)];
+    }
+
+    /**
+     * @param {number} length
+     * @returns {string}
+     */
+    static string(length) {
+        let str = '';
+        while (length--) {
+            str += this.character();
+        }
+        return str;
     }
 }

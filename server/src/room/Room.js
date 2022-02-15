@@ -1,5 +1,14 @@
+import GameServer from '../core/GameServer.js';
+
 export default class Room {
-    constructor(server) {
+    /**
+     * @param {GameServer} server
+     * @param {Object} [options]
+     * @param {string} [options.password]
+     */
+    constructor(server, options) {
+        options = { password: null, ...options };
+
         this.server = server;
 
         this.clients = new Map();
@@ -13,25 +22,40 @@ export default class Room {
         client.room = this;
     }
 
-    deleteClient(clientId) {
-        this.clients.delete(clientId);
+    deleteClient(id) {
+        this.clients.delete(id);
     }
 
+    /**
+     * @param {(string|ArrayBuffer)} msg
+     */
     broadcast(msg) {
         this.clients.forEach(client => {
             client.send(msg);
         });
     }
 
-    broadcastExcludeClient(clientId, msg) {
+    /**
+     * @param {(string|ArrayBuffer)} msg
+     * @param {number[]} ids
+     */
+    broadcastExcludeClients(msg, ids) {
         this.clients.forEach((client, id) => {
-            if (id !== clientId) {
+            if (!ids.includes(id)) {
                 client.send(msg);
             }
         });
     }
 
-    sendToClient(clientId, msg) {
-        this.clients.get(clientId).send(msg);
+    /**
+     * @param {(string|ArrayBuffer)} msg
+     * @param {number} id
+     */
+    sendToClient(msg, id) {
+        this.clients.get(id).send(msg);
+    }
+
+    getClientsInfo() {
+        return [...this.clients.values()].map(client => ({ id: client.id, name: client.name, color: client.color }));
     }
 }

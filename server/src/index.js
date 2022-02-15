@@ -1,14 +1,14 @@
 import { createServer } from 'http';
 
 import GameServer from './core/GameServer.js';
-import DefaultRoom from './room/default/DefaultRoom.js';
+import BrowserRoom from './room/browser/BrowserRoom.js';
 import RaceRoom from './room/race/RaceRoom.js';
 
 let httpServer = createServer();
 
 let gameServer = new GameServer({ noServer: true, clientTracking: false });
 gameServer.init();
-gameServer.addRoom(new DefaultRoom(gameServer));
+gameServer.addRoom(new BrowserRoom(gameServer));
 gameServer.addRoom(new RaceRoom(gameServer));
 
 httpServer.on('upgrade', (req, socket, head) => {

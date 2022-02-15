@@ -6,12 +6,12 @@ export default class Color {
     }
 
     static #generateValues(brightness) {
-        let values = [Random.generateInt(170, 255), Random.generateInt(0, 255), Random.generateInt(0, 85)].map(value =>
+        let values = [Random.int(170, 255), Random.int(0, 255), Random.int(0, 85)].map(value =>
             this.#setValueBrightness(value, brightness)
         );
 
-        let r = values.splice(Random.generateInt(0, 2), 1)[0];
-        let g = values.splice(Random.generateInt(0, 1), 1)[0];
+        let r = values.splice(Random.int(0, 2), 1)[0];
+        let g = values.splice(Random.int(0, 1), 1)[0];
         let b = values[0];
 
         return [r, g, b];

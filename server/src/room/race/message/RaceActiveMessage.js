@@ -1,17 +1,22 @@
+import { KEY_PRESSED } from '../constant/MessageConstants.js';
+
 export default class RaceActiveMessage {
-    static 0(sender, data) {
-        sender.room.broadcastExcludeClient(sender.id, new Float64Array([0, sender.id, data[0], data[1]]));
+    static [KEY_PRESSED](sender, data) {
+        sender.room.broadcastExcludeClients(
+            new Float64Array([KEY_PRESSED, sender.id, data[0], data[1]]),
+            sender.room.loadingClients.concat(sender.id)
+        );
         sender.keyLog[data[0]].push(data[1]);
     }
 
     static 'time'(sender, data) {
         sender.room.sendToClient(
-            data.id,
             JSON.stringify({
                 type: 'keylog',
                 data: {
                     id: sender.id,
                     time: data.time,
+                    stopped: sender.stopped,
                     keys: {
                         upPressed: sender.keyLog[0],
                         downPressed: sender.keyLog[1],
@@ -25,14 +30,30 @@ export default class RaceActiveMessage {
                     unpausePressed: sender.keyLog[8],
                     switchBikePressed: sender.keyLog[9],
                 },
-            })
+            }),
+            data.id
+        );
+    }
+
+    static 'finish'(sender, data) {
+        sender.finalTime = data;
+
+        if (sender.room.state.name === 'stage4Racing') {
+            sender.room.stage5RaceEnd(sender.name);
+        }
+    }
+
+    static 'unstop'(sender) {
+        sender.stopped = false;
+        sender.room.broadcastExcludeClients(
+            JSON.stringify({ type: 'unstop', data: sender.id }),
+            sender.room.loadingClients.concat(sender.id)
         );
     }
 
     static 'message'(sender, data) {
-        sender.room.broadcastExcludeClient(
+        sender.room.broadcastExcludeClients(JSON.stringify({ type: 'message', data: { id: sender.id, text: data } }), [
             sender.id,
-            JSON.stringify({ type: 'message', data: { id: sender.id, text: data } })
-        );
+        ]);
     }
 }
