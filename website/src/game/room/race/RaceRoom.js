@@ -2,14 +2,13 @@ import Room from '../Room.js';
 import RaceLoadingMessage from './message/RaceLoadingMessage.js';
 import RaceActiveMessage from './message/RaceActiveMessage.js';
 import RaceResults from '../../ui/RaceResults.js';
+import { UNSTOP } from './constant/RaceMessageConstants.js';
 
 export default class RaceRoom extends Room {
     constructor(stateManager, ws) {
         super(stateManager, ws);
 
         super.setMessageParser('loading');
-
-        this.stopped = false;
 
         this.state = new Object();
 
@@ -56,46 +55,56 @@ export default class RaceRoom extends Room {
     }
 
     stage3PreRace() {
-        this.raceResults = null;
+        if (this.raceResults) {
+            this.raceResults.destroy();
+            this.raceResults = null;
+        }
 
         this.state.message = { text: 'Waiting for players', size: 22, top: 200 };
         this.track.stopped = true;
     }
 
     stage4Racing() {
+        this.track.stopped = true;
+
+        this.state.message = { text: '', size: 36, top: 200 };
+
+        let startRacing = () => {
+            this.state.message.text = 'GO';
+            setTimeout(() => {
+                this.state.message = null;
+            }, 1500);
+            super.sendFloat64Array([UNSTOP]);
+            this.track.stopped = false;
+        };
+
         let delay = this.state.delay;
-        if (delay > 0) {
-            let startRacing = () => {
-                this.state.message.text = 'GO';
-                setTimeout(() => {
-                    this.state.message = null;
-                }, 1500);
-                super.sendJSON({ type: 'unstop' });
-                this.track.stopped = false;
-            };
 
-            this.state.message = { text: Math.ceil(delay / 1000), size: 36, top: 200 };
-
-            let small = delay - Math.floor(delay / 1000) * 1000;
-
-            this.timeout = setTimeout(() => {
-                delay -= small;
-                if (delay > 999) {
-                    this.state.message.text = Math.round(delay / 1000);
-                    this.interval = setInterval(() => {
-                        delay -= 1000;
-                        if (delay > 999) {
-                            this.state.message.text = Math.round(delay / 1000);
-                        } else {
-                            clearInterval(this.interval);
-                            startRacing();
-                        }
-                    }, 1000);
-                } else {
-                    startRacing();
-                }
-            }, small);
+        if (delay <= 0) {
+            return startRacing();
         }
+
+        this.state.message.text = Math.ceil(delay / 1000);
+
+        let small = delay - Math.floor(delay / 1000) * 1000;
+
+        this.timeout = setTimeout(() => {
+            delay -= small;
+            if (delay > 999) {
+                this.state.message.text = Math.round(delay / 1000);
+                this.interval = setInterval(() => {
+                    delay -= 1000;
+                    if (delay > 999) {
+                        this.state.message.text = Math.round(delay / 1000);
+                    } else {
+                        clearInterval(this.interval);
+                        startRacing();
+                    }
+                }, 1000);
+            } else {
+                startRacing();
+            }
+        }, small);
     }
 
     stage5RaceEnd() {
@@ -126,10 +135,19 @@ export default class RaceRoom extends Room {
 
     displayResults(results) {
         this.raceResults = new RaceResults(this.stateManager.game.ui.gameScreen, this.stateManager);
-        this.raceResults.render([{ name: 'test', finalTime: 2134 }, { name: 'testt' }]);
+        this.raceResults.render(this, results);
     }
 
     render(ctx) {
+        if (this.track.spectating) {
+            ctx.save();
+            ctx.font = `bold ${22}px Ubuntu`;
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#000';
+            ctx.fillText('Race in progress', this.track.canvas.width / 2, 60);
+            ctx.restore();
+        }
+
         if (this.state.message) {
             ctx.save();
             ctx.font = `bold ${this.state.message.size}px Ubuntu`;

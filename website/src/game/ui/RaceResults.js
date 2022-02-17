@@ -8,28 +8,43 @@ export default class RaceResults {
         this.stateManager = stateManager;
     }
 
-    render(results) {
+    render(room, results) {
         this.container = document.createElement('div');
         this.container.classList.add('race-results');
 
-        let closeButtonContainer = document.createElement('div');
+        let top = document.createElement('div');
+        top.classList.add('top');
+
+        let title = document.createElement('div');
+        title.classList.add('title');
+        title.textContent = 'Race Results';
+
         let closeButton = document.createElement('button');
         closeButton.classList.add('close-button');
         closeButton.innerHTML = CLOSE_SVG;
         closeButton.onclick = () => {
             this.destroy();
         };
-        closeButtonContainer.appendChild(closeButton);
 
-        this.container.appendChild(closeButtonContainer);
+        top.append(title, closeButton);
+        this.container.appendChild(top);
 
-        results.forEach((result, index) => {
+        let prevTime = -1;
+        let curPosition = 0;
+        results.forEach(result => {
+            let user = room.users.get(result.id) || room.track.user;
+
+            if (prevTime !== result.finalTime) {
+                ++curPosition;
+            }
+
             let resultEl = document.createElement('div');
             resultEl.classList.add('result');
+            resultEl.style.color = user.color;
 
             let resultName = document.createElement('div');
             resultName.classList.add('name');
-            resultName.textContent = `${index + 1}${['st', 'nd', 'rd'][index] || 'th'} ${result.name}`;
+            resultName.textContent = `${curPosition}${['st', 'nd', 'rd'][curPosition - 1] || 'th'}: ${user.name}`;
 
             let resultTime = document.createElement('div');
             resultTime.classList.add('time');
@@ -39,12 +54,17 @@ export default class RaceResults {
 
             resultEl.append(resultName, resultTime);
             this.container.appendChild(resultEl);
+
+            prevTime = result.finalTime;
         });
 
         this.parent.appendChild(this.container);
     }
 
     destroy() {
-        this.parent.removeChild(this.container);
+        if (this.container) {
+            this.parent.removeChild(this.container);
+        }
+        this.container = null;
     }
 }

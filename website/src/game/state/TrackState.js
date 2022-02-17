@@ -19,7 +19,7 @@ export default class TrackState extends GameState {
                     }
                 });
             }
-            this.track.time++;
+            ++this.track.time;
         }
         this.track.socketRunners.forEach(runner => {
             runner.fixedUpdate();
@@ -28,7 +28,7 @@ export default class TrackState extends GameState {
 
     update(progress, delta) {
         this.track.toolManager.update(progress, delta);
-        if (!this.track.stopped && !this.track.paused) {
+        if (!this.track.paused && !this.track.stopped) {
             this.track.ghostRunners.forEach(runner => {
                 if (!runner.done) {
                     runner.update(progress, delta);
@@ -40,7 +40,7 @@ export default class TrackState extends GameState {
             this.track.camera.selfAdd(this.track.focalPoint.displayPos.sub(this.track.camera).scale(delta / 200));
         }
         this.track.socketRunners.forEach(runner => {
-            if (!runner.stopped && !runner.paused) {
+            if (!runner.stopped && !runner.paused && !runner.done) {
                 runner.update(progress, delta);
             }
         });

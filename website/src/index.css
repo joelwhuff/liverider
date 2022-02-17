@@ -34,6 +34,8 @@ body {
 
 button {
     font: 1rem 'Ubuntu';
+    border: none;
+    outline: none;
 }
 button:hover {
     cursor: pointer;
@@ -175,6 +177,7 @@ button:hover {
     margin: 10px 16px 0 16px;
     padding-bottom: 12px;
     /* border-bottom: 2px solid #bbb; */
+    user-select: none;
 }
 
 .game-chat .input {
@@ -343,28 +346,52 @@ button:hover {
     top: 150px;
     left: 50%;
     width: 500px;
-    padding: 20px;
-    background-color: #ddd;
+    padding: 14px 26px 30px 26px;
+    background-color: #fff;
     border-radius: 3px;
     animation: results 0.2s ease-out;
     transform: translateX(-50%);
+    font-weight: bold;
+    user-select: none;
+    box-shadow: 0 8px 17px 8px rgba(0, 0, 0, 0.3);
 }
 
-.race-results .close-button {
-    /* float: right; */
-    width: 30px;
-    height: 30px;
+.race-results .top {
+    position: relative;
+    text-align: center;
+    margin-bottom: 8px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #ddd;
+    /* background-color: #bbb; */
 }
-.race-results .close-button:hover {
-    background-color: #aaa;
+
+.race-results .top .title {
+    display: inline-block;
+    font-size: 1.4rem;
+}
+
+.race-results .top .close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 34px;
+    height: 34px;
+    padding: 4px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+.race-results .top .close-button:hover {
+    background-color: #eee;
 }
 
 .race-results .result {
-    padding-top: 10px;
+    position: relative;
+    padding: 10px 8px 0 8px;
     text-align: left;
 }
 
 .race-results .result .name {
+    display: inline-block;
     /* float: left; */
 }
 
@@ -384,4 +411,23 @@ button:hover {
         opacity: 0;
         transform: translateY(-50px) translateX(-50%);
     }
+}
+
+/* RoomBrowser */
+
+.room-browser {
+    margin-top: 100px;
+    width: 600px;
+}
+
+.room-browser .options {
+    position: relative;
+    margin-top: 60px;
+    background-color: #eee;
+}
+
+.room-browser .options .name {
+}
+
+.room-browser .options .name-button {
 }

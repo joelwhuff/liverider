@@ -6,7 +6,9 @@ export default class SocketRunner extends BikeRunner {
     constructor(track, bikeClass, name, color) {
         super(track, bikeClass, name, color);
 
+        this.initialTime = 0;
         this.time = 0;
+
         this.stopped = false;
         this.paused = false;
 
@@ -29,9 +31,9 @@ export default class SocketRunner extends BikeRunner {
 
     onHitTarget() {
         if (this.targetsReached.size >= this.track.targets.size) {
+            this.stopped = true;
             this.done = true;
             this.finalTime = this.time;
-            this.stopped = true;
         }
     }
 
@@ -46,23 +48,27 @@ export default class SocketRunner extends BikeRunner {
         this.rightPressed = false;
         this.turnPressed = false;
 
-        this.time = 0;
+        this.time = this.initialTime;
 
         this.bikeClass = this.track.bikeClass;
         super.createBike();
         super.reset();
         this.restart();
 
-        while (this.time < time) {
-            this.fixedUpdate();
+        if (!this.stopped && !this.done) {
+            while (this.time < time) {
+                this.fixedUpdate();
+            }
         }
     }
 
     fixedUpdate() {
-        if (!this.stopped) {
-            this.updateToolControls();
-            if (!this.paused) {
-                super.fixedUpdate();
+        if (!this.stopped && !this.done) {
+            if (this.time >= 0) {
+                this.updateToolControls();
+                if (!this.paused) {
+                    super.fixedUpdate();
+                }
             }
             ++this.time;
         }
@@ -130,7 +136,12 @@ export default class SocketRunner extends BikeRunner {
             // this.turnPressed = snapshot.turnPressed;
         }
 
+        let old = this.instance;
         this.instance = bike.clone();
+
+        if (this.track.focalPoint === old.hitbox) {
+            this.track.focalPoint = this.instance.hitbox;
+        }
     }
 
     /**
@@ -197,7 +208,7 @@ export default class SocketRunner extends BikeRunner {
         }
 
         if (time < this.time) {
-            this.runUpdates(this.time - 2);
+            this.runUpdates(Math.max(0, this.time - 2));
         }
     }
 }

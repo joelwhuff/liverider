@@ -96,7 +96,7 @@ export default class TrackParser {
         this.track.bikeClass = bikeClass;
         this.track.playerRunner.bikeClass = bikeClass;
         this.track.playerRunner.createBike();
-        this.track.focalPoint = this.track.playerRunner.instance.hitbox;
+        this.track.focalPoint = this.track.playerRunner.instance?.hitbox;
 
         this.currentStep = this.finish;
     }

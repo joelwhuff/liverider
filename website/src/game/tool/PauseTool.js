@@ -24,10 +24,7 @@ export default class PauseTool extends Tool {
     }
 
     run() {
-        // this.track.room.sendFloat64Array([3, this.track.time]);
         this.track.pause(!this.track.paused);
-        // this.track.paused = !this.track.paused;
-        // this.updateDOM();
     }
 
     updateDOM() {

@@ -1,4 +1,9 @@
-import { LEFT_TOOLBAR_EDITING, LEFT_TOOLBAR_VIEWING, RIGHT_TOOLBAR } from '../constant/ToolbarConstants.js';
+import {
+    LEFT_TOOLBAR_EDITING,
+    LEFT_TOOLBAR_VIEWING,
+    LEFT_TOOLBAR_SPECTATING,
+    RIGHT_TOOLBAR,
+} from '../constant/ToolbarConstants.js';
 import { TRACK_DEFAULT } from '../constant/TrackConstants.js';
 import Toolbar from '../tool/Toolbar.js';
 import Track from '../track/Track.js';
@@ -15,6 +20,8 @@ export default class UI {
 
         this.gameScreen = null;
         this.canvas = null;
+        this['left'] = null;
+        this['right'] = null;
 
         this.settings = null;
         this.settingsIsOpen = false;
@@ -31,8 +38,13 @@ export default class UI {
     }
 
     clearUI(state) {
-        while (this.gameScreen.lastChild !== this.gameScreen.firstChild) {
-            this.gameScreen.removeChild(this.gameScreen.lastChild);
+        if (this['left']) {
+            this.gameScreen.removeChild(this['left']);
+            this['left'] = null;
+        }
+        if (this['right']) {
+            this.gameScreen.removeChild(this['right']);
+            this['right'] = null;
         }
     }
 
@@ -54,7 +66,7 @@ export default class UI {
     }
 
     createRaceUI(state) {
-        this.makeToolbar(state, LEFT_TOOLBAR_VIEWING, 'left');
+        this.makeToolbar(state, state.track.spectating ? LEFT_TOOLBAR_SPECTATING : LEFT_TOOLBAR_VIEWING, 'left');
 
         state.track.toolManager.setTool(state.track.toolCollection.toolsByToolName.get(CameraTool.toolName));
     }
@@ -71,7 +83,8 @@ export default class UI {
         this.gameScreen.appendChild(this.canvas);
 
         let chat = document.createElement('div');
-        chat.classList.add('game-chat', 'open');
+        chat.classList.add('game-chat');
+        this.settingsIsOpen = false;
 
         let chatInputContainer = document.createElement('div');
         chatInputContainer.classList.add('input-ctr');
@@ -275,8 +288,6 @@ export default class UI {
     }
 
     makeToolbar(state, type, className) {
-        let toolbarEl = null;
-
         let toolbar = new Toolbar(
             type,
             type.reduce((toolMap, toolClass) => {
@@ -284,10 +295,10 @@ export default class UI {
             }, {})
         );
 
-        toolbarEl = toolbar.getDOM();
+        this[className] = toolbar.getDOM();
         toolbar.registerControls();
-        toolbarEl.classList.add(className);
-        state.track.canvas.parentNode.appendChild(toolbarEl);
+        this[className].classList.add(className);
+        this.gameScreen.appendChild(this[className]);
 
         toolbar.attachToTrack(state.track);
     }

@@ -58,6 +58,7 @@ export default class Track {
         this.time = 0;
 
         this.user = opt.user || { name: 'me', color: '#000' };
+        this.spectating = opt.spectating;
 
         this.bikeClass = null;
         this.playerRunner = new PlayerRunner(this, BMX, this.user.name, this.user.color);
@@ -167,9 +168,11 @@ export default class Track {
     }
 
     pause(paused) {
-        this.room.sendFloat64Array([0, paused ? 7 : 8, this.time]);
-        this.paused = paused;
-        this.toolCollection.getByToolName(PauseTool.toolName).updateDOM();
+        if (!this.stopped) {
+            this.room.sendFloat64Array([0, paused ? 7 : 8, this.time]);
+            this.paused = paused;
+            this.toolCollection.getByToolName(PauseTool.toolName).updateDOM();
+        }
     }
 
     restart() {

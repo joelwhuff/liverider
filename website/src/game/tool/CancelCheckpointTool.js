@@ -18,11 +18,13 @@ export default class CancelCheckpointTool extends Tool {
     }
 
     run() {
-        this.track.room.sendFloat64Array([0, 6, this.track.time]);
-        this.track.playerRunner.popCheckpoint();
-        this.track.ghostRunners.forEach(runner => {
-            runner.popCheckpoint();
-        });
-        this.track.restart();
+        if (!this.track.stopped) {
+            this.track.room.sendFloat64Array([0, 6, this.track.time]);
+            this.track.playerRunner.popCheckpoint();
+            this.track.ghostRunners.forEach(runner => {
+                runner.popCheckpoint();
+            });
+            this.track.restart();
+        }
     }
 }

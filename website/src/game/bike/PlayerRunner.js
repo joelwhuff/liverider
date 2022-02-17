@@ -26,10 +26,9 @@ export default class PlayerRunner extends BikeRunner {
         this.timeAtLastTarget = this.track.time;
         if (this.targetsReached.size >= this.track.targets.size) {
             this.track.room.sendJSON({ type: 'finish', data: this.track.time });
+            this.track.stopped = true;
             this.done = true;
             this.finalTime = this.track.time;
-
-            this.track.stopped = true;
 
             // let ghostString = GhostParser.generate(this);
             // console.log(ghostString);

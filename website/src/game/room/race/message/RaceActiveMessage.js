@@ -1,33 +1,27 @@
 import Track from '../../../track/Track.js';
 import SocketRunner from '../../../bike/SocketRunner.js';
+import { KEY_PRESSED, TIME, UNSTOP } from '../constant/RaceMessageConstants.js';
 
 export default class RaceActiveMessage {
-    static 0(room, data) {
+    static [KEY_PRESSED](room, data) {
         room.track.socketRunners.get(data[0]).parseKeyPress(data[1], data[2]);
     }
 
-    static 'adduser'(room, data) {
-        room.users.set(data.id, { name: data.name, color: data.color });
+    static [TIME](room, data) {
+        if (!room.track.spectating) {
+            let time = Math.floor(
+                (performance.now() - room.stateManager.game.lastTime) / room.stateManager.game.frameDuration
+            );
+
+            room.sendFloat64Array([TIME, data[0], room.track.time + time]);
+        }
     }
 
-    static 'deleteuser'(room, data) {
-        room.users.delete(data);
-        room.track.socketRunners.delete(data);
-    }
-
-    static 'addrunner'(room, data) {
-        let user = room.users.get(data.id);
-        let runner = new SocketRunner(room.track, room.track.bikeClass, user.name, user.color);
-        runner.stopped = data.stopped;
-        runner.createBike();
-        room.track.socketRunners.set(data.id, runner);
-    }
-
-    static 'time'(room, data) {
-        room.sendJSON({
-            type: 'time',
-            data: { id: data, time: room.track.time },
-        });
+    static [UNSTOP](room, data) {
+        let runner = room.track.socketRunners.get(data[0]);
+        if (runner) {
+            runner.stopped = false;
+        }
     }
 
     static 'keylog'(room, data) {
@@ -48,8 +42,29 @@ export default class RaceActiveMessage {
         room.track.socketRunners.set(data.id, runner);
     }
 
-    static 'unstop'(room, data) {
-        room.track.socketRunners.get(data).stopped = false;
+    static 'adduser'(room, data) {
+        room.users.set(data.id, { name: data.name, color: data.color });
+    }
+
+    static 'deleteuser'(room, data) {
+        room.users.delete(data);
+        room.track.socketRunners.delete(data);
+    }
+
+    static 'addrunner'(room, data) {
+        let user = room.users.get(data.id);
+        let runner = new SocketRunner(room.track, room.track.bikeClass, user.name, user.color);
+        runner.stopped = data.stopped;
+        runner.createBike();
+        room.track.socketRunners.set(data.id, runner);
+
+        // This causes runners that are added when the document is hidden to
+        // receive the correct number of fixedUpdates when window is in focus again
+        let time = Math.ceil(
+            (performance.now() - room.stateManager.game.lastTime) / room.stateManager.game.frameDuration
+        );
+        runner.initialTime -= time;
+        runner.time = runner.initialTime;
     }
 
     static 'trackdata'(room, data) {
@@ -60,6 +75,7 @@ export default class RaceActiveMessage {
             trackCode: data.trackCode,
             room: room,
             user: data.user || room.stateManager.track.user,
+            spectating: !!data.spectating,
         });
         room.track = room.stateManager.track;
 
@@ -67,6 +83,10 @@ export default class RaceActiveMessage {
         room.stateManager.push('parser');
 
         room.setState(data.state);
+
+        if (data.spectating) {
+            room.track.playerRunner.createBike = () => {};
+        }
     }
 
     static 'state'(room, data) {

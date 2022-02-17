@@ -63,4 +63,5 @@ export const LEFT_TOOLBAR_VIEWING = [
         // EmptyTool,
         GridSnapTool,
     ],
+    LEFT_TOOLBAR_SPECTATING = [FocusGhostTool, EmptyTool, CameraTool],
     ITEM_OPTIONS = [TargetTool, CheckpointTool, BoostTool, GravityTool, BombTool, SlowMoTool];

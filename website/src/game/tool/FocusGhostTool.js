@@ -25,9 +25,9 @@ export default class FocusGhostTool extends Tool {
     }
 
     run() {
-        if (this.track.ghostRunners.length) {
-            this.currentGhostIndex = (this.currentGhostIndex + 1) % this.track.ghostRunners.length;
-            this.track.focalPoint = this.track.ghostRunners[this.currentGhostIndex].instance.hitbox;
+        if (this.track.socketRunners.size) {
+            this.currentGhostIndex = (this.currentGhostIndex + 1) % this.track.socketRunners.size;
+            this.track.focalPoint = [...this.track.socketRunners.values()][this.currentGhostIndex].instance.hitbox;
         }
     }
 }
