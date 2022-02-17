@@ -12,7 +12,7 @@ gameServer.addRoom(new BrowserRoom(gameServer));
 gameServer.addRoom(new RaceRoom(gameServer));
 
 httpServer.on('upgrade', (req, socket, head) => {
-    if (gameServer.blacklist.includes(socket.remoteAddress)) {
+    if (GameServer.blacklist.includes(socket.remoteAddress)) {
         socket.destroy();
         return;
     }

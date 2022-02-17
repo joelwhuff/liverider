@@ -26,12 +26,20 @@ export default class RaceRoom extends Room {
 
         super.addClient(client);
 
-        client.name = 'user' + client.id;
+        client.name ||= 'user' + client.id;
 
         super.broadcastExcludeClients(
             JSON.stringify({ type: 'adduser', data: { id: client.id, name: client.name, color: client.color } }),
             [client.id]
         );
+
+        client.setMessageParser(this.constructor.messageStages.get('loading'));
+        client.resetRaceProps();
+        this.addLoadingClient(client.id);
+
+        // if (this.state.name === 'stage3PreRace' || this.state.name === 'stage4Racing') {
+        //     client.spectating = true;
+        // }
 
         client.send(
             JSON.stringify({
@@ -40,22 +48,21 @@ export default class RaceRoom extends Room {
                     trackCode: this.trackCode,
                     state: this.getState(),
                     user: { name: client.name, color: client.color },
+                    spectating: client.spectating,
                 },
             })
         );
-
-        client.setMessageParser(this.constructor.messageStages.get('loading'));
-        client.resetRaceProps();
-        this.addLoadingClient(client.id);
     }
 
-    deleteClient(clientId) {
-        super.deleteClient(clientId);
+    deleteClient(id) {
+        super.deleteClient(id);
+        this.deleteLoadingClient(id);
 
         if (this.clients.size >= 1) {
-            super.broadcast(JSON.stringify({ type: 'deleteuser', data: clientId }));
-            if (this.state.name === 'stage2LobbyCountdown') {
-                // this.stage1Lobby();
+            super.broadcast(JSON.stringify({ type: 'deleteuser', data: id }));
+            if (this.clients.size === 1 && this.state.name === 'stage2LobbyCountdown') {
+                this.stage1Lobby(false);
+                super.broadcast(JSON.stringify({ type: 'state', data: this.state }));
             }
         } else {
             this.stage1Lobby();
@@ -93,7 +100,7 @@ export default class RaceRoom extends Room {
         });
     }
 
-    stage1Lobby() {
+    stage1Lobby(reset = true) {
         clearTimeout(this.timeout);
 
         this.state = {
@@ -102,23 +109,25 @@ export default class RaceRoom extends Room {
 
         this.trackCode = this.constructor.LOBBY_TRACK_CODE;
 
-        this.resetPlayers();
+        if (reset) {
+            this.resetPlayers();
 
-        super.broadcast(
-            JSON.stringify({
-                type: 'trackdata',
-                data: {
-                    trackCode: this.trackCode,
-                    state: this.state,
-                },
-            })
-        );
+            super.broadcast(
+                JSON.stringify({
+                    type: 'trackdata',
+                    data: {
+                        trackCode: this.trackCode,
+                        state: this.state,
+                    },
+                })
+            );
+        }
     }
 
     stage2LobbyCountdown() {
         this.state = {
             name: 'stage2LobbyCountdown',
-            delay: 20000,
+            delay: 5000,
         };
 
         this.delayStart = performance.now();
@@ -133,7 +142,9 @@ export default class RaceRoom extends Room {
     }
 
     stage3PreRace() {
-        fs.readFile(`server/tracks/${Math.floor(Math.random() * 8)}.txt`, 'utf8', (err, data) => {
+        fs.readFile(`server/test_tracks/${Math.floor(Math.random() * 16)}.txt`, 'utf8', (err, data) => {
+            if (err) console.log(err);
+
             this.state = { name: 'stage3PreRace' };
 
             this.trackCode = data;
@@ -149,6 +160,12 @@ export default class RaceRoom extends Room {
                     },
                 })
             );
+
+            this.timeout = setTimeout(() => {
+                if (this.state.name !== 'stage4Racing') {
+                    this.stage4Racing();
+                }
+            }, 7000);
         });
     }
 
@@ -176,9 +193,22 @@ export default class RaceRoom extends Room {
 
         this.delayStart = performance.now();
         this.timeout = setTimeout(() => {
-            this.stage1Lobby();
-            super.broadcast(JSON.stringify({ type: 'results' }));
-        }, this.state.delay + 5000);
+            super.broadcast(JSON.stringify({ type: 'results', data: this.getRaceResults() }));
+            this.timeout = setTimeout(() => {
+                this.stage1Lobby();
+            }, 4000);
+        }, this.state.delay + 1000);
+    }
+
+    getRaceResults() {
+        return [...this.clients.values()]
+            .map(client => ({ id: client.id, finalTime: client.finalTime }))
+            .sort((a, b) => {
+                if (a.finalTime && b.finalTime) return a.finalTime - b.finalTime;
+                else if (a.finalTime && !b.finalTime) return -1;
+                else if (!a.finalTime && b.finalTime) return 1;
+                else return 0;
+            });
     }
 }
 
@@ -186,4 +216,4 @@ RaceRoom.messageStages = new Map();
 RaceRoom.messageStages.set('loading', RaceLoadingMessage);
 RaceRoom.messageStages.set('active', RaceActiveMessage);
 
-RaceRoom.LOBBY_TRACK_CODE = fs.readFileSync('server/tracks/mockba.txt', 'utf8');
+RaceRoom.LOBBY_TRACK_CODE = fs.readFileSync('server/test_tracks/mockba.txt', 'utf8');

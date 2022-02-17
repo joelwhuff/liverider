@@ -8,18 +8,18 @@ export default class GameClient {
      * @param {WebSocket} ws
      * @param {GameServer} server
      */
-    constructor(ws, server) {
-        this.ws = ws;
-
+    constructor(server, ws) {
         this.server = server;
+
+        this.ws = ws;
 
         this.room = null;
 
-        this.messageParser = null;
-
         this.id = 0;
-        this.name = 'test';
+        this.name = '';
         this.color = Color.randomHex(0.6);
+
+        this.messageParser = null;
     }
 
     registerListeners() {
@@ -45,7 +45,9 @@ export default class GameClient {
     }
 
     resetRaceProps() {
+        this.spectating = false;
         this.stopped = true;
+        this.finalTime = null;
 
         this.keyLog = [
             [] /* upPressed */,
@@ -61,7 +63,9 @@ export default class GameClient {
         ];
     }
 
-    onError(e) {}
+    onError() {
+        this.destroy();
+    }
 
     onOpen() {}
 
@@ -73,11 +77,9 @@ export default class GameClient {
         }
     }
 
-    onClose(e) {
+    onClose() {
+        this.room?.deleteClient(this.id);
         this.server.deleteClient(this);
-        if (this.room) {
-            this.room.deleteClient(this.id);
-        }
     }
 
     send(msg) {
@@ -86,7 +88,7 @@ export default class GameClient {
 
     parseBuffer(data) {
         try {
-            this.messageParser[new Float64Array(data, 0, 1)[0]](this, new Float64Array(data, 8));
+            this.messageParser[new Float64Array(data, 0, 1)[0]](this.room, this, new Float64Array(data, 8));
         } catch (err) {
             console.log(err);
             this.destroy();
@@ -96,7 +98,7 @@ export default class GameClient {
     parseJSON(data) {
         try {
             let msg = JSON.parse(data.toString());
-            this.messageParser[msg.type](this, msg.data);
+            this.messageParser[msg.type](this.room, this, msg.data);
         } catch (err) {
             console.log(err);
             this.destroy();
@@ -104,6 +106,6 @@ export default class GameClient {
     }
 
     destroy() {
-        console.log(`client ${this.name} destroyed itself`);
+        this.ws.terminate();
     }
 }
