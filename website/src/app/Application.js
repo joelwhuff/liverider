@@ -1,4 +1,5 @@
 import Game from '../game/Game.js';
+import Login from '../game/ui/Login.js';
 
 export default class Application {
     constructor() {
@@ -9,6 +10,8 @@ export default class Application {
 
     boot() {
         this.initConnection();
+        this.login = new Login(document.body, this);
+        this.login.render();
     }
 
     initConnection() {
@@ -22,7 +25,6 @@ export default class Application {
         });
         this.ws.addEventListener('open', e => {
             console.log(`Connection to localhost established`);
-            this.ws.send(JSON.stringify({ type: 100, data: { id: 1 } }));
         });
         this.ws.addEventListener('close', e => {
             console.log(`Connection to localhost has been closed`);
@@ -45,10 +47,18 @@ export default class Application {
     onMessage(e) {
         let msg = new Float64Array(e.data);
 
-        if (msg[0]) {
-            this.bootGame();
-        } else {
-            console.log(msg[1]);
+        switch (msg[0]) {
+            case 1:
+                this.bootGame();
+                break;
+            case 0:
+                console.log(msg[1]);
+                break;
+            case 201:
+                this.ws.send(JSON.stringify({ type: 100, data: { id: 1 } }));
+                this.login.destroy();
+                this.login = null;
+                break;
         }
     }
 }

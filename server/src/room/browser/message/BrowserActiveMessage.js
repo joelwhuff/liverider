@@ -3,8 +3,8 @@ import * as MSG from '../constant/MessageConstants.js';
 export default class DefaultActiveMessage {
     static [MSG.JOIN](room, sender, data) {
         let _room = sender.server.getRoom(data.id);
-        if (room) {
-            if (!room.password || data.password === room.password) {
+        if (_room) {
+            if (!_room.password || data.password === _room.password) {
                 sender.send(new Float64Array([MSG.JOIN_SUCCEEDED]));
                 sender.room = _room;
             } else {

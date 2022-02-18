@@ -84,7 +84,7 @@ export default class UI {
 
         let chat = document.createElement('div');
         chat.classList.add('game-chat');
-        this.settingsIsOpen = false;
+        this.chatIsOpen = false;
 
         let chatInputContainer = document.createElement('div');
         chatInputContainer.classList.add('input-ctr');

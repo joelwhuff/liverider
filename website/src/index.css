@@ -28,7 +28,7 @@ html {
 }
 
 body {
-    background-color: #000;
+    background-color: #eee;
     overflow: hidden;
 }
 
@@ -39,6 +39,12 @@ button {
 }
 button:hover {
     cursor: pointer;
+}
+
+input {
+    font: 1rem 'Ubuntu';
+    border: none;
+    outline: none;
 }
 
 #game {
@@ -413,21 +419,45 @@ button:hover {
     }
 }
 
-/* RoomBrowser */
+/* Temp Login */
 
-.room-browser {
-    margin-top: 100px;
-    width: 600px;
+.login {
+    text-align: center;
+    margin-top: 225px;
 }
 
-.room-browser .options {
-    position: relative;
-    margin-top: 60px;
-    background-color: #eee;
+.login h1 {
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #444;
 }
 
-.room-browser .options .name {
+.login input {
+    vertical-align: top;
+    height: 32px;
+    padding: 0 10px;
+    text-align: center;
+    margin-right: 10px;
+    border: 1px solid #777;
+    border-radius: 3px;
+}
+.login input:hover {
+    border-color: #000;
+}
+.login input:focus {
+    border-color: #000;
 }
 
-.room-browser .options .name-button {
+.login button {
+    vertical-align: top;
+    height: 32px;
+    padding: 0 10px;
+    background-color: #ddd;
+    border: 1px solid #555;
+    border-radius: 3px;
+}
+.login button:hover {
+    background-color: #ccc;
 }
