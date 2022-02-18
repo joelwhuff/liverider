@@ -127,7 +127,7 @@ export default class RaceRoom extends Room {
     stage2LobbyCountdown() {
         this.state = {
             name: 'stage2LobbyCountdown',
-            delay: 5000,
+            delay: 30000,
         };
 
         this.delayStart = performance.now();
@@ -182,7 +182,7 @@ export default class RaceRoom extends Room {
     }
 
     stage5RaceEnd(winner) {
-        this.state = { name: 'stage5RaceEnd', delay: 5000, winner };
+        this.state = { name: 'stage5RaceEnd', delay: 30000, winner };
 
         super.broadcast(
             JSON.stringify({
