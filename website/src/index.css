@@ -105,12 +105,35 @@ input {
 }
 
 #settings {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 70px auto;
     width: 700px;
     height: 460px;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 4px;
     animation: pop 0.2s ease-out;
+}
+
+#settings .close-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    padding: 4px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+#settings .close-button:hover {
+    background-color: #eee;
+}
+
+#settings .wip {
+    color: #444;
+    font-size: 1.3rem;
 }
 
 #game-options .chat {

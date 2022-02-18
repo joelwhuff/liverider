@@ -8,11 +8,7 @@ export default class Login {
     }
 
     submitName(name) {
-        if (name.length > 2) {
-            this.app.ws.send(JSON.stringify({ type: 'name', data: name }));
-        } else {
-            alert('Name too short');
-        }
+        this.app.ws.send(JSON.stringify({ type: 'name', data: name || '' }));
     }
 
     render() {
@@ -20,7 +16,7 @@ export default class Login {
         this.container.classList.add('login');
 
         let logo = document.createElement('h1');
-        logo.textContent = 'LiveRider Test v0.1';
+        logo.textContent = 'LiveRider Test v0.0.1';
 
         let input = document.createElement('input');
         input.setAttribute('spellcheck', false);
@@ -42,6 +38,8 @@ export default class Login {
 
         this.container.append(logo, input, button);
         this.parent.appendChild(this.container);
+
+        input.focus();
     }
 
     destroy() {

@@ -20,7 +20,7 @@ export default class DefaultActiveMessage {
     }
 
     static 'name'(room, sender, data) {
-        if (data.length > 8 || data.length <= 2) {
+        if (data.length > 8) {
             sender.send(new Float64Array([MSG.NAME_INVALID]));
         } else {
             sender.send(new Float64Array([MSG.NAME_SET_SUCCESSFULLY]));

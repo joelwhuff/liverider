@@ -9,6 +9,7 @@ import Toolbar from '../tool/Toolbar.js';
 import Track from '../track/Track.js';
 import CameraTool from '../tool/CameraTool.js';
 import LineTool from '../tool/item/line/LineTool.js';
+import { CLOSE_SVG } from '../constant/UIConstants.js';
 
 export default class UI {
     constructor(game, container) {
@@ -83,8 +84,7 @@ export default class UI {
         this.gameScreen.appendChild(this.canvas);
 
         let chat = document.createElement('div');
-        chat.classList.add('game-chat');
-        this.chatIsOpen = false;
+        chat.classList.add('game-chat', 'open');
 
         let chatInputContainer = document.createElement('div');
         chatInputContainer.classList.add('input-ctr');
@@ -180,6 +180,7 @@ export default class UI {
 
         this.hideScreenOverlay();
         this.screenOverlay.removeChild(this.settings);
+        this.settings = null;
 
         if (!this.gameWasPaused) {
             this.game.stateManager.track.pause(false);
@@ -194,6 +195,19 @@ export default class UI {
 
         this.settings = document.createElement('div');
         this.settings.id = 'settings';
+
+        let close = document.createElement('button');
+        close.classList.add('close-button');
+        close.innerHTML = CLOSE_SVG;
+        close.onclick = () => {
+            this.closeSettings();
+        };
+
+        let wipText = document.createElement('div');
+        wipText.classList.add('wip');
+        wipText.textContent = 'Work in progress';
+
+        this.settings.append(close, wipText);
 
         this.screenOverlay.appendChild(this.settings);
 
