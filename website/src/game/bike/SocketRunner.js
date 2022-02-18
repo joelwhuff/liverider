@@ -208,6 +208,7 @@ export default class SocketRunner extends BikeRunner {
         }
 
         if (time < this.time) {
+            // todo: run updates starting from nearest snapshot or initialbike
             this.runUpdates(Math.max(0, this.time - 2));
         }
     }

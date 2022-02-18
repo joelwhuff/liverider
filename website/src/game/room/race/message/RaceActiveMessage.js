@@ -60,7 +60,7 @@ export default class RaceActiveMessage {
 
         // This causes runners that are added when the document is hidden to
         // receive the correct number of fixedUpdates when window is in focus again
-        let time = Math.ceil(
+        let time = Math.floor(
             (performance.now() - room.stateManager.game.lastTime) / room.stateManager.game.frameDuration
         );
         runner.initialTime -= time;
