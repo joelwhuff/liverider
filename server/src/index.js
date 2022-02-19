@@ -6,8 +6,8 @@ import BrowserRoom from './room/browser/BrowserRoom.js';
 import RaceRoom from './room/race/RaceRoom.js';
 
 let httpServer = createServer({
-    key: readFileSync(`~/../etc/letsencrypt/live/${process.env.NAME}.liverider.app/privKey.pem`),
-    cert: readFileSync(`~/../etc/letsencrypt/live/${process.env.NAME}.liverider.app/fullchain.pem`),
+    key: readFileSync(`/etc/letsencrypt/live/${process.env.NAME}.liverider.app/privKey.pem`),
+    cert: readFileSync(`/etc/letsencrypt/live/${process.env.NAME}.liverider.app/fullchain.pem`),
 });
 
 let gameServer = new GameServer({ noServer: true, clientTracking: false });
