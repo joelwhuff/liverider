@@ -15,7 +15,9 @@ export default class Application {
     }
 
     initConnection() {
-        this.ws = new WebSocket(`${document.location.protocol === 'https:' ? 'wss' : 'wss'}://localhost:80`);
+        this.ws = new WebSocket(
+            `${document.location.protocol === 'https:' ? 'wss' : 'wss'}://us-west.liverider.app:443`
+        );
 
         this.ws.binaryType = 'arraybuffer';
 

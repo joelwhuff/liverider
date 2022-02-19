@@ -1,10 +1,14 @@
-import { createServer } from 'http';
+import { createServer } from 'https';
+import { readFileSync } from 'fs';
 
 import GameServer from './core/GameServer.js';
 import BrowserRoom from './room/browser/BrowserRoom.js';
 import RaceRoom from './room/race/RaceRoom.js';
 
-let httpServer = createServer();
+let httpServer = createServer({
+    key: readFileSync(`~/../etc/letsencrypt/live/${process.env.NAME}.liverider.app/privKey.pem`),
+    cert: readFileSync(`~/../etc/letsencrypt/live/${process.env.NAME}.liverider.app/fullchain.pem`),
+});
 
 let gameServer = new GameServer({ noServer: true, clientTracking: false });
 gameServer.init();
@@ -22,6 +26,6 @@ httpServer.on('upgrade', (req, socket, head) => {
     });
 });
 
-httpServer.listen(80, () => {
-    console.log('listening on port 80');
+httpServer.listen(443, () => {
+    console.log('listening on port 443');
 });
