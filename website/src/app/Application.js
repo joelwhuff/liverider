@@ -15,7 +15,7 @@ export default class Application {
     }
 
     initConnection() {
-        this.ws = new WebSocket('ws://206.189.151.58:80');
+        this.ws = new WebSocket(`${document.location.protocol === 'https:' ? 'wss' : 'wss'}://localhost:80`);
 
         this.ws.binaryType = 'arraybuffer';
 
