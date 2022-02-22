@@ -34,7 +34,11 @@ export default {
         ],
     },
     plugins: [
-        new HtmlWebpackPlugin({ template: './src/template.html', minify: TERSER_HTML_OPTIONS }),
+        new HtmlWebpackPlugin({
+            template: './src/template.html',
+            minify: TERSER_HTML_OPTIONS,
+            favicon: './src/images/favicon.ico',
+        }),
         new MiniCssExtractPlugin({ filename: '[contenthash].css' }),
     ],
     optimization: { minimizer: ['...', new CssMinimizerPlugin()] },

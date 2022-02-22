@@ -17,5 +17,5 @@ export default {
             { test: /\.(woff|woff2)/, type: 'asset/resource', generator: { filename: '[name][ext]' } },
         ],
     },
-    plugins: [new HtmlWebpackPlugin({ template: './src/template.html' })],
+    plugins: [new HtmlWebpackPlugin({ template: './src/template.html', favicon: './src/images/favicon.ico' })],
 };
