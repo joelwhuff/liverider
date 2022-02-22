@@ -1,5 +1,5 @@
 import RaceActiveMessage from './RaceActiveMessage.js';
-import { KEY_PRESSED, TIME, PARSER_DONE } from '../constant/MessageConstants.js';
+import { KEY_PRESSED, TIME, PARSER_DONE } from '../constant/RaceMessageConstants.js';
 
 export default class RaceLoadingMessage extends RaceActiveMessage {
     static [KEY_PRESSED]() {}

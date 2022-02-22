@@ -1,4 +1,4 @@
-import { KEY_PRESSED, TIME, UNSTOP, FINISH } from '../constant/MessageConstants.js';
+import { KEY_PRESSED, TIME, UNSTOP, FINISH } from '../constant/RaceMessageConstants.js';
 
 export default class RaceActiveMessage {
     static [KEY_PRESSED](room, sender, data) {

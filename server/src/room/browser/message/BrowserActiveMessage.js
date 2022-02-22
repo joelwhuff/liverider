@@ -1,4 +1,4 @@
-import * as MSG from '../constant/MessageConstants.js';
+import * as MSG from '../constant/BrowserMessageConstants.js';
 
 export default class DefaultActiveMessage {
     static [MSG.JOIN](room, sender, data) {
