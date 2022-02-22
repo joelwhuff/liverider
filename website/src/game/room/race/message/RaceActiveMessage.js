@@ -1,10 +1,14 @@
 import Track from '../../../track/Track.js';
 import SocketRunner from '../../../bike/SocketRunner.js';
-import { KEY_PRESSED, TIME, UNSTOP } from '../constant/RaceMessageConstants.js';
+import { KEY_PRESSED, TIME, UNSTOP } from '../../../constant/RoomConstants.js';
 
 export default class RaceActiveMessage {
     static [KEY_PRESSED](room, data) {
-        room.track.socketRunners.get(data[0]).parseKeyPress(data[1], data[2]);
+        let id = new Uint16Array(data, 2, 1)[0];
+        let key = new Uint8Array(data, 1, 1)[0];
+        let time = new Uint32Array(data, 4)[0];
+
+        room.track.socketRunners.get(id).parseKeyPress(key, time);
     }
 
     static [TIME](room, data) {
@@ -13,12 +17,16 @@ export default class RaceActiveMessage {
                 (performance.now() - room.stateManager.game.lastTime) / room.stateManager.game.frameDuration
             );
 
-            room.sendFloat64Array([TIME, data[0], room.track.time + time]);
+            let buf = new ArrayBuffer(8);
+            new Uint8Array(buf, 0, 1)[0] = TIME;
+            new Uint16Array(buf, 2, 1)[0] = new Uint16Array(data, 2)[0];
+            new Uint32Array(buf, 4)[0] = room.track.time + time;
+            room.send(buf);
         }
     }
 
     static [UNSTOP](room, data) {
-        let runner = room.track.socketRunners.get(data[0]);
+        let runner = room.track.socketRunners.get(new Uint16Array(data, 2)[0]);
         if (runner) {
             runner.stopped = false;
         }
@@ -42,6 +50,12 @@ export default class RaceActiveMessage {
         room.track.socketRunners.set(data.id, runner);
     }
 
+    static 'users'(room, data) {
+        data.forEach(user => {
+            room.users.set(user.id, { name: user.name, color: user.color });
+        });
+    }
+
     static 'adduser'(room, data) {
         room.users.set(data.id, { name: data.name, color: data.color });
     }
@@ -63,7 +77,7 @@ export default class RaceActiveMessage {
         let time = Math.floor(
             (performance.now() - room.stateManager.game.lastTime) / room.stateManager.game.frameDuration
         );
-        runner.initialTime -= time;
+        runner.initialTime = -time;
         runner.time = runner.initialTime;
     }
 

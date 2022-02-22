@@ -1,6 +1,8 @@
 import Game from '../game/Game.js';
 import Login from '../game/ui/Login.js';
 
+// this is all temp crap
+
 export default class Application {
     constructor() {
         this.ws = null;
@@ -15,9 +17,7 @@ export default class Application {
     }
 
     initConnection() {
-        this.ws = new WebSocket(
-            `${document.location.protocol === 'https:' ? 'wss' : 'wss'}://us-west.liverider.app:443`
-        );
+        this.ws = new WebSocket(`${document.location.protocol === 'https:' ? 'wss' : 'ws'}://localhost`);
 
         this.ws.binaryType = 'arraybuffer';
 
@@ -43,11 +43,11 @@ export default class Application {
 
         this.game = new Game(gameContainer, { ws: this.ws });
         this.game.run();
-        this.game.stateManager.room.sendFloat64Array([101]);
+        this.game.stateManager.room.send(new Uint8Array([101]));
     }
 
     onMessage(e) {
-        let msg = new Float64Array(e.data);
+        let msg = new Uint8Array(e.data);
 
         switch (msg[0]) {
             case 1:

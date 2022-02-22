@@ -1,12 +1,12 @@
 import RaceActiveMessage from './RaceActiveMessage.js';
-import { KEY_PRESSED, TIME } from '../constant/MessageConstants.js';
+import { KEY_PRESSED, TIME, PARSER_DONE } from '../constant/MessageConstants.js';
 
 export default class RaceLoadingMessage extends RaceActiveMessage {
     static [KEY_PRESSED]() {}
 
     static [TIME]() {}
 
-    static 'parserdone'(room, sender) {
+    static [PARSER_DONE](room, sender) {
         room.deleteLoadingClient(sender.id);
 
         if (room.state.name !== 'stage3PreRace') {
@@ -17,7 +17,10 @@ export default class RaceLoadingMessage extends RaceActiveMessage {
             room.stage4Racing();
         }
 
-        room.broadcastExcludeClients(new Float64Array([TIME, sender.id]), room.loadingClients.concat(sender.id));
+        let buf = new ArrayBuffer(4);
+        new Uint8Array(buf, 0, 1)[0] = TIME;
+        new Uint16Array(buf, 2)[0] = sender.id;
+        room.broadcastExcludeClients(buf, room.loadingClients.concat(sender.id));
 
         if (!sender.spectating) {
             room.broadcastExcludeClients(

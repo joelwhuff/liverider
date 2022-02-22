@@ -32,11 +32,11 @@ export default class Room {
         this.send(JSON.stringify(obj));
     }
 
-    /**
-     * @param {number[]} arr
-     */
-    sendFloat64Array(arr) {
-        this.send(new Float64Array(arr));
+    sendKeyPress(keyIndex, time) {
+        let buf = new ArrayBuffer(8);
+        new Uint8Array(buf, 1, 1)[0] = keyIndex;
+        new Uint32Array(buf, 4)[0] = time;
+        this.send(buf);
     }
 
     onMessage(e) {
@@ -46,7 +46,7 @@ export default class Room {
             let msg = JSON.parse(data);
             this.messageParser[msg.type](this, msg.data);
         } else {
-            this.messageParser[new Float64Array(data, 0, 1)[0]](this, new Float64Array(data, 8));
+            this.messageParser[new Uint8Array(data, 0, 1)[0]](this, data);
         }
     }
 

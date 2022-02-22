@@ -1,17 +1,14 @@
 import RaceActiveMessage from './RaceActiveMessage.js';
+import { KEY_PRESSED, TIME, UNSTOP } from '../../../constant/RoomConstants.js';
 
 export default class RaceLoadingMessage extends RaceActiveMessage {
-    static 'users'(room, data) {
-        data.forEach(user => {
-            room.users.set(user.id, { name: user.name, color: user.color });
-        });
-    }
+    static [KEY_PRESSED](room, data) {}
 
-    static 0(room, data) {}
+    static [TIME](room, data) {}
 
-    static 'addrunner'(room, data) {}
-
-    static 'time'(room, data) {}
+    static [UNSTOP](room, data) {}
 
     static 'keylog'(room, data) {}
+
+    static 'addrunner'(room, data) {}
 }

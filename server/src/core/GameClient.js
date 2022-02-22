@@ -88,7 +88,7 @@ export default class GameClient {
 
     parseBuffer(data) {
         try {
-            this.messageParser[new Float64Array(data, 0, 1)[0]](this.room, this, new Float64Array(data, 8));
+            this.messageParser[new Uint8Array(data, 0, 1)[0]](this.room, this, data);
         } catch (err) {
             console.log(err);
             this.destroy();

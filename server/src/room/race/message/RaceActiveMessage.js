@@ -2,11 +2,11 @@ import { KEY_PRESSED, TIME, UNSTOP, FINISH } from '../constant/MessageConstants.
 
 export default class RaceActiveMessage {
     static [KEY_PRESSED](room, sender, data) {
-        room.broadcastExcludeClients(
-            new Float64Array([KEY_PRESSED, sender.id, data[0], data[1]]),
-            room.loadingClients.concat(sender.id)
-        );
-        sender.keyLog[data[0]].push(data[1]);
+        new Uint16Array(data, 2, 1)[0] = sender.id;
+
+        room.broadcastExcludeClients(data, room.loadingClients.concat(sender.id));
+
+        sender.keyLog[new Uint8Array(data, 1, 1)[0]].push(new Uint32Array(data, 4)[0]);
     }
 
     static [TIME](room, sender, data) {
@@ -15,7 +15,7 @@ export default class RaceActiveMessage {
                 type: 'keylog',
                 data: {
                     id: sender.id,
-                    time: data[1],
+                    time: new Uint32Array(data, 4)[0],
                     stopped: sender.stopped,
                     keys: {
                         upPressed: sender.keyLog[0],
@@ -31,17 +31,22 @@ export default class RaceActiveMessage {
                     switchBikePressed: sender.keyLog[9],
                 },
             }),
-            data[0]
+            new Uint16Array(data, 2, 1)[0]
         );
     }
 
     static [UNSTOP](room, sender) {
+        let buf = new ArrayBuffer(4);
+        new Uint8Array(buf, 0, 1)[0] = UNSTOP;
+        new Uint16Array(buf, 2)[0] = sender.id;
+
+        room.broadcastExcludeClients(buf, room.loadingClients.concat(sender.id));
+
         sender.stopped = false;
-        room.broadcastExcludeClients(new Float64Array([UNSTOP, sender.id]), room.loadingClients.concat(sender.id));
     }
 
-    static 'finish'(room, sender, data) {
-        sender.finalTime = data;
+    static [FINISH](room, sender, data) {
+        sender.finalTime = new Uint32Array(data, 4)[0];
 
         if (room.state.name === 'stage4Racing') {
             room.stage5RaceEnd(sender.name);

@@ -20,7 +20,7 @@ export default class SwitchBikeTool extends Tool {
 
     run() {
         if (!this.track.stopped) {
-            this.track.room.sendFloat64Array([0, 9, this.track.time]);
+            this.track.room.sendKeyPress(9, this.track.time);
             this.track.playerRunner.bikeClass = SWITCH_MAP[this.track.playerRunner.bikeClass.bikeName];
             this.track.playerRunner.createBike();
             this.track.playerRunner.reset();

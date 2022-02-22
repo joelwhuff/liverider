@@ -169,7 +169,7 @@ export default class Track {
 
     pause(paused) {
         if (!this.stopped) {
-            this.room.sendFloat64Array([0, paused ? 7 : 8, this.time]);
+            this.room.sendKeyPress(paused ? 7 : 8, this.time);
             this.paused = paused;
             this.toolCollection.getByToolName(PauseTool.toolName).updateDOM();
         }

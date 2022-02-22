@@ -4,6 +4,7 @@ import GhostParser from '../parser/GhostParser.js';
 import BikeRunner from './BikeRunner.js';
 import BikeRenderer from './instance/renderer/BikeRenderer.js';
 import Keyboard from '../keyboard/Keyboard.js';
+import { FINISH } from '../constant/RoomConstants.js';
 
 export default class PlayerRunner extends BikeRunner {
     static get type() {
@@ -25,7 +26,11 @@ export default class PlayerRunner extends BikeRunner {
     onHitTarget() {
         this.timeAtLastTarget = this.track.time;
         if (this.targetsReached.size >= this.track.targets.size) {
-            this.track.room.sendJSON({ type: 'finish', data: this.track.time });
+            let buf = new ArrayBuffer(8);
+            new Uint8Array(buf, 0, 1)[0] = FINISH;
+            new Uint32Array(buf, 4)[0] = this.track.time;
+            this.track.room.send(buf);
+
             this.track.stopped = true;
             this.done = true;
             this.finalTime = this.track.time;
@@ -54,7 +59,7 @@ export default class PlayerRunner extends BikeRunner {
         controls.forEach((pressed, mapKey) => {
             // this[mapKey] refers to the this.xxxPressed properties of BikeRunner
             if (pressed !== this[mapKey]) {
-                this.track.room.sendFloat64Array([0, i, this.track.time]);
+                this.track.room.sendKeyPress(i, this.track.time);
 
                 // this.instance.keyLog.get(mapKey).push(this.track.time.toString());
                 this[mapKey] = pressed;

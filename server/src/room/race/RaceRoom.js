@@ -9,11 +9,9 @@ export default class RaceRoom extends Room {
     constructor(server) {
         super(server);
 
-        this.clients = new Map();
+        this.loadingClients = new Array();
 
         this.state = new Object();
-
-        this.loadingClients = new Array();
 
         this.timeout;
         this.delayStart = 0;

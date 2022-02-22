@@ -2,7 +2,7 @@ import Room from '../Room.js';
 import RaceLoadingMessage from './message/RaceLoadingMessage.js';
 import RaceActiveMessage from './message/RaceActiveMessage.js';
 import RaceResults from '../../ui/RaceResults.js';
-import { UNSTOP } from './constant/RaceMessageConstants.js';
+import { UNSTOP } from '../../constant/RoomConstants.js';
 
 export default class RaceRoom extends Room {
     constructor(stateManager, ws) {
@@ -74,7 +74,7 @@ export default class RaceRoom extends Room {
             setTimeout(() => {
                 this.state.message = null;
             }, 1500);
-            super.sendFloat64Array([UNSTOP]);
+            super.send(new Uint8Array([UNSTOP]));
             this.track.stopped = false;
         };
 

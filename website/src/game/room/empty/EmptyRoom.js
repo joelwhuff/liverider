@@ -5,7 +5,7 @@ export default class EmptyRoom {
 
     sendJSON() {}
 
-    sendFloat64Array() {}
+    sendKeyPress() {}
 
     render() {}
 }

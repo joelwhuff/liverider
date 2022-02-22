@@ -19,7 +19,7 @@ export default class RestartTool extends Tool {
 
     run() {
         if (!this.track.stopped) {
-            this.track.room.sendFloat64Array([0, 5, this.track.time]);
+            this.track.room.sendKeyPress(5, this.track.time);
             this.track.restart();
         }
     }

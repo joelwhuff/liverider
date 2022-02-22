@@ -16,7 +16,7 @@ export default class Room {
     }
 
     addClient(client) {
-        client.id = this.clientId++;
+        client.id = this.generateId();
         this.clients.set(client.id, client);
 
         client.room = this;
@@ -57,5 +57,19 @@ export default class Room {
 
     getClientsInfo() {
         return [...this.clients.values()].map(client => ({ id: client.id, name: client.name, color: client.color }));
+    }
+
+    generateId() {
+        if (this.clientId > 65535) {
+            this.clientId = 0;
+        }
+
+        let id = this.clientId++;
+
+        if (this.clients.has(id)) {
+            return this.generateId();
+        }
+
+        return id;
     }
 }

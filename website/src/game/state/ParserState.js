@@ -1,6 +1,7 @@
 import GameState from './GameState.js';
 import TrackParser from '../parser/TrackParser.js';
 import EmptyRoom from '../room/empty/EmptyRoom.js';
+import { PARSER_DONE } from '../constant/RoomConstants.js';
 
 export default class ParserState extends GameState {
     onEnter() {
@@ -32,7 +33,7 @@ export default class ParserState extends GameState {
         this.parser.progress =
             this.parser.solidLineData.index + this.parser.sceneryLineData.index + this.parser.itemData.index;
         if (this.parser.done) {
-            this.manager.room.sendJSON({ type: 'parserdone' });
+            this.manager.room.send(new Uint8Array([PARSER_DONE]));
             this.manager.room.setMessageParser('active');
             this.manager.push('track');
             this.initUI();
