@@ -47,7 +47,7 @@ export default class GameClient {
     resetRaceProps() {
         this.spectating = false;
         this.stopped = true;
-        this.finalTime = null;
+        this.finalTime;
 
         this.keyLog = [
             [] /* upPressed */,

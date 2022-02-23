@@ -201,12 +201,7 @@ export default class RaceRoom extends Room {
     getRaceResults() {
         return [...this.clients.values()]
             .map(client => ({ id: client.id, finalTime: client.finalTime }))
-            .sort((a, b) => {
-                if (a.finalTime && b.finalTime) return a.finalTime - b.finalTime;
-                else if (a.finalTime && !b.finalTime) return -1;
-                else if (!a.finalTime && b.finalTime) return 1;
-                else return 0;
-            });
+            .sort((a, b) => a.finalTime - b.finalTime);
     }
 }
 
