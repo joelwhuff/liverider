@@ -81,7 +81,8 @@ export default class TrackState extends GameState {
 
         [this.track.playerRunner, ...this.track.socketRunners.values()]
             .sort((a, b) => {
-                if (a.finalTime && b.finalTime) {
+                if (a.finalTime) {
+                    if (!b.finalTime) return -1;
                     return a.finalTime - b.finalTime;
                 }
                 return b.targetsReached.size - a.targetsReached.size;
