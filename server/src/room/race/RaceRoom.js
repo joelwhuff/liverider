@@ -125,7 +125,7 @@ export default class RaceRoom extends Room {
     stage2LobbyCountdown() {
         this.state = {
             name: 'stage2LobbyCountdown',
-            delay: 30000,
+            delay: 20000,
         };
 
         this.delayStart = performance.now();
